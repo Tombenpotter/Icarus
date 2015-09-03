@@ -7,24 +7,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import tombenpotter.icarus.common.items.ItemRFWing;
-import tombenpotter.icarus.common.items.ItemSingleWing;
-import tombenpotter.icarus.common.items.ItemWing;
-import tombenpotter.icarus.common.items.Wing;
+import thaumcraft.api.ThaumcraftApi;
+import tombenpotter.icarus.common.items.*;
 
 import java.util.ArrayList;
 
 public class IcarusItems {
 
     public static ArrayList<String> wingNames = new ArrayList<String>();
-
     public static ItemSingleWing singleWings;
-
-    public static ItemWing cardboardWings, featherWings, ironWings, goldDiamondWings, thaumiumWings, bronzeWings;
-
+    public static ItemWing cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
+    public static ItemThaumcraftWing thaumiumWings;
     public static ItemRFWing leadstoneWings, electrumWings, enderiumWings;
 
-    public static ItemArmor.ArmorMaterial THAUMIUM = EnumHelper.addArmorMaterial("ICARUS_THAUMIUM", 25, new int[]{2, 6, 5, 2}, 25);
     public static ItemArmor.ArmorMaterial CLOTH = EnumHelper.addArmorMaterial("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15);
     public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
     public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
@@ -55,7 +50,7 @@ public class IcarusItems {
         GameRegistry.addShapedRecipe(new ItemStack(singleWings, 1, 3), "XX ", "XYY", " XX", 'X', Items.diamond, 'Y', Items.gold_ingot);
         GameRegistry.addShapelessRecipe(new ItemStack(goldDiamondWings), new ItemStack(singleWings, 1, 3), new ItemStack(singleWings, 1, 3));
 
-        thaumiumWings = new ItemWing(THAUMIUM, new Wing("ThaumiumWing", 512, 256, 0.65, 0.55, -0.1, -0.2, 0.7));
+        thaumiumWings = new ItemThaumcraftWing(ThaumcraftApi.armorMatThaumium, new Wing("ThaumiumWing", 512, 256, 0.65, 0.55, -0.1, -0.2, 0.7));
         if (OreDictionary.doesOreNameExist("ingotThaumium")) {
             GameRegistry.registerItem(thaumiumWings, "ItemThaumiumWing");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 4), "XX ", "XYY", " XX", 'X', "ingotThaumium", 'Y', "ingotThaumium"));
