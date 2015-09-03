@@ -19,7 +19,6 @@ import java.util.List;
 public class ItemRFWing extends ItemWing implements ISpecialArmor, IEnergyContainerItem, ISpecialWing {
 
     //Armor handling methods taken from Redstone Arsenal.
-
     int capacity;
     int receive = 2000;
     int send = 1000;
@@ -49,8 +48,8 @@ public class ItemRFWing extends ItemWing implements ISpecialArmor, IEnergyContai
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), 0));
-        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(item, 1, 0), getMaxEnergyStored(new ItemStack(item))));
+        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), 0));
+        list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), getMaxEnergyStored(new ItemStack(item))));
     }
 
     @Override
@@ -81,7 +80,6 @@ public class ItemRFWing extends ItemWing implements ISpecialArmor, IEnergyContai
         }
         int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
         return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
-        // 0.05 = 1 / 20 (max armor)
     }
 
     @Override

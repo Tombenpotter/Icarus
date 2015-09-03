@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -59,9 +60,20 @@ public class ItemWing extends ItemArmor {
             player.motionY = wing.waterDrag;
         }
 
-        if (player.worldObj.isRaining() || player.worldObj.isThundering()) {
+        if (player.worldObj.isRaining()) {
             if (world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
                 player.motionY = wing.rainDrag;
+            }
+        }
+
+        if (player.worldObj.isThundering()) {
+            if (world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+                player.motionY = wing.rainDrag;
+            }
+            if (!player.onGround && world.rand.nextInt(250) == 0) {
+                world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
+                player.setHealth(5.0F);
+                player.motionY -= 1.5;
             }
         }
 
