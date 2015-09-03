@@ -1,0 +1,25 @@
+#Creative Tab
+itemGroup.tabIcarus=Icarus
+
+#Items
+##Wing Armor
+item.Icarus.wing.CardboardWing.name=Cardboard Wings
+item.Icarus.wing.FeatherWing.name=Feather Wings
+item.Icarus.wing.IronWing.name=Iron Wings
+item.Icarus.wing.DiamondGoldWing.name=Gold Plated Diamond Wings
+item.Icarus.wing.ThaumiumWing.name=Thaumium Wings
+item.Icarus.wing.BronzeWing.name=Bronze Wings
+item.Icarus.wing.LeadstoneWing.name=Leadstone Wings
+item.Icarus.wing.ElectrumWing.name=Electrum Wings
+item.Icarus.wing.EnderiumWing.name=Enderium Wings
+
+##Single Wing item
+item.Icarus.singleWing.CardboardWing.name=Cardboard Wing
+item.Icarus.singleWing.FeatherWing.name=Feather Wing
+item.Icarus.singleWing.IronWing.name=Iron Wing
+item.Icarus.singleWing.DiamondGoldWing.name=Gold Plated Diamond Wing
+item.Icarus.singleWing.ThaumiumWing.name=Thaumium Wing
+item.Icarus.singleWing.BronzeWing.name=Bronze Wing
+item.Icarus.singleWing.LeadstoneWing.name=Leadstone Wing
+item.Icarus.singleWing.ElectrumWing.name=Electrum Wing
+item.Icarus.singleWing.EnderiumWing.name=Enderium Wing
