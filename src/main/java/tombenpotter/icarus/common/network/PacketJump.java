@@ -38,7 +38,14 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
         EntityPlayer player = ctx.getServerHandler().playerEntity;
         player.motionY = message.jump;
         player.fallDistance = 0;
-        player.addExhaustion(0.45F);
+
+        float exhaustion = 0.5F;
+        if (player.worldObj.provider.dimensionId == -1) {
+            exhaustion += 0.5F;
+        } else if (player.worldObj.provider.dimensionId == 1) {
+            exhaustion -= 0.25F;
+        }
+        player.addExhaustion(exhaustion);
 
         if (message.isSpecialWing && player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemWing) {
             ISpecialWing specialWing = (ISpecialWing) player.inventory.armorInventory[2].getItem();
