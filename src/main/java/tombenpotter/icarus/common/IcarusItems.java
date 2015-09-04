@@ -64,7 +64,7 @@ public class IcarusItems {
         if (OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
             GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
-            GameRegistry.addRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
+            GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
         }
 
         bronzeWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.85, -0.2, -0.4, 0.5));
