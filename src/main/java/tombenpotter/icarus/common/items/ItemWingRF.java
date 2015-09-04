@@ -1,9 +1,10 @@
 package tombenpotter.icarus.common.items;
 
 import cofh.api.energy.IEnergyContainerItem;
-import tombenpotter.icarus.common.ISpecialWing;
-import tombenpotter.icarus.util.EnergyHelper;
-import tombenpotter.icarus.util.StringHelper;
+import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.util.cofh.EnergyHelper;
+import tombenpotter.icarus.util.IcarusWing;
+import tombenpotter.icarus.util.cofh.StringHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,7 +17,7 @@ import net.minecraftforge.common.ISpecialArmor;
 
 import java.util.List;
 
-public class ItemRFWing extends ItemWing implements ISpecialArmor, IEnergyContainerItem, ISpecialWing {
+public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContainerItem, ISpecialWing {
 
     //Armor handling methods taken from Redstone Arsenal.
     int capacity;
@@ -26,9 +27,9 @@ public class ItemRFWing extends ItemWing implements ISpecialArmor, IEnergyContai
     public double absorbRatio = 0.9D;
     public static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
 
-    public ItemRFWing(ArmorMaterial material, Wing wing) {
-        super(material, wing);
-        capacity = wing.durability;
+    public ItemWingRF(ArmorMaterial material, IcarusWing icarusWing) {
+        super(material, icarusWing);
+        capacity = icarusWing.durability;
     }
 
     @Override

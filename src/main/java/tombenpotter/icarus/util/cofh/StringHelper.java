@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util;
+package tombenpotter.icarus.util.cofh;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.EnumRarity;

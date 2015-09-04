@@ -15,15 +15,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import tombenpotter.icarus.Icarus;
-import tombenpotter.icarus.common.ISpecialWing;
+import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.api.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
+import tombenpotter.icarus.util.EventHandler;
+import tombenpotter.icarus.util.IcarusWing;
 
 public class ItemWing extends ItemArmor {
 
     public Wing wing;
 
-    public ItemWing(ArmorMaterial material, Wing wing) {
+    public ItemWing(ArmorMaterial material, IcarusWing wing) {
         super(material, 3, 1);
         setUnlocalizedName(Icarus.name + ".wing." + wing.name);
         setMaxDamage(wing.durability);
@@ -77,7 +80,7 @@ public class ItemWing extends ItemArmor {
             }
         }
 
-        if (!player.isSneaking() && !player.onGround && player.motionY < 0) {
+        if (player.isSneaking() == EventHandler.holdShiftToHoverForPlayer.get(player.getCommandSenderName()) && !player.onGround && player.motionY < 0) {
             player.motionY *= wing.glideFactor;
             if (itemStack.getItem() instanceof ISpecialWing) {
                 ((ISpecialWing) itemStack.getItem()).onWingHover(itemStack);

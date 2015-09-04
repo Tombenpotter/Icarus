@@ -1,8 +1,6 @@
-package tombenpotter.icarus.common.items;
+package tombenpotter.icarus.api;
 
-import tombenpotter.icarus.common.IcarusItems;
-
-public class Wing {
+public abstract class Wing {
 
     public String name;
     public int durability;
@@ -22,7 +20,5 @@ public class Wing {
         this.rainDrag = rainDrag;
         this.waterDrag = waterDrag;
         this.fallReductionFactor = fallReductionFactor;
-
-        IcarusItems.wingNames.add(name);
     }
 }

@@ -11,5 +11,6 @@ public class PacketHandler {
 
     public static void registerPackets() {
         INSTANCE.registerMessage(PacketJump.class, PacketJump.class, 0, Side.SERVER);
+        INSTANCE.registerMessage(PacketClientConfig.class, PacketClientConfig.class, 1, Side.SERVER);
     }
 }

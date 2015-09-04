@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util;
+package tombenpotter.icarus.util.cofh;
 
 import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;

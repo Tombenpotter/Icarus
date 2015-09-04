@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import tombenpotter.icarus.common.ISpecialWing;
+import tombenpotter.icarus.api.ISpecialWing;
 import tombenpotter.icarus.common.items.ItemWing;
 
 public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessage> {
@@ -38,7 +38,7 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
         EntityPlayer player = ctx.getServerHandler().playerEntity;
         player.motionY = message.jump;
         player.fallDistance = 0;
-        player.addExhaustion(0.5F);
+        player.addExhaustion(0.45F);
 
         if (message.isSpecialWing && player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemWing) {
             ISpecialWing specialWing = (ISpecialWing) player.inventory.armorInventory[2].getItem();

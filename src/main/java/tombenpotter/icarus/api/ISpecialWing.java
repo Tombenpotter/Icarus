@@ -1,4 +1,4 @@
-package tombenpotter.icarus.common;
+package tombenpotter.icarus.api;
 
 import net.minecraft.item.ItemStack;
 
