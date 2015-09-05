@@ -20,7 +20,7 @@ public class Icarus {
 
     public static final String modid = "TIcarus";
     public static final String name = "Icarus";
-    public static final String version = "1.0.0";
+    public static final String version = "1.0.1";
     public static final String texturePath = "icarus";
     public static final String channel = "Icarus";
     public static final String depend = "after:AWWayofTime;after:Thaumcraft;after:ThermalExpansion";
