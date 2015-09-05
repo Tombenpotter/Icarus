@@ -63,36 +63,36 @@ public class IcarusItems {
         voidMetalWings = new ItemWingThaumcraft.ItemWingVoidMetal(ThaumcraftApi.armorMatVoid, new IcarusWing("VoidMetalWing", 768, 384, 0.7, 0.4, -0.1, -0.1, 0.75));
         if (OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
             GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
-            GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 5), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
+            GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 5), new ItemStack(singleWings, 1, 5));
         }
 
         bronzeWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.85, -0.2, -0.4, 0.5));
         if (OreDictionary.doesOreNameExist("ingotBronze")) {
             GameRegistry.registerItem(bronzeWings, "ItemBronzeWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 5), "XX ", "XYY", " XX", 'X', "ingotBronze", 'Y', Items.feather));
-            GameRegistry.addShapelessRecipe(new ItemStack(bronzeWings), new ItemStack(singleWings, 1, 5), new ItemStack(singleWings, 1, 5));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 6), "XX ", "XYY", " XX", 'X', "ingotBronze", 'Y', Items.feather));
+            GameRegistry.addShapelessRecipe(new ItemStack(bronzeWings), new ItemStack(singleWings, 1, 6), new ItemStack(singleWings, 1, 6));
         }
 
         leadstoneWings = new ItemWingRF(ItemArmor.ArmorMaterial.IRON, new IcarusWing("LeadstoneWing", 131072, 512, 0.6, 0.65, -0.3, -0.4, 0.3));
         if (ModItemGetter.leadstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotLead")) {
             GameRegistry.registerItem(leadstoneWings, "ItemLeadstoneWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 6), "XX ", "XYY", " XX", 'X', "ingotLead", 'Y', ModItemGetter.leadstoneCapacitor));
-            GameRegistry.addShapelessRecipe(new ItemStack(leadstoneWings), new ItemStack(singleWings, 1, 6), new ItemStack(singleWings, 1, 6));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 7), "XX ", "XYY", " XX", 'X', "ingotLead", 'Y', ModItemGetter.leadstoneCapacitor));
+            GameRegistry.addShapelessRecipe(new ItemStack(leadstoneWings), new ItemStack(singleWings, 1, 7), new ItemStack(singleWings, 1, 7));
         }
 
         electrumWings = new ItemWingRF(ELECTRUM, new IcarusWing("ElectrumWing", 393216, 1024, 0.7, 0.35, -0.3, -0.4, 0.6));
         if (ModItemGetter.redstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotElectrum")) {
             GameRegistry.registerItem(electrumWings, "ItemElectrumWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 7), "XX ", "XYY", " XX", 'X', "ingotElectrum", 'Y', ModItemGetter.redstoneCapacitor));
-            GameRegistry.addShapelessRecipe(new ItemStack(electrumWings), new ItemStack(singleWings, 1, 7), new ItemStack(singleWings, 1, 7));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 8), "XX ", "XYY", " XX", 'X', "ingotElectrum", 'Y', ModItemGetter.redstoneCapacitor));
+            GameRegistry.addShapelessRecipe(new ItemStack(electrumWings), new ItemStack(singleWings, 1, 8), new ItemStack(singleWings, 1, 8));
         }
 
         enderiumWings = new ItemWingRF(ENDERIUM, new IcarusWing("EnderiumWing", 786432, 2048, 0.75, 0.25, -0.2, -0.3, 0.8));
         if (ModItemGetter.resonantCapacitor != null && OreDictionary.doesOreNameExist("ingotEnderium")) {
             GameRegistry.registerItem(enderiumWings, "ItemEnderiumWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 8), "XX ", "XYY", " XX", 'X', "ingotEnderium", 'Y', ModItemGetter.resonantCapacitor));
-            GameRegistry.addShapelessRecipe(new ItemStack(enderiumWings), new ItemStack(singleWings, 1, 8), new ItemStack(singleWings, 1, 8));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotEnderium", 'Y', ModItemGetter.resonantCapacitor));
+            GameRegistry.addShapelessRecipe(new ItemStack(enderiumWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
         }
     }
 }
