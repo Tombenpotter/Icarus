@@ -35,14 +35,14 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
-        if (StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown())
-            list.add(StringHelper.shiftForDetails());
-
         if (stack.stackTagCompound == null)
             EnergyHelper.setDefaultEnergyTag(stack, 0);
 
-        if (StringHelper.isShiftKeyDown()) {
-            list.add(StringHelper.localize("info.cofh.charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
+        if (!StringHelper.isShiftKeyDown()) {
+            list.add(pressShiftForDetails());
+        } else if (StringHelper.isShiftKeyDown()) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
+            list.addAll(tooltip());
         }
     }
 

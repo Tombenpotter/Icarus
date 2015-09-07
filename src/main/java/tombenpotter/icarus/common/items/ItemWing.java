@@ -23,8 +23,11 @@ import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
 import tombenpotter.icarus.common.util.IcarusWing;
+import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemWing extends ItemArmor {
 
@@ -38,6 +41,25 @@ public class ItemWing extends ItemArmor {
         MinecraftForge.EVENT_BUS.register(this);
 
         this.wing = wing;
+    }
+
+    public static String pressShiftForDetails() {
+        return StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.press") + " " +
+                StringHelper.LIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("tooltip.icarus.shift") + StringHelper.END + " " +
+                StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.details") + StringHelper.END;
+    }
+
+    public List tooltip() {
+        List list = new ArrayList();
+        list.add(" ");
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.height") + StringHelper.END + ": " + wing.maxHeight);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.boost") + StringHelper.END + ": " + wing.jumpBoost);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.glide") + StringHelper.END + ": " + wing.glideFactor);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.rain") + StringHelper.END + ": " + wing.rainDrag);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.water") + StringHelper.END + ": " + wing.waterDrag);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.fall.reduction") + StringHelper.END + ": " + wing.fallReductionFactor);
+        list.add(" ");
+        return list;
     }
 
     @Override
@@ -108,6 +130,16 @@ public class ItemWing extends ItemArmor {
         if (player.posY > wing.maxHeight) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
+        if (!StringHelper.isShiftKeyDown()) {
+            list.add(pressShiftForDetails());
+        } else if (StringHelper.isShiftKeyDown()) {
+            list.addAll(tooltip());
         }
     }
 

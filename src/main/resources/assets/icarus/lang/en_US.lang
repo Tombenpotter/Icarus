@@ -33,3 +33,16 @@ item.Icarus.singleWing.ElectrumWing.name=Electrum Wing
 item.Icarus.singleWing.EnderiumWing.name=Enderium Wing
 ###OreDict
 item.Icarus.singleWing.BronzeWing.name=Bronze Wing
+
+#Text
+##Tooltips
+tooltip.icarus.press=Press
+tooltip.icarus.shift=shift
+tooltip.icarus.details=for details
+tooltip.icarus.energy=Charge
+tooltip.icarus.height=Max Height
+tooltip.icarus.boost=Jump Boost
+tooltip.icarus.glide=Glide Factor
+tooltip.icarus.drag.rain=Rain Drag
+tooltip.icarus.drag.water=Water Drag
+tooltip.icarus.fall.reduction=Fall Reduction
