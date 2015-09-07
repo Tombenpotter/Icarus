@@ -8,7 +8,11 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
-import tombenpotter.icarus.common.items.*;
+import tombenpotter.icarus.common.items.ItemSingleWing;
+import tombenpotter.icarus.common.items.ItemWing;
+import tombenpotter.icarus.common.items.ItemWingRF;
+import tombenpotter.icarus.common.items.ItemWingThaumcraft;
+import tombenpotter.icarus.util.ConfigHandler;
 import tombenpotter.icarus.util.IcarusWing;
 import tombenpotter.icarus.util.ModItemGetter;
 
@@ -54,43 +58,43 @@ public class IcarusItems {
         GameRegistry.addShapelessRecipe(new ItemStack(goldDiamondWings), new ItemStack(singleWings, 1, 3), new ItemStack(singleWings, 1, 3));
 
         thaumiumWings = new ItemWingThaumcraft(ThaumcraftApi.armorMatThaumium, new IcarusWing("ThaumiumWing", 512, 256, 0.65, 0.55, -0.1, -0.2, 0.7));
-        if (OreDictionary.doesOreNameExist("ingotThaumium") && OreDictionary.doesOreNameExist("gemAmber")) {
+        if (ConfigHandler.enableThaumcraftCompat && OreDictionary.doesOreNameExist("ingotThaumium") && OreDictionary.doesOreNameExist("gemAmber")) {
             GameRegistry.registerItem(thaumiumWings, "ItemThaumiumWing");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 4), "XX ", "XYY", " XX", 'X', "ingotThaumium", 'Y', "gemAmber"));
             GameRegistry.addShapelessRecipe(new ItemStack(thaumiumWings), new ItemStack(singleWings, 1, 4), new ItemStack(singleWings, 1, 4));
         }
 
         bronzeWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.85, -0.2, -0.4, 0.5));
-        if (OreDictionary.doesOreNameExist("ingotBronze")) {
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("ingotBronze")) {
             GameRegistry.registerItem(bronzeWings, "ItemBronzeWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 5), "XX ", "XYY", " XX", 'X', "ingotBronze", 'Y', Items.feather));
             GameRegistry.addShapelessRecipe(new ItemStack(bronzeWings), new ItemStack(singleWings, 1, 5), new ItemStack(singleWings, 1, 5));
         }
 
         leadstoneWings = new ItemWingRF(ItemArmor.ArmorMaterial.IRON, new IcarusWing("LeadstoneWing", 131072, 512, 0.6, 0.65, -0.3, -0.4, 0.3));
-        if (ModItemGetter.leadstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotLead")) {
+        if (ConfigHandler.enableTECompat && ModItemGetter.leadstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotLead")) {
             GameRegistry.registerItem(leadstoneWings, "ItemLeadstoneWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 6), "XX ", "XYY", " XX", 'X', "ingotLead", 'Y', ModItemGetter.leadstoneCapacitor));
             GameRegistry.addShapelessRecipe(new ItemStack(leadstoneWings), new ItemStack(singleWings, 1, 6), new ItemStack(singleWings, 1, 6));
         }
 
         electrumWings = new ItemWingRF(ELECTRUM, new IcarusWing("ElectrumWing", 393216, 1024, 0.7, 0.35, -0.3, -0.4, 0.6));
-        if (ModItemGetter.redstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotElectrum")) {
+        if (ConfigHandler.enableTECompat && ModItemGetter.redstoneCapacitor != null && OreDictionary.doesOreNameExist("ingotElectrum")) {
             GameRegistry.registerItem(electrumWings, "ItemElectrumWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 7), "XX ", "XYY", " XX", 'X', "ingotElectrum", 'Y', ModItemGetter.redstoneCapacitor));
             GameRegistry.addShapelessRecipe(new ItemStack(electrumWings), new ItemStack(singleWings, 1, 7), new ItemStack(singleWings, 1, 7));
         }
 
         enderiumWings = new ItemWingRF(ENDERIUM, new IcarusWing("EnderiumWing", 786432, 2048, 0.75, 0.25, -0.2, -0.3, 0.8));
-        if (ModItemGetter.resonantCapacitor != null && OreDictionary.doesOreNameExist("ingotEnderium")) {
+        if (ConfigHandler.enableTECompat && ModItemGetter.resonantCapacitor != null && OreDictionary.doesOreNameExist("ingotEnderium")) {
             GameRegistry.registerItem(enderiumWings, "ItemEnderiumWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 8), "XX ", "XYY", " XX", 'X', "ingotEnderium", 'Y', ModItemGetter.resonantCapacitor));
             GameRegistry.addShapelessRecipe(new ItemStack(enderiumWings), new ItemStack(singleWings, 1, 8), new ItemStack(singleWings, 1, 8));
         }
 
-        
+
         voidMetalWings = new ItemWingThaumcraft.ItemWingVoidMetal(ThaumcraftApi.armorMatVoid, new IcarusWing("VoidMetalWing", 768, 384, 0.7, 0.4, -0.1, -0.1, 0.75));
-        if (OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
+        if (ConfigHandler.enableThaumcraftCompat && OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
             GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
             GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));

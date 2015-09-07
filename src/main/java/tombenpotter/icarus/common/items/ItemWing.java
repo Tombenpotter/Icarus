@@ -55,7 +55,7 @@ public class ItemWing extends ItemArmor {
             if (isJumping) {
                 PacketHandler.INSTANCE.sendToServer(new PacketJump(wing.jumpBoost, itemStack.getItem() instanceof ISpecialWing));
 
-                if(itemStack.getItem() instanceof ISpecialWing){
+                if (itemStack.getItem() instanceof ISpecialWing) {
                     ISpecialWing specialWing = (ISpecialWing) itemStack.getItem();
                     if (!specialWing.canWingBeUsed(itemStack)) {
                         return;
@@ -89,7 +89,7 @@ public class ItemWing extends ItemArmor {
             }
         }
 
-        if (player.isSneaking() == EventHandler.holdShiftToHoverForPlayer.get(player.getCommandSenderName()) && !player.onGround && player.motionY < 0) {
+        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
             if (itemStack.getItem() instanceof ISpecialWing) {
                 if (!((ISpecialWing) itemStack.getItem()).canWingBeUsed(itemStack)) {
                     return;
