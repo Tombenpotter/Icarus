@@ -60,13 +60,6 @@ public class IcarusItems {
             GameRegistry.addShapelessRecipe(new ItemStack(thaumiumWings), new ItemStack(singleWings, 1, 4), new ItemStack(singleWings, 1, 4));
         }
 
-        voidMetalWings = new ItemWingThaumcraft.ItemWingVoidMetal(ThaumcraftApi.armorMatVoid, new IcarusWing("VoidMetalWing", 768, 384, 0.7, 0.4, -0.1, -0.1, 0.75));
-        if (OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
-            GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
-            GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
-        }
-
         bronzeWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.85, -0.2, -0.4, 0.5));
         if (OreDictionary.doesOreNameExist("ingotBronze")) {
             GameRegistry.registerItem(bronzeWings, "ItemBronzeWings");
@@ -93,6 +86,14 @@ public class IcarusItems {
             GameRegistry.registerItem(enderiumWings, "ItemEnderiumWings");
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 8), "XX ", "XYY", " XX", 'X', "ingotEnderium", 'Y', ModItemGetter.resonantCapacitor));
             GameRegistry.addShapelessRecipe(new ItemStack(enderiumWings), new ItemStack(singleWings, 1, 8), new ItemStack(singleWings, 1, 8));
+        }
+
+        
+        voidMetalWings = new ItemWingThaumcraft.ItemWingVoidMetal(ThaumcraftApi.armorMatVoid, new IcarusWing("VoidMetalWing", 768, 384, 0.7, 0.4, -0.1, -0.1, 0.75));
+        if (OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
+            GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 9), "XX ", "XYY", " XX", 'X', "ingotVoid", 'Y', "shardEntropy"));
+            GameRegistry.addShapelessRecipe(new ItemStack(voidMetalWings), new ItemStack(singleWings, 1, 9), new ItemStack(singleWings, 1, 9));
         }
     }
 }
