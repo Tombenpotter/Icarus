@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util;
+package tombenpotter.icarus.common.util;
 
 import net.minecraftforge.common.config.Configuration;
 

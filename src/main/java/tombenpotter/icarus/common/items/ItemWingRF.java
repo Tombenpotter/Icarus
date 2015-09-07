@@ -1,10 +1,6 @@
 package tombenpotter.icarus.common.items;
 
 import cofh.api.energy.IEnergyContainerItem;
-import tombenpotter.icarus.api.ISpecialWing;
-import tombenpotter.icarus.util.cofh.EnergyHelper;
-import tombenpotter.icarus.util.IcarusWing;
-import tombenpotter.icarus.util.cofh.StringHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,18 +10,22 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
+import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.common.util.IcarusWing;
+import tombenpotter.icarus.common.util.cofh.EnergyHelper;
+import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.List;
 
 public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContainerItem, ISpecialWing {
 
+    public static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
+    public double absorbRatio = 0.9D;
     //Armor handling methods taken from Redstone Arsenal.
     int capacity;
     int receive = 2000;
     int send = 1000;
     int energyPerDamage = 160;
-    public double absorbRatio = 0.9D;
-    public static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
 
     public ItemWingRF(ArmorMaterial material, IcarusWing icarusWing) {
         super(material, icarusWing);
@@ -90,6 +90,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         }
         return 0;
     }
+
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
         if (source.damageType.equals("flux")) {

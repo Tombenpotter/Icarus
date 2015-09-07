@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util;
+package tombenpotter.icarus.common.util;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;

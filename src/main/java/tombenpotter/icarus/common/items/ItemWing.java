@@ -1,6 +1,7 @@
 package tombenpotter.icarus.common.items;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import tombenpotter.icarus.Icarus;
@@ -19,8 +21,10 @@ import tombenpotter.icarus.api.ISpecialWing;
 import tombenpotter.icarus.api.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
-import tombenpotter.icarus.util.EventHandler;
-import tombenpotter.icarus.util.IcarusWing;
+import tombenpotter.icarus.common.util.EventHandler;
+import tombenpotter.icarus.common.util.IcarusWing;
+
+import java.lang.reflect.Field;
 
 public class ItemWing extends ItemArmor {
 
@@ -51,10 +55,8 @@ public class ItemWing extends ItemArmor {
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
         if (world.isRemote) {
-            boolean isJumping = Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed();
-            if (isJumping) {
+            if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
                 PacketHandler.INSTANCE.sendToServer(new PacketJump(wing.jumpBoost, itemStack.getItem() instanceof ISpecialWing));
-
                 if (itemStack.getItem() instanceof ISpecialWing) {
                     ISpecialWing specialWing = (ISpecialWing) itemStack.getItem();
                     if (!specialWing.canWingBeUsed(itemStack)) {
@@ -62,7 +64,6 @@ public class ItemWing extends ItemArmor {
                     }
                     specialWing.onWingFlap(itemStack);
                 }
-
                 player.motionY = wing.jumpBoost;
                 player.fallDistance = 0;
             }
@@ -73,13 +74,18 @@ public class ItemWing extends ItemArmor {
         }
 
         if (player.worldObj.isRaining()) {
-            if (world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                player.motionY = wing.rainDrag;
+            Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "enableRain");
+            try {
+                if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+                    player.motionY = wing.rainDrag;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
 
         if (player.worldObj.isThundering()) {
-            if (world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+            if (world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).canSpawnLightningBolt() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
                 player.motionY = wing.rainDrag;
             }
             if (!player.onGround && world.rand.nextInt(250) == 0) {

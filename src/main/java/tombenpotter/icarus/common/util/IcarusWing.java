@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util;
+package tombenpotter.icarus.common.util;
 
 import tombenpotter.icarus.api.Wing;
 import tombenpotter.icarus.common.IcarusItems;

@@ -16,7 +16,7 @@ public class ItemSingleWing extends Item {
 
     public IIcon[] icon = new IIcon[50];
 
-    public ItemSingleWing(){
+    public ItemSingleWing() {
         setCreativeTab(Icarus.creativeTab);
         setUnlocalizedName(Icarus.name + ".singleWing");
         setHasSubtypes(true);
@@ -24,7 +24,7 @@ public class ItemSingleWing extends Item {
 
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister ri) {
-        for(int i = 0; i < IcarusItems.wingNames.size(); i++) {
+        for (int i = 0; i < IcarusItems.wingNames.size(); i++) {
             this.icon[i] = ri.registerIcon(Icarus.texturePath + ":wings/" + IcarusItems.wingNames.get(i));
         }
     }

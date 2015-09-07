@@ -1,4 +1,4 @@
-package tombenpotter.icarus.util.cofh;
+package tombenpotter.icarus.common.util.cofh;
 
 import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,8 +11,8 @@ import java.util.List;
  * This class contains helper functions related to Redstone Flux, the basis of the CoFH Energy System.
  *
  * @author King Lemming
- *
- * Stolen from COFH Lib as it is one of the only two classes I need. Removed functions I will never use.
+ *         <p/>
+ *         Stolen from COFH Lib as it is one of the only two classes I need. Removed functions I will never use.
  */
 public class EnergyHelper {
 

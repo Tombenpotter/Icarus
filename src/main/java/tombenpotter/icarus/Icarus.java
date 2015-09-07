@@ -9,11 +9,13 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.Logger;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.network.PacketHandler;
+import tombenpotter.icarus.common.util.ConfigHandler;
+import tombenpotter.icarus.common.util.EventHandler;
+import tombenpotter.icarus.common.util.LogHelper;
 import tombenpotter.icarus.proxies.CommonProxy;
-import tombenpotter.icarus.util.ConfigHandler;
-import tombenpotter.icarus.util.EventHandler;
 
 @Mod(modid = Icarus.modid, name = Icarus.name, version = Icarus.version, dependencies = Icarus.depend)
 public class Icarus {
@@ -32,6 +34,7 @@ public class Icarus {
             return IcarusItems.goldDiamondWings;
         }
     };
+    public static Logger logger;
 
     @SidedProxy(serverSide = Icarus.commonProxy, clientSide = Icarus.clientProxy)
     public static CommonProxy proxy;
@@ -42,6 +45,7 @@ public class Icarus {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         instance = this;
+        logger = LogHelper.getLogger();
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         IcarusItems.registerItems();
     }
