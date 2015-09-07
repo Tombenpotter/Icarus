@@ -27,5 +27,10 @@ public class ItemWingThaumcraft extends ItemWing implements IRepairable {
         @Override
         public void onWingHover(ItemStack stack) {
         }
+
+        @Override
+        public boolean canWingBeUsed(ItemStack stack) {
+            return true;
+        }
     }
 }

@@ -54,6 +54,15 @@ public class ItemWing extends ItemArmor {
             boolean isJumping = Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed();
             if (isJumping) {
                 PacketHandler.INSTANCE.sendToServer(new PacketJump(wing.jumpBoost, itemStack.getItem() instanceof ISpecialWing));
+
+                if(itemStack.getItem() instanceof ISpecialWing){
+                    ISpecialWing specialWing = (ISpecialWing) itemStack.getItem();
+                    if (!specialWing.canWingBeUsed(itemStack)) {
+                        return;
+                    }
+                    specialWing.onWingFlap(itemStack);
+                }
+
                 player.motionY = wing.jumpBoost;
                 player.fallDistance = 0;
             }
@@ -81,10 +90,13 @@ public class ItemWing extends ItemArmor {
         }
 
         if (player.isSneaking() == EventHandler.holdShiftToHoverForPlayer.get(player.getCommandSenderName()) && !player.onGround && player.motionY < 0) {
-            player.motionY *= wing.glideFactor;
             if (itemStack.getItem() instanceof ISpecialWing) {
+                if (!((ISpecialWing) itemStack.getItem()).canWingBeUsed(itemStack)) {
+                    return;
+                }
                 ((ISpecialWing) itemStack.getItem()).onWingHover(itemStack);
             }
+            player.motionY *= wing.glideFactor;
         }
 
         if (player.posY > wing.maxHeight) {

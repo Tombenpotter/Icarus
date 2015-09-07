@@ -155,4 +155,9 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     public void onWingHover(ItemStack stack) {
         extractEnergy(stack, energyPerDamage / 4, false);
     }
+
+    @Override
+    public boolean canWingBeUsed(ItemStack stack) {
+        return getEnergyStored(stack) >= energyPerDamage;
+    }
 }
