@@ -13,7 +13,7 @@ public class ConfigHandler {
 
     public static boolean holdSneakToHover;
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableBMCompat;
-    public static int boostEnchantID;
+    public static int boostEnchantID, hoverEnchantID;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -39,6 +39,7 @@ public class ConfigHandler {
 
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 256, "Change the ID for the Flight Boost Enchant here.\nDo not go over 256 or the game will crash!");
+        hoverEnchantID = config.getInt("hoverEnchantID", enchant, 101, 0, 256, "Change the ID for the Hover Enchant here.\nDo not go over 256 or the game will crash!");
 
         config.save();
     }

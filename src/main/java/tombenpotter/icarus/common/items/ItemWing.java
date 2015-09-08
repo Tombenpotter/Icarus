@@ -68,12 +68,12 @@ public class ItemWing extends ItemArmor {
     public void handleJump(World world, EntityPlayer player, ItemStack stack) {
         if (world.isRemote) {
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
-
                 double jumpBoost = wing.jumpBoost;
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.boostEnchantID, stack);
                 if (enchantmentLevel > 0) {
                     jumpBoost += (double) enchantmentLevel / 20;
                 }
+
                 PacketHandler.INSTANCE.sendToServer(new PacketJump(jumpBoost, stack.getItem() instanceof ISpecialWing));
 
                 if (stack.getItem() instanceof ISpecialWing) {
@@ -123,7 +123,7 @@ public class ItemWing extends ItemArmor {
         }
     }
 
-    public void handeHover(World world, EntityPlayer player, ItemStack stack) {
+    public void handleHover(World world, EntityPlayer player, ItemStack stack) {
         if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
             if (stack.getItem() instanceof ISpecialWing) {
                 if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack)) {
@@ -132,7 +132,12 @@ public class ItemWing extends ItemArmor {
                 ((ISpecialWing) stack.getItem()).onWingHover(stack);
             }
 
-            player.motionY *= wing.glideFactor;
+            double glideFactor = wing.glideFactor;
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.hoverEnchantID, stack);
+            if (enchantmentLevel > 0) {
+                glideFactor -= 0.03 * enchantmentLevel;
+            }
+            player.motionY *= glideFactor;
         }
     }
 
@@ -148,7 +153,7 @@ public class ItemWing extends ItemArmor {
         handleJump(world, player, stack);
         handleWater(world, player, stack);
         handleWeather(world, player, stack);
-        handeHover(world, player, stack);
+        handleHover(world, player, stack);
         handleHeight(world, player, stack);
     }
 
