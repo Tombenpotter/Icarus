@@ -12,7 +12,7 @@ import tombenpotter.icarus.common.items.ItemSingleWing;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.items.ItemWingRF;
 import tombenpotter.icarus.common.items.ItemWingThaumcraft;
-import tombenpotter.icarus.common.util.ConfigHandler;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.ModItemGetter;
 

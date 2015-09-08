@@ -3,6 +3,7 @@ package tombenpotter.icarus.common.util;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.common.network.PacketClientConfig;
 import tombenpotter.icarus.common.network.PacketHandler;

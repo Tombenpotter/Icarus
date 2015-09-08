@@ -10,9 +10,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
+import tombenpotter.icarus.common.IcarusEnchants;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.network.PacketHandler;
-import tombenpotter.icarus.common.util.ConfigHandler;
 import tombenpotter.icarus.common.util.EventHandler;
 import tombenpotter.icarus.common.util.LogHelper;
 import tombenpotter.icarus.proxies.CommonProxy;
@@ -47,6 +47,7 @@ public class Icarus {
         instance = this;
         logger = LogHelper.getLogger();
         ConfigHandler.init(event.getSuggestedConfigurationFile());
+        IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
     }
 

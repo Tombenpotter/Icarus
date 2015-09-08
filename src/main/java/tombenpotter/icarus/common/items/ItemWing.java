@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.api.ISpecialWing;
 import tombenpotter.icarus.api.Wing;
@@ -38,8 +40,8 @@ public class ItemWing extends ItemArmor {
         setUnlocalizedName(Icarus.name + ".wing." + wing.name);
         setMaxDamage(wing.durability);
         setCreativeTab(Icarus.creativeTab);
-        MinecraftForge.EVENT_BUS.register(this);
 
+        MinecraftForge.EVENT_BUS.register(this);
         this.wing = wing;
     }
 
@@ -62,6 +64,94 @@ public class ItemWing extends ItemArmor {
         return list;
     }
 
+    @SideOnly(Side.CLIENT)
+    public void handleJump(World world, EntityPlayer player, ItemStack stack) {
+        if (world.isRemote) {
+            if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
+
+                double jumpBoost = wing.jumpBoost;
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.boostEnchantID, stack);
+                if (enchantmentLevel > 0) {
+                    jumpBoost += (double) enchantmentLevel / 20;
+                }
+                PacketHandler.INSTANCE.sendToServer(new PacketJump(jumpBoost, stack.getItem() instanceof ISpecialWing));
+
+                if (stack.getItem() instanceof ISpecialWing) {
+                    ISpecialWing specialWing = (ISpecialWing) stack.getItem();
+                    if (!specialWing.canWingBeUsed(stack)) {
+                        return;
+                    }
+                    specialWing.onWingFlap(stack);
+                }
+
+                player.motionY = jumpBoost;
+                player.fallDistance = 0;
+            }
+        }
+    }
+
+    public void handleWater(World world, EntityPlayer player, ItemStack stack) {
+        if (player.isInWater()) {
+            player.motionY = wing.waterDrag;
+        }
+    }
+
+    public void handleWeather(World world, EntityPlayer player, ItemStack stack) {
+        if (player.worldObj.isRaining()) {
+            Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "enableRain");
+            try {
+                if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) &&
+                        world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+                    player.motionY = wing.rainDrag;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (player.worldObj.isThundering()) {
+            if (world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).canSpawnLightningBolt() &&
+                    world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+                player.motionY = wing.rainDrag;
+            }
+
+            if (!player.onGround && world.rand.nextInt(250) == 0) {
+                world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
+                player.setHealth(5.0F);
+                player.motionY -= 1.5;
+            }
+        }
+    }
+
+    public void handeHover(World world, EntityPlayer player, ItemStack stack) {
+        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
+            if (stack.getItem() instanceof ISpecialWing) {
+                if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack)) {
+                    return;
+                }
+                ((ISpecialWing) stack.getItem()).onWingHover(stack);
+            }
+
+            player.motionY *= wing.glideFactor;
+        }
+    }
+
+    public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
+        if (player.posY > wing.maxHeight) {
+            player.setFire(1);
+            player.attackEntityFrom(DamageSource.inFire, 1.0F);
+        }
+    }
+
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+        handleJump(world, player, stack);
+        handleWater(world, player, stack);
+        handleWeather(world, player, stack);
+        handeHover(world, player, stack);
+        handleHeight(world, player, stack);
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
@@ -72,65 +162,6 @@ public class ItemWing extends ItemArmor {
     @SideOnly(Side.CLIENT)
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         return Icarus.texturePath + ":textures/items/EmptyArmor.png";
-    }
-
-    @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-        if (world.isRemote) {
-            if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
-                PacketHandler.INSTANCE.sendToServer(new PacketJump(wing.jumpBoost, itemStack.getItem() instanceof ISpecialWing));
-                if (itemStack.getItem() instanceof ISpecialWing) {
-                    ISpecialWing specialWing = (ISpecialWing) itemStack.getItem();
-                    if (!specialWing.canWingBeUsed(itemStack)) {
-                        return;
-                    }
-                    specialWing.onWingFlap(itemStack);
-                }
-                player.motionY = wing.jumpBoost;
-                player.fallDistance = 0;
-            }
-        }
-
-        if (player.isInWater()) {
-            player.motionY = wing.waterDrag;
-        }
-
-        if (player.worldObj.isRaining()) {
-            Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "enableRain");
-            try {
-                if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                    player.motionY = wing.rainDrag;
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (player.worldObj.isThundering()) {
-            if (world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).canSpawnLightningBolt() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                player.motionY = wing.rainDrag;
-            }
-            if (!player.onGround && world.rand.nextInt(250) == 0) {
-                world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
-                player.setHealth(5.0F);
-                player.motionY -= 1.5;
-            }
-        }
-
-        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
-            if (itemStack.getItem() instanceof ISpecialWing) {
-                if (!((ISpecialWing) itemStack.getItem()).canWingBeUsed(itemStack)) {
-                    return;
-                }
-                ((ISpecialWing) itemStack.getItem()).onWingHover(itemStack);
-            }
-            player.motionY *= wing.glideFactor;
-        }
-
-        if (player.posY > wing.maxHeight) {
-            player.setFire(1);
-            player.attackEntityFrom(DamageSource.inFire, 1.0F);
-        }
     }
 
     @Override
