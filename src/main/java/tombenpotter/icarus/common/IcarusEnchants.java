@@ -1,7 +1,7 @@
 package tombenpotter.icarus.common;
 
 import tombenpotter.icarus.ConfigHandler;
-import tombenpotter.icarus.common.enchants.EnchantWingBase;
+import tombenpotter.icarus.api.enchants.EnchantWingBase;
 
 public class IcarusEnchants {
 

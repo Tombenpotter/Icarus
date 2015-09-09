@@ -2,7 +2,7 @@ package tombenpotter.icarus.common.items;
 
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.IRepairable;
-import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
 
 public class ItemWingThaumcraft extends ItemWing implements IRepairable {

@@ -1,4 +1,4 @@
-package tombenpotter.icarus.api;
+package tombenpotter.icarus.api.wings;
 
 import net.minecraft.item.ItemStack;
 

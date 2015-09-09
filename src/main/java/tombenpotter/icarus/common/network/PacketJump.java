@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.items.ItemWing;
 
 public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessage> {

@@ -3,13 +3,13 @@
   "modid": "Icarus",
   "name": "Icarus",
   "description": "Wings, the not easy way!",
-  "version": "1.0.0",
-  "mcversion": "1.7.10",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["Tombenpotter"],
   "credits": "GustoniaEagle, for the cool textures!",
-  "logoFile": "",
+  "logoFile": "IcarusLogo.png",
   "screenshots": [],
   "dependencies": []
 }

@@ -1,4 +1,4 @@
-package tombenpotter.icarus.common.enchants;
+package tombenpotter.icarus.api.enchants;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;

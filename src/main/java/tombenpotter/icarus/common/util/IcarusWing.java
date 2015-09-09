@@ -1,6 +1,6 @@
 package tombenpotter.icarus.common.util;
 
-import tombenpotter.icarus.api.Wing;
+import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.IcarusItems;
 
 public class IcarusWing extends Wing {

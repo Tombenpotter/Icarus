@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
-import tombenpotter.icarus.api.ISpecialWing;
+import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.cofh.EnergyHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
