@@ -115,7 +115,7 @@ public class ItemWing extends ItemArmor {
                 player.motionY = wing.rainDrag;
             }
 
-            if (!player.onGround && world.rand.nextInt(250) == 0) {
+            if (!player.onGround && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && world.rand.nextInt(250) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
                 player.attackEntityFrom(DamageSource.magic, 15.0F);
                 player.motionY -= 1.5;
@@ -142,7 +142,7 @@ public class ItemWing extends ItemArmor {
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > wing.maxHeight && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+        if (player.posY > wing.maxHeight && world.isDaytime() && ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }

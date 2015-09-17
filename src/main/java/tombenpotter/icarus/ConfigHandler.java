@@ -3,6 +3,7 @@ package tombenpotter.icarus;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.HashSet;
 
 public class ConfigHandler {
 
@@ -12,6 +13,7 @@ public class ConfigHandler {
     public static String enchant = "enchantments";
 
     public static boolean holdSneakToHover, showWingsStats;
+    public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableBMCompat;
     public static int boostEnchantID, hoverEnchantID;
 
@@ -32,6 +34,10 @@ public class ConfigHandler {
         //General
         holdSneakToHover = config.getBoolean("holdSneakToHover", general, false, "Hold the Sneaking key to make your wings hover.\nIf not enabled, you wings will make you hover as soon as you are off the groud.\nClientside only config, changing it serverside will do nothing.");
         showWingsStats = config.getBoolean("showWingsStats", general, true, "Allows wings stats to be shown when holding shift and hovering over wings.\nDisable to prevent stats to be shown altogether");
+        int[] dimsNoBurn = config.get(general, "dimensionsWingsDontBurn", new int[]{1}, "The IDs of the dimensions where Wings will never be able to burn.").getIntList();
+        for (int i : dimsNoBurn) {
+            dimensionNoWingBurn.add(i);
+        }
 
         //Compat
         enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, "Enable Thaumcraft wings when the mod is present.\nWill do nothing if Thaumcraft isn't in your modlist");
