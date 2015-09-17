@@ -78,10 +78,10 @@ public class ItemWing extends ItemArmor {
 
                 if (stack.getItem() instanceof ISpecialWing) {
                     ISpecialWing specialWing = (ISpecialWing) stack.getItem();
-                    if (!specialWing.canWingBeUsed(stack)) {
+                    if (!specialWing.canWingBeUsed(stack, player)) {
                         return;
                     }
-                    specialWing.onWingFlap(stack);
+                    specialWing.onWingFlap(stack, player);
                 }
 
                 player.motionY = jumpBoost;
@@ -117,7 +117,7 @@ public class ItemWing extends ItemArmor {
 
             if (!player.onGround && world.rand.nextInt(250) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
-                player.setHealth(5.0F);
+                player.attackEntityFrom(DamageSource.magic, 15.0F);
                 player.motionY -= 1.5;
             }
         }
@@ -126,10 +126,10 @@ public class ItemWing extends ItemArmor {
     public void handleHover(World world, EntityPlayer player, ItemStack stack) {
         if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
             if (stack.getItem() instanceof ISpecialWing) {
-                if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack)) {
+                if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack, player)) {
                     return;
                 }
-                ((ISpecialWing) stack.getItem()).onWingHover(stack);
+                ((ISpecialWing) stack.getItem()).onWingHover(stack, player);
             }
 
             double glideFactor = wing.glideFactor;
@@ -142,7 +142,7 @@ public class ItemWing extends ItemArmor {
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > wing.maxHeight) {
+        if (player.posY > wing.maxHeight && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }
@@ -172,10 +172,12 @@ public class ItemWing extends ItemArmor {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
-        if (!StringHelper.isShiftKeyDown()) {
-            list.add(pressShiftForDetails());
-        } else if (StringHelper.isShiftKeyDown()) {
-            list.addAll(tooltip());
+        if (ConfigHandler.showWingsStats) {
+            if (!StringHelper.isShiftKeyDown()) {
+                list.add(pressShiftForDetails());
+            } else if (StringHelper.isShiftKeyDown()) {
+                list.addAll(tooltip());
+            }
         }
     }
 

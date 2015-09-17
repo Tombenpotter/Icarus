@@ -17,6 +17,11 @@ item.Icarus.wing.ElectrumWing.name=Electrum Wings
 item.Icarus.wing.EnderiumWing.name=Enderium Wings
 ###OreDict
 item.Icarus.wing.BronzeWing.name=Bronze Wings
+###Botania
+item.Icarus.wing.LivingwoodWing.name=Livingwood Wings
+item.Icarus.wing.ManasteelWing.name=Manasteel Wings
+item.Icarus.wing.TerrasteelWing.name=Terrasteel Wings
+item.Icarus.wing.ElementiumWing.name=Elementium Wings
 
 ##Single Wing item
 ###Vanilla
@@ -33,6 +38,11 @@ item.Icarus.singleWing.ElectrumWing.name=Electrum Wing
 item.Icarus.singleWing.EnderiumWing.name=Enderium Wing
 ###OreDict
 item.Icarus.singleWing.BronzeWing.name=Bronze Wing
+###Botania
+item.Icarus.singleWing.LivingwoodWing.name=Livingwood Wing
+item.Icarus.singleWing.ManasteelWing.name=Manasteel Wing
+item.Icarus.singleWing.TerrasteelWing.name=Terrasteel Wing
+item.Icarus.singleWing.ElementiumWing.name=Elementium Wing
 
 #Text
 ##Tooltips

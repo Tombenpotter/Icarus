@@ -10,12 +10,10 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
-import tombenpotter.icarus.common.items.ItemSingleWing;
-import tombenpotter.icarus.common.items.ItemWing;
-import tombenpotter.icarus.common.items.ItemWingRF;
-import tombenpotter.icarus.common.items.ItemWingThaumcraft;
+import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.ModItemGetter;
+import vazkii.botania.api.BotaniaAPI;
 
 import java.util.ArrayList;
 
@@ -24,11 +22,13 @@ public class IcarusItems {
     public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
     public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 9
+    //Last damage value used: 13
     public static ItemSingleWing singleWings;
     public static ItemWing cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
     public static ItemWingRF leadstoneWings, electrumWings, enderiumWings;
+    public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings;
+    //Equivalent of the cloth material, without the coloring stuffs
     public static ItemArmor.ArmorMaterial CLOTH = EnumHelper.addArmorMaterial("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15);
 
     public static void registerItems() {
@@ -53,7 +53,7 @@ public class IcarusItems {
         GameRegistry.registerItem(goldDiamondWings, "ItemGoldDiamondWings");
         addWingRecipe(3, goldDiamondWings, "gemDiamond", "ingotGold");
 
-        thaumiumWings = new ItemWingThaumcraft(ThaumcraftApi.armorMatThaumium, new IcarusWing("ThaumiumWing", 512, 256, 0.65, 0.55, -0.1, -0.2, 0.7));
+        thaumiumWings = new ItemWingThaumcraft(ThaumcraftApi.armorMatThaumium, new IcarusWing("ThaumiumWing", 512, 256, 0.65, 0.52, -0.1, -0.2, 0.7));
         if (ConfigHandler.enableThaumcraftCompat && OreDictionary.doesOreNameExist("ingotThaumium") && OreDictionary.doesOreNameExist("gemAmber")) {
             GameRegistry.registerItem(thaumiumWings, "ItemThaumiumWing");
             addWingRecipe(4, thaumiumWings, "ingotThaumium", "gemAmber");
@@ -87,6 +87,30 @@ public class IcarusItems {
         if (ConfigHandler.enableThaumcraftCompat && OreDictionary.doesOreNameExist("ingotVoid") && OreDictionary.doesOreNameExist("shardEntropy")) {
             GameRegistry.registerItem(voidMetalWings, "ItemVoidMetalWings");
             addWingRecipe(9, voidMetalWings, "ingotVoid", "shardEntropy");
+        }
+
+        livingwoodWings = new ItemWingBotania(CLOTH, new IcarusWing("LivingwoodWing", 128, 102, 0.28, 0.93, -0.25, -0.5, 0.8));
+        if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("livingwood")) {
+            GameRegistry.registerItem(livingwoodWings, "ItemLivingwoodWings");
+            addWingRecipe(10, livingwoodWings, "livingwood", Items.paper);
+        }
+
+        manasteelWings = new ItemWingBotania(BotaniaAPI.manasteelArmorMaterial, new IcarusWing("ManasteelWing", 448, 164, 0.53, 0.85, -0.18, -0.36, 0.5));
+        if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("ingotManasteel")) {
+            GameRegistry.registerItem(manasteelWings, "ItemManasteelWings");
+            addWingRecipe(11, manasteelWings, "ingotManasteel", Items.feather);
+        }
+
+        terrasteelWings = new ItemWingBotania(BotaniaAPI.terrasteelArmorMaterial, new IcarusWing("TerrasteelWing", 1792, 196, 0.7, 0.57, -0.18, -0.15, 0.7));
+        if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("ingotTerrasteel") && OreDictionary.doesOreNameExist("shardPrismarine")) {
+            GameRegistry.registerItem(terrasteelWings, "ItemTerrasteelWings");
+            addWingRecipe(12, manasteelWings, "ingotTerrasteel", "shardPrismarine");
+        }
+
+        elementiumWings = new ItemWingBotania(BotaniaAPI.elementiumArmorMaterial, new IcarusWing("ElementiumWing", 896, 196, 0.55, 0.72, -0.15, -0.18, 0.8));
+        if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("ingotElvenElementium") && OreDictionary.doesOreNameExist("elvenPixieDust")) {
+            GameRegistry.registerItem(elementiumWings, "ItemElementiumWings");
+            addWingRecipe(13, elementiumWings, "ingotElvenElementium", "elvenPixieDust");
         }
     }
 

@@ -39,10 +39,10 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
 
         if (message.isSpecialWing && player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemWing) {
             ISpecialWing specialWing = (ISpecialWing) player.inventory.armorInventory[2].getItem();
-            if (!specialWing.canWingBeUsed(player.inventory.armorInventory[2])) {
+            if (!specialWing.canWingBeUsed(player.inventory.armorInventory[2], player)) {
                 return null;
             }
-            specialWing.onWingFlap(player.inventory.armorInventory[2]);
+            specialWing.onWingFlap(player.inventory.armorInventory[2], player);
         }
 
         player.motionY = message.jump;

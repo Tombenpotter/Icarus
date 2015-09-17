@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.cofh.EnergyHelper;
@@ -42,7 +43,9 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
             list.add(pressShiftForDetails());
         } else if (StringHelper.isShiftKeyDown()) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
-            list.addAll(tooltip());
+            if (ConfigHandler.showWingsStats) {
+                list.addAll(tooltip());
+            }
         }
     }
 
@@ -148,17 +151,17 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     }
 
     @Override
-    public void onWingFlap(ItemStack stack) {
+    public void onWingFlap(ItemStack stack, EntityPlayer player) {
         extractEnergy(stack, energyPerDamage / 2, false);
     }
 
     @Override
-    public void onWingHover(ItemStack stack) {
+    public void onWingHover(ItemStack stack, EntityPlayer player) {
         extractEnergy(stack, energyPerDamage / 4, false);
     }
 
     @Override
-    public boolean canWingBeUsed(ItemStack stack) {
+    public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
         return getEnergyStored(stack) >= energyPerDamage;
     }
 }
