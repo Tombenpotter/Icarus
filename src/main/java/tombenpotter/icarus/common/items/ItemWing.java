@@ -98,7 +98,7 @@ public class ItemWing extends ItemArmor {
 
     public void handleWeather(World world, EntityPlayer player, ItemStack stack) {
         if (player.worldObj.isRaining()) {
-            Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "enableRain");
+            Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "field_76765_S", "enableRain", "ax");
             try {
                 if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) &&
                         world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {

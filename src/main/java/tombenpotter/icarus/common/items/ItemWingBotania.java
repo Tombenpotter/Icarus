@@ -21,8 +21,7 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     }
 
     public static void damageItem(ItemStack stack, int damage, EntityLivingBase entity, int manaPerDamage) {
-        int mana = damage * manaPerDamage;
-        if (entity instanceof EntityPlayer && !ManaItemHandler.requestManaExact(stack, (EntityPlayer) entity, mana, true)) {
+        if (entity instanceof EntityPlayer && !ManaItemHandler.requestManaExact(stack, (EntityPlayer) entity, damage * manaPerDamage, true)) {
             stack.damageItem(damage, entity);
         }
     }
