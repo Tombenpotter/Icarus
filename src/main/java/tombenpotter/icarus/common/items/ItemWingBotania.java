@@ -65,13 +65,13 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
 
     @Override
     public void onWingTick(ItemStack stack, EntityPlayer player) {
-        if (stack.getItemDamage() > 0 && ManaItemHandler.requestManaExact(stack, player, manaPerDamage * 2, true)) {
+        if (stack.getItemDamage() > 0 && ManaItemHandler.requestManaExact(stack, player, manaPerDamage, true)) {
                 stack.setItemDamage(stack.getItemDamage() - 1);
         }
     }
 
     @Override
     public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
-        return getArmorMaterial().name().equals(IcarusItems.CLOTH.name()) || ManaItemHandler.requestManaExact(stack, player, manaPerDamage / 2, false);
+        return getArmorMaterial().name().equals(IcarusItems.CLOTH.name()) || ManaItemHandler.requestManaExact(stack, player, manaPerDamage, false);
     }
 }
