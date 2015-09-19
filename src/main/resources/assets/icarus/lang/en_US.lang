@@ -22,6 +22,10 @@ item.Icarus.wing.LivingwoodWing.name=Livingwood Wings
 item.Icarus.wing.ManasteelWing.name=Manasteel Wings
 item.Icarus.wing.TerrasteelWing.name=Terrasteel Wings
 item.Icarus.wing.ElementiumWing.name=Elementium Wings
+###EnderIO
+item.Icarus.wing.ConductiveWing.name=Conductive Wings
+item.Icarus.wing.EnergeticWing.name=Energetic Wings
+item.Icarus.wing.VibrantWing.name=Vibrant Wings
 
 ##Single Wing item
 ###Vanilla
@@ -43,6 +47,10 @@ item.Icarus.singleWing.LivingwoodWing.name=Livingwood Wing
 item.Icarus.singleWing.ManasteelWing.name=Manasteel Wing
 item.Icarus.singleWing.TerrasteelWing.name=Terrasteel Wing
 item.Icarus.singleWing.ElementiumWing.name=Elementium Wing
+###EnderIO
+item.Icarus.singleWing.ConductiveWing.name=Conductive Wing
+item.Icarus.singleWing.EnergeticWing.name=Energetic Wing
+item.Icarus.singleWing.VibrantWing.name=Vibrant Wing
 
 #Text
 ##Tooltips

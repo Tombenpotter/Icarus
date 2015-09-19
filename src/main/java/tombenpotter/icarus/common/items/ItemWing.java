@@ -114,9 +114,9 @@ public class ItemWing extends ItemArmor {
                 player.motionY = wing.rainDrag;
             }
 
-            if (!player.onGround && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && world.rand.nextInt(250) == 0) {
+            if (!player.onGround && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && world.rand.nextInt(500) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
-                player.attackEntityFrom(DamageSource.magic, 15.0F);
+                player.attackEntityFrom(DamageSource.magic, player.getMaxHealth() / 2);
                 player.motionY -= 1.5;
             }
         }

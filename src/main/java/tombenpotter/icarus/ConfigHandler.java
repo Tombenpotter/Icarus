@@ -13,6 +13,7 @@ public class ConfigHandler {
     public static String enchant = "enchantments";
 
     public static boolean holdSneakToHover, showWingsStats;
+    public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableBMCompat;
     public static int boostEnchantID, hoverEnchantID;
@@ -38,12 +39,14 @@ public class ConfigHandler {
         for (int i : dimsNoBurn) {
             dimensionNoWingBurn.add(i);
         }
+        hungerConsumed = config.getFloat("hungerConsumed", general, 0.5F, 0.25F, Float.MAX_VALUE, "Change the hunger consumed by each flap of the wings.");
 
         //Compat
         enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, "Enable Thaumcraft wings when the mod is present.\nWill do nothing if Thaumcraft isn't in your modlist");
         enableTECompat = config.getBoolean("enableTECompatibility", compat, true, "Enable Thermal Expansion wings when the mod is present.\nWill do nothing if Thermal Expansion isn't in your modlist");
         enableOreDictCompat = config.getBoolean("enableOreDictCompatibilty", compat, true, "Enable Ore Dictionary wings when the ores exist in the Ore Dict.\nWill do nothing if the Ore Dictionary entries don't exist");
         enableBotaniaCompat = config.getBoolean("enableBotaniaCompatibility", compat, true, "Enable Botania wings when the mod is present.\nWill do nothing if Botania isn't in your modlist");
+        enableEIOCompat = config.getBoolean("enableEnderIOCompatibility", compat, true,"Enable EnderIO wings when the mod is present.\nWill do nothing if EnderIO isn't in your modlist");
 
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 255, "Change the ID for the Flight Boost Enchant here.\nDo not go over 255 or the game will crash!");

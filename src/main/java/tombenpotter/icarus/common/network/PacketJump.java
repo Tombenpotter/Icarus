@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.items.ItemWing;
 
@@ -48,7 +49,7 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
         player.motionY = message.jump;
         player.fallDistance = 0;
 
-        float exhaustion = 0.5F;
+        float exhaustion = ConfigHandler.hungerConsumed;
         if (player.worldObj.provider.dimensionId == -1) {
             exhaustion += 0.5F;
         } else if (player.worldObj.provider.dimensionId == 1) {

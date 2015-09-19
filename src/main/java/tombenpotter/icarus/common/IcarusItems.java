@@ -19,17 +19,19 @@ import java.util.ArrayList;
 
 public class IcarusItems {
 
-    public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
-    public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 13
+    //Last damage value used: 16
     public static ItemSingleWing singleWings;
     public static ItemWing cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
     public static ItemWingRF leadstoneWings, electrumWings, enderiumWings;
     public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings;
+    public static ItemWingRF conductiveWings, energeticWings, vibrantWings;
+
     //Equivalent of the cloth material, without the coloring stuffs
-    public static ItemArmor.ArmorMaterial CLOTH = EnumHelper.addArmorMaterial("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15);
+    public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
+    public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
+    public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
 
     public static void registerItems() {
         ModItemGetter.load();
@@ -112,6 +114,24 @@ public class IcarusItems {
             GameRegistry.registerItem(elementiumWings, "ItemElementiumWings");
             addWingRecipe(13, elementiumWings, "ingotElvenElementium", "elvenPixieDust");
         }
+
+        conductiveWings = new ItemWingRF(ItemArmor.ArmorMaterial.IRON, new IcarusWing("ConductiveWing", 100000, 164, 0.5, 0.8, -0.3, -0.3, 0.5));
+        if (ConfigHandler.enableEIOCompat && ModItemGetter.basicCapacitor != null && OreDictionary.doesOreNameExist("ingotConductiveIron")) {
+            GameRegistry.registerItem(conductiveWings, "ItemConductiveWings");
+            addWingRecipe(14, conductiveWings, "ingotConductiveIron", ModItemGetter.basicCapacitor);
+        }
+
+        energeticWings = new ItemWingRF(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("EnergeticWing", 200000, 196, 0.65, 0.55, -0.17, -0.21, 0.4));
+        if (ConfigHandler.enableEIOCompat && ModItemGetter.doubleLayeredCapacitor != null && OreDictionary.doesOreNameExist("ingotEnergeticAlloy")) {
+            GameRegistry.registerItem(energeticWings, "ItemEnergeticWings");
+            addWingRecipe(15, energeticWings, "ingotEnergeticAlloy", ModItemGetter.doubleLayeredCapacitor);
+        }
+
+        vibrantWings = new ItemWingRF(ELECTRUM, new IcarusWing("VibrantWing", 500000, 256, 0.73, 0.39, -0.12, -0.15, 0.2));
+        if (ConfigHandler.enableEIOCompat && ModItemGetter.octadicCapacitor != null && OreDictionary.doesOreNameExist("ingotPhasedGold")) {
+            GameRegistry.registerItem(vibrantWings, "ItemVibrantWings");
+            addWingRecipe(16, vibrantWings, "ingotPhasedGold", ModItemGetter.octadicCapacitor);
+        }
     }
 
     public static void addWingRecipe(int singleWingMeta, ItemWing output, Item item1, Item item2) {
@@ -132,5 +152,19 @@ public class IcarusItems {
     public static void addWingRecipe(int singleWingMeta, ItemWing output, String item1, String item2) {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
         GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
+    }
+
+    public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, Item repairItem) {
+        ItemArmor.ArmorMaterial material = EnumHelper.addArmorMaterial(name, durability, reductionAmounts, enchantability);
+        material.customCraftingMaterial = repairItem;
+        return material;
+    }
+
+    public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, ItemStack repairItem) {
+        return addArmorMaterialWithRepair(name, durability, reductionAmounts, enchantability, repairItem.getItem());
+    }
+
+    public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, String repairItem) {
+        return addArmorMaterialWithRepair(name, durability, reductionAmounts, enchantability, OreDictionary.getOres(repairItem).get(0).getItem());
     }
 }
