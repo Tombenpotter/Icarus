@@ -64,7 +64,6 @@ public class ItemWing extends ItemArmor {
         return list;
     }
 
-    @SideOnly(Side.CLIENT)
     public void handleJump(World world, EntityPlayer player, ItemStack stack) {
         if (world.isRemote) {
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
@@ -148,6 +147,18 @@ public class ItemWing extends ItemArmor {
         }
     }
 
+    public void handleTick(World world, EntityPlayer player, ItemStack stack) {
+        if (world.isRemote) {
+            if (stack.getItem() instanceof ISpecialWing) {
+                ISpecialWing specialWing = (ISpecialWing) stack.getItem();
+                if (!specialWing.canWingBeUsed(stack, player)) {
+                    return;
+                }
+                specialWing.onWingTick(stack, player);
+            }
+        }
+    }
+
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
         handleJump(world, player, stack);
@@ -155,6 +166,7 @@ public class ItemWing extends ItemArmor {
         handleWeather(world, player, stack);
         handleHover(world, player, stack);
         handleHeight(world, player, stack);
+        handleTick(world, player, stack);
     }
 
     @Override

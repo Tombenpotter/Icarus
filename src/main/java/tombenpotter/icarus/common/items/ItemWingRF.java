@@ -161,6 +161,10 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     }
 
     @Override
+    public void onWingTick(ItemStack stack, EntityPlayer player) {
+    }
+
+    @Override
     public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
         return getEnergyStored(stack) >= energyPerDamage;
     }

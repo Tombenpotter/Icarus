@@ -104,7 +104,7 @@ public class IcarusItems {
         terrasteelWings = new ItemWingBotania(BotaniaAPI.terrasteelArmorMaterial, new IcarusWing("TerrasteelWing", 1792, 196, 0.7, 0.57, -0.18, -0.15, 0.7));
         if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("ingotTerrasteel") && OreDictionary.doesOreNameExist("shardPrismarine")) {
             GameRegistry.registerItem(terrasteelWings, "ItemTerrasteelWings");
-            addWingRecipe(12, manasteelWings, "ingotTerrasteel", "shardPrismarine");
+            addWingRecipe(12, terrasteelWings, "ingotTerrasteel", "shardPrismarine");
         }
 
         elementiumWings = new ItemWingBotania(BotaniaAPI.elementiumArmorMaterial, new IcarusWing("ElementiumWing", 896, 196, 0.55, 0.72, -0.15, -0.18, 0.8));

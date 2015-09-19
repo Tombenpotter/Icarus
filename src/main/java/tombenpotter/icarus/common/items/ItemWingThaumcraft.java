@@ -20,6 +20,10 @@ public class ItemWingThaumcraft extends ItemWing implements IRepairable {
 
         @Override
         public void onWingFlap(ItemStack stack, EntityPlayer player) {
+        }
+
+        @Override
+        public void onWingTick(ItemStack stack, EntityPlayer player) {
             if (stack.getItemDamage() > 0) {
                 stack.setItemDamage(stack.getItemDamage() + 1);
             }
