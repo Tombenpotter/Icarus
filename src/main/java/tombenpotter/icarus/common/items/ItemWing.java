@@ -64,7 +64,6 @@ public class ItemWing extends ItemArmor {
         return list;
     }
 
-    @SideOnly(Side.CLIENT)
     public void handleJump(World world, EntityPlayer player, ItemStack stack) {
         if (world.isRemote) {
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
