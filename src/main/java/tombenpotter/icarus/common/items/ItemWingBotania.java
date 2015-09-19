@@ -32,17 +32,6 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
-        super.onArmorTick(world, player, stack);
-
-        if (!world.isRemote) {
-            if (stack.getItemDamage() > 0 && ManaItemHandler.requestManaExact(stack, player, manaPerDamage * 2, true)) {
-                stack.setItemDamage(stack.getItemDamage() - 1);
-            }
-        }
-    }
-
-    @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
         if (source.isUnblockable()) {
             return new ArmorProperties(0, 0, 0);
@@ -71,6 +60,13 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     public void onWingHover(ItemStack stack, EntityPlayer player) {
         if(!getArmorMaterial().name().equals(IcarusItems.CLOTH.name())){
             ManaItemHandler.requestManaExact(stack, player, manaPerDamage / 4, true);
+        }
+    }
+
+    @Override
+    public void onWingTick(ItemStack stack, EntityPlayer player) {
+        if (stack.getItemDamage() > 0 && ManaItemHandler.requestManaExact(stack, player, manaPerDamage * 2, true)) {
+                stack.setItemDamage(stack.getItemDamage() - 1);
         }
     }
 

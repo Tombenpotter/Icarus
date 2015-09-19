@@ -8,5 +8,7 @@ public interface ISpecialWing {
 
     public void onWingHover(ItemStack stack, EntityPlayer player);
 
+    public void onWingTick(ItemStack stack, EntityPlayer player);
+
     public boolean canWingBeUsed(ItemStack stack, EntityPlayer player);
 }
