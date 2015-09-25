@@ -1,6 +1,5 @@
 package tombenpotter.icarus.common.items;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -12,11 +11,10 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.api.wings.ISpecialWing;
@@ -24,7 +22,6 @@ import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
-import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.lang.reflect.Field;
@@ -33,16 +30,24 @@ import java.util.List;
 
 public class ItemWing extends ItemArmor {
 
-    public Wing wing;
+    private Wing wing;
 
-    public ItemWing(ArmorMaterial material, IcarusWing wing) {
+    public ItemWing(ArmorMaterial material, Wing wing) {
         super(material, 3, 1);
-        setUnlocalizedName(Icarus.name + ".wing." + wing.name);
-        setMaxDamage(wing.durability);
-        setCreativeTab(Icarus.creativeTab);
 
-        MinecraftForge.EVENT_BUS.register(this);
         this.wing = wing;
+
+        setUnlocalizedName(Icarus.name + ".wing." + getWing().name);
+        setMaxDamage(getWing().durability);
+        setCreativeTab(Icarus.creativeTab);
+    }
+
+    public Wing getWing() {
+        return wing;
+    }
+
+    public Wing getWing(ItemStack stack) {
+        return getWing();
     }
 
     public static String pressShiftForDetails() {
@@ -51,15 +56,21 @@ public class ItemWing extends ItemArmor {
                 StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.details") + StringHelper.END;
     }
 
-    public List tooltip() {
+    public void checkNBT(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
+            stack.setTagCompound(new NBTTagCompound());
+        }
+    }
+
+    public List tooltip(ItemStack stack) {
         List list = new ArrayList();
         list.add(" ");
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.height") + StringHelper.END + ": " + wing.maxHeight);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.boost") + StringHelper.END + ": " + wing.jumpBoost);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.glide") + StringHelper.END + ": " + wing.glideFactor);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.rain") + StringHelper.END + ": " + wing.rainDrag);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.water") + StringHelper.END + ": " + wing.waterDrag);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.fall.reduction") + StringHelper.END + ": " + wing.fallReductionFactor);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.height") + StringHelper.END + ": " + getWing(stack).maxHeight);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.boost") + StringHelper.END + ": " + getWing(stack).jumpBoost);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.glide") + StringHelper.END + ": " + getWing(stack).glideFactor);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.rain") + StringHelper.END + ": " + getWing(stack).rainDrag);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.drag.water") + StringHelper.END + ": " + getWing(stack).waterDrag);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.fall.reduction") + StringHelper.END + ": " + getWing(stack).fallReductionFactor);
         list.add(" ");
         return list;
     }
@@ -67,7 +78,7 @@ public class ItemWing extends ItemArmor {
     public void handleJump(World world, EntityPlayer player, ItemStack stack) {
         if (world.isRemote) {
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
-                double jumpBoost = wing.jumpBoost;
+                double jumpBoost = getWing(stack).jumpBoost;
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.boostEnchantID, stack);
                 if (enchantmentLevel > 0) {
                     jumpBoost += (double) enchantmentLevel / 20;
@@ -91,7 +102,7 @@ public class ItemWing extends ItemArmor {
 
     public void handleWater(World world, EntityPlayer player, ItemStack stack) {
         if (player.isInWater()) {
-            player.motionY = wing.waterDrag;
+            player.motionY = getWing(stack).waterDrag;
         }
     }
 
@@ -101,7 +112,7 @@ public class ItemWing extends ItemArmor {
             try {
                 if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) &&
                         world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                    player.motionY = wing.rainDrag;
+                    player.motionY = getWing(stack).rainDrag;
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -111,12 +122,12 @@ public class ItemWing extends ItemArmor {
         if (player.worldObj.isThundering()) {
             if (world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).canSpawnLightningBolt() &&
                     world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                player.motionY = wing.rainDrag;
+                player.motionY = getWing(stack).rainDrag;
             }
 
             if (!player.onGround && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && world.rand.nextInt(500) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
-                player.attackEntityFrom(DamageSource.magic, player.getMaxHealth() / 2);
+                //player.attackEntityFrom(DamageSource.magic, player.getMaxHealth() / 2);
                 player.motionY -= 1.5;
             }
         }
@@ -131,7 +142,7 @@ public class ItemWing extends ItemArmor {
                 ((ISpecialWing) stack.getItem()).onWingHover(stack, player);
             }
 
-            double glideFactor = wing.glideFactor;
+            double glideFactor = getWing(stack).glideFactor;
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.hoverEnchantID, stack);
             if (enchantmentLevel > 0) {
                 glideFactor -= 0.03 * enchantmentLevel;
@@ -141,7 +152,7 @@ public class ItemWing extends ItemArmor {
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > wing.maxHeight && world.isDaytime() && ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }
@@ -172,7 +183,7 @@ public class ItemWing extends ItemArmor {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
-        this.itemIcon = iconRegister.registerIcon(Icarus.texturePath + ":doubleWings/" + wing.name + "s");
+        this.itemIcon = iconRegister.registerIcon(Icarus.texturePath + ":doubleWings/" + getWing().name + "s");
     }
 
     @Override
@@ -188,17 +199,7 @@ public class ItemWing extends ItemArmor {
             if (!StringHelper.isShiftKeyDown()) {
                 list.add(pressShiftForDetails());
             } else if (StringHelper.isShiftKeyDown()) {
-                list.addAll(tooltip());
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onFall(LivingFallEvent event) {
-        if (event.entity instanceof EntityPlayer) {
-            EntityPlayer entity = (EntityPlayer) event.entity;
-            if (entity.inventory.armorInventory[2] != null && entity.inventory.armorInventory[2].getItem() instanceof ItemWing) {
-                event.distance *= wing.fallReductionFactor;
+                list.addAll(tooltip(stack));
             }
         }
     }

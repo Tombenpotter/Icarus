@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.opengl.GL11;
@@ -31,11 +32,12 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void renderPlayerWings(RenderPlayerEvent.Specials.Post event) {
-        if (event.entityPlayer.inventory.armorInventory[2] != null && event.entityPlayer.inventory.armorInventory[2].getItem() instanceof ItemWing) {
-            ItemWing itemWing = (ItemWing) event.entityPlayer.inventory.armorInventory[2].getItem();
+        ItemStack stack = event.entityPlayer.inventory.armorInventory[2];
+        if (stack != null && stack.getItem() instanceof ItemWing) {
+            ItemWing itemWing = (ItemWing) stack.getItem();
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Icarus.texturePath + ":textures/items/wings/" + itemWing.wing.name + ".png"));
+            Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Icarus.texturePath + ":textures/items/wings/" + itemWing.getWing(stack).name + ".png"));
             GL11.glTranslatef(0F, -0.3125F, 0.125F);
             Tessellator tesselator = Tessellator.instance;
 

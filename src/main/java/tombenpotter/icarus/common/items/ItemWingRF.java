@@ -44,7 +44,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         } else if (StringHelper.isShiftKeyDown()) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
             if (ConfigHandler.showWingsStats) {
-                list.addAll(tooltip());
+                list.addAll(tooltip(stack));
             }
         }
     }

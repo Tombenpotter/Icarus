@@ -3,6 +3,7 @@ package tombenpotter.icarus.common.items;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.IRepairable;
+import thaumcraft.api.IWarpingGear;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
 
@@ -12,7 +13,7 @@ public class ItemWingThaumcraft extends ItemWing implements IRepairable {
         super(material, icarusWing);
     }
 
-    public static class ItemWingVoidMetal extends ItemWingThaumcraft implements ISpecialWing {
+    public static class ItemWingVoidMetal extends ItemWingThaumcraft implements ISpecialWing, IWarpingGear {
 
         public ItemWingVoidMetal(ArmorMaterial material, IcarusWing icarusWing) {
             super(material, icarusWing);
@@ -36,6 +37,11 @@ public class ItemWingThaumcraft extends ItemWing implements IRepairable {
         @Override
         public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
             return true;
+        }
+
+        @Override
+        public int getWarp(ItemStack itemstack, EntityPlayer player) {
+            return 2;
         }
     }
 }

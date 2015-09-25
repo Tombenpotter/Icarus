@@ -8,6 +8,7 @@
 /out/*
 /asm/*
 /bin/*
+/TODO/*
 
 #File Extensions
 *.psd
@@ -18,6 +19,4 @@
 *.project
 
 #Specific files
-MCFPost.txt
-Thumbs.db
-curse.gradle
+TODO.txt

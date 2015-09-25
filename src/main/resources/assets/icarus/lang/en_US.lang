@@ -26,6 +26,8 @@ item.Icarus.wing.ElementiumWing.name=Elementium Wings
 item.Icarus.wing.ConductiveWing.name=Conductive Wings
 item.Icarus.wing.EnergeticWing.name=Energetic Wings
 item.Icarus.wing.VibrantWing.name=Vibrant Wings
+###Aura Cascade
+item.Icarus.wing.AngelsteelWing.name=Angelsteel Wings
 
 ##Single Wing item
 ###Vanilla
@@ -51,6 +53,8 @@ item.Icarus.singleWing.ElementiumWing.name=Elementium Wing
 item.Icarus.singleWing.ConductiveWing.name=Conductive Wing
 item.Icarus.singleWing.EnergeticWing.name=Energetic Wing
 item.Icarus.singleWing.VibrantWing.name=Vibrant Wing
+###Aura Cascade
+item.Icarus.singleWing.AngelsteelWing.name=Angelsteel Wing
 
 #Text
 ##Tooltips
@@ -64,6 +68,7 @@ tooltip.icarus.glide=Glide Factor
 tooltip.icarus.drag.rain=Rain Drag
 tooltip.icarus.drag.water=Water Drag
 tooltip.icarus.fall.reduction=Fall Reduction
+tooltip.icarus.tier=Tier
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer

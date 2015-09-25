@@ -15,7 +15,7 @@ public class ConfigHandler {
     public static boolean holdSneakToHover, showWingsStats;
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
-    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableBMCompat;
+    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat;
     public static int boostEnchantID, hoverEnchantID;
 
     public static void init(File file) {
@@ -46,7 +46,8 @@ public class ConfigHandler {
         enableTECompat = config.getBoolean("enableTECompatibility", compat, true, "Enable Thermal Expansion wings when the mod is present.\nWill do nothing if Thermal Expansion isn't in your modlist");
         enableOreDictCompat = config.getBoolean("enableOreDictCompatibilty", compat, true, "Enable Ore Dictionary wings when the ores exist in the Ore Dict.\nWill do nothing if the Ore Dictionary entries don't exist");
         enableBotaniaCompat = config.getBoolean("enableBotaniaCompatibility", compat, true, "Enable Botania wings when the mod is present.\nWill do nothing if Botania isn't in your modlist");
-        enableEIOCompat = config.getBoolean("enableEnderIOCompatibility", compat, true,"Enable EnderIO wings when the mod is present.\nWill do nothing if EnderIO isn't in your modlist");
+        enableEIOCompat = config.getBoolean("enableEnderIOCompatibility", compat, true, "Enable EnderIO wings when the mod is present.\nWill do nothing if EnderIO isn't in your modlist");
+        enableACCompat = config.getBoolean("enableAuraCascadeCompatibility", compat, true, "Enable Aura Cascade wings when the mod is present.\nWill do nothing if Aura Cascade isn't in your modlist");
 
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 255, "Change the ID for the Flight Boost Enchant here.\nDo not go over 255 or the game will crash!");
