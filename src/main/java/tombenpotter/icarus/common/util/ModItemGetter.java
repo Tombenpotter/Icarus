@@ -30,7 +30,9 @@ public abstract class ModItemGetter {
         basicCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 0);
         doubleLayeredCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 1);
         octadicCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 2);
+    }
 
+    public static void auraCascadeIngotBecausePixlepixIsDuh() {
         Item angelsteelIngot = GameRegistry.findItem("aura", "ingotAngelSteel");
         if (angelsteelIngot != null) {
             for (int i = 0; i < ItemWingAuraCascade.MAX_TIER; i++) {

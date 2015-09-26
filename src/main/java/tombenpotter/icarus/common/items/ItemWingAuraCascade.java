@@ -27,9 +27,12 @@ public class ItemWingAuraCascade extends ItemWing {
     public ItemWingAuraCascade(ArmorMaterial material, Wing wing) {
         super(material, wing);
 
-        for (int i = 0; i < MAX_TIER; i++) {
+        wingList.add(wing);
+        for (int i = 1; i < MAX_TIER; i++) {
             wingList.add(new IcarusWing(wing.name, wing.durability + i * wing.durability / MAX_TIER, wing.maxHeight + i * wing.maxHeight / MAX_TIER, wing.jumpBoost + i * wing.jumpBoost / MAX_TIER, wing.glideFactor - i * wing.glideFactor / MAX_TIER, wing.rainDrag - i * wing.rainDrag / MAX_TIER, wing.waterDrag - i * wing.waterDrag / MAX_TIER, wing.fallReductionFactor - i * wing.fallReductionFactor / MAX_TIER));
+        }
 
+        for (int i = 0; i < MAX_TIER; i++) {
             ItemStack stack = new ItemStack(this);
             stack.setTagCompound(new NBTTagCompound());
             stack.stackTagCompound.setInteger(NBT_TIER, i);

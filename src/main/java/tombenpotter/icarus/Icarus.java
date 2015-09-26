@@ -25,7 +25,7 @@ public class Icarus {
     public static final String version = "@VERSION@";
     public static final String texturePath = "icarus";
     public static final String channel = "Icarus";
-    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO";
+    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura";
     public static final String clientProxy = "tombenpotter.icarus.proxies.ClientProxy";
     public static final String commonProxy = "tombenpotter.icarus.proxies.CommonProxy";
     public static CreativeTabs creativeTab = new CreativeTabs("tab" + name) {
@@ -54,6 +54,7 @@ public class Icarus {
     @Mod.EventHandler
     public void load(FMLInitializationEvent event) {
         proxy.registerRenders();
+        IcarusItems.registerItemsInInitBecausePixlepix();
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         FMLCommonHandler.instance().bus().register(new EventHandler());
         PacketHandler.registerPackets();

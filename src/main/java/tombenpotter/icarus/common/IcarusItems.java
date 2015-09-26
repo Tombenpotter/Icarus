@@ -133,11 +133,15 @@ public class IcarusItems {
             GameRegistry.registerItem(vibrantWings, "ItemVibrantWings");
             addWingRecipe(16, vibrantWings, "ingotPhasedGold", ModItemGetter.octadicCapacitor);
         }
+    }
+
+    public static void registerItemsInInitBecausePixlepix() {
+        ModItemGetter.auraCascadeIngotBecausePixlepixIsDuh();
 
         angelsteelWings = new ItemWingAuraCascade(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("AngelsteelWing", 512, 512, 0.4, 0.8, -0.3, 0.33, 0.8));
         if (ConfigHandler.enableACCompat && !ModItemGetter.angelsteelIngots.isEmpty()) {
             GameRegistry.registerItem(angelsteelWings, "ItemAngelsteelWings");
-            for (int i = 0; i < ItemWingAuraCascade.MAX_TIER; i++) {
+            for (int i = 0; i < ModItemGetter.angelsteelIngots.size(); i++) {
                 addWingRecipe(17 + i, ItemWingAuraCascade.angelsteelWings.get(i), ModItemGetter.angelsteelIngots.get(i), Items.feather);
             }
         }
