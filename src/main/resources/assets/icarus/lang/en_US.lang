@@ -27,7 +27,7 @@ item.Icarus.wing.ConductiveWing.name=Conductive Wings
 item.Icarus.wing.EnergeticWing.name=Energetic Wings
 item.Icarus.wing.VibrantWing.name=Vibrant Wings
 ###Aura Cascade
-item.Icarus.wing.AngelsteelWing.name=Angelsteel Wings
+item.Icarus.wing.AngelsteelWing.name=Angel's Steel Wings
 
 ##Single Wing item
 ###Vanilla
@@ -54,7 +54,7 @@ item.Icarus.singleWing.ConductiveWing.name=Conductive Wing
 item.Icarus.singleWing.EnergeticWing.name=Energetic Wing
 item.Icarus.singleWing.VibrantWing.name=Vibrant Wing
 ###Aura Cascade
-item.Icarus.singleWing.AngelsteelWing.name=Angelsteel Wing
+item.Icarus.singleWing.AngelsteelWing.name=Angel's Steel Wing
 
 #Text
 ##Tooltips

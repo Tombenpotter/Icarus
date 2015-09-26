@@ -135,13 +135,31 @@ public class IcarusItems {
         }
 
         angelsteelWings = new ItemWingAuraCascade(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("AngelsteelWing", 512, 512, 0.4, 0.8, -0.3, 0.33, 0.8));
-        if(ConfigHandler.enableACCompat){
+        if (ConfigHandler.enableACCompat && !ModItemGetter.angelsteelIngots.isEmpty()) {
             GameRegistry.registerItem(angelsteelWings, "ItemAngelsteelWings");
+            for (int i = 0; i < ItemWingAuraCascade.MAX_TIER; i++) {
+                addWingRecipe(17 + i, ItemWingAuraCascade.angelsteelWings.get(i), ModItemGetter.angelsteelIngots.get(i), Items.feather);
+            }
         }
     }
 
     public static void addWingRecipe(int singleWingMeta, ItemWing output, Item item1, Item item2) {
         GameRegistry.addShapedRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2);
+        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
+    }
+
+    public static void addWingRecipe(int singleWingMeta, ItemWing output, ItemStack item1, Item item2) {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
+        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
+    }
+
+    public static void addWingRecipe(int singleWingMeta, ItemWing output, Item item1, ItemStack item2) {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
+        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
+    }
+
+    public static void addWingRecipe(int singleWingMeta, ItemWing output, ItemStack item1, ItemStack item2) {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
         GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
     }
 
@@ -158,6 +176,11 @@ public class IcarusItems {
     public static void addWingRecipe(int singleWingMeta, ItemWing output, String item1, String item2) {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
         GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
+    }
+
+    public static void addWingRecipe(int singleWingMeta, ItemStack output, ItemStack item1, Item item2) {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
+        GameRegistry.addShapelessRecipe(output, new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
     }
 
     public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, Item repairItem) {

@@ -20,15 +20,20 @@ public class ItemWingAuraCascade extends ItemWing {
 
     public static final String NBT_TIER = "Icarus_Tier";
     public static final int MAX_TIER = 11;
+    public static ArrayList<ItemStack> angelsteelWings = new ArrayList<ItemStack>();
+
     public ArrayList<Wing> wingList = new ArrayList<Wing>();
 
     public ItemWingAuraCascade(ArmorMaterial material, Wing wing) {
         super(material, wing);
 
-        wingList.add(wing);
-
-        for (int i = 1; i < MAX_TIER; i++) {
+        for (int i = 0; i < MAX_TIER; i++) {
             wingList.add(new IcarusWing(wing.name, wing.durability + i * wing.durability / MAX_TIER, wing.maxHeight + i * wing.maxHeight / MAX_TIER, wing.jumpBoost + i * wing.jumpBoost / MAX_TIER, wing.glideFactor - i * wing.glideFactor / MAX_TIER, wing.rainDrag - i * wing.rainDrag / MAX_TIER, wing.waterDrag - i * wing.waterDrag / MAX_TIER, wing.fallReductionFactor - i * wing.fallReductionFactor / MAX_TIER));
+
+            ItemStack stack = new ItemStack(this);
+            stack.setTagCompound(new NBTTagCompound());
+            stack.stackTagCompound.setInteger(NBT_TIER, i);
+            angelsteelWings.add(stack);
         }
     }
 
@@ -64,11 +69,6 @@ public class ItemWingAuraCascade extends ItemWing {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        for (int i = 0; i < MAX_TIER; i++) {
-            ItemStack stack = new ItemStack(this);
-            stack.setTagCompound(new NBTTagCompound());
-            stack.stackTagCompound.setInteger(NBT_TIER, i);
-            list.add(stack);
-        }
+        list.addAll(angelsteelWings);
     }
 }
