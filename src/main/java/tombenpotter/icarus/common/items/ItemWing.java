@@ -11,24 +11,25 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.api.wings.ISpecialWing;
+import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
+import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemWing extends ItemArmor {
+public class ItemWing extends ItemArmor implements IWingHUD {
 
     private Wing wing;
 
@@ -48,18 +49,6 @@ public class ItemWing extends ItemArmor {
 
     public Wing getWing(ItemStack stack) {
         return getWing();
-    }
-
-    public static String pressShiftForDetails() {
-        return StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.press") + " " +
-                StringHelper.LIGHT_BLUE + StringHelper.ITALIC + StringHelper.localize("tooltip.icarus.shift") + StringHelper.END + " " +
-                StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.details") + StringHelper.END;
-    }
-
-    public void checkNBT(ItemStack stack) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
     }
 
     public List tooltip(ItemStack stack) {
@@ -197,10 +186,26 @@ public class ItemWing extends ItemArmor {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
         if (ConfigHandler.showWingsStats) {
             if (!StringHelper.isShiftKeyDown()) {
-                list.add(pressShiftForDetails());
+                list.add(WingHelper.pressShiftForDetails());
             } else if (StringHelper.isShiftKeyDown()) {
                 list.addAll(tooltip(stack));
             }
         }
+    }
+
+    @Override
+    public List<String> getDisplayString(World clientWorld, EntityPlayer clientPlayer, ItemStack stack) {
+        List<String> list = new ArrayList<String>();
+
+        if (clientPlayer.fallDistance > 0.0F) {
+            int fall = WingHelper.getFallDistanceWithWings(clientPlayer, this, stack);
+            String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
+            if (fall > 0) {
+                str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;
+            }
+            list.add(str);
+        }
+
+        return list;
     }
 }

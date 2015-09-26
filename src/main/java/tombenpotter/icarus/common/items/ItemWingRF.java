@@ -9,10 +9,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
+import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.EnergyHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
@@ -40,7 +42,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
             EnergyHelper.setDefaultEnergyTag(stack, 0);
 
         if (!StringHelper.isShiftKeyDown()) {
-            list.add(pressShiftForDetails());
+            list.add(WingHelper.pressShiftForDetails());
         } else if (StringHelper.isShiftKeyDown()) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
             if (ConfigHandler.showWingsStats) {
@@ -167,5 +169,12 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     @Override
     public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
         return getEnergyStored(stack) >= energyPerDamage;
+    }
+
+    @Override
+    public List<String> getDisplayString(World clientWorld, EntityPlayer clientPlayer, ItemStack stack) {
+        List<String> list = super.getDisplayString(clientWorld, clientPlayer, stack);
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
+        return list;
     }
 }

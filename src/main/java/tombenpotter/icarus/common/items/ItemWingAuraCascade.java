@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.util.IcarusWing;
+import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.ArrayList;
@@ -33,13 +34,13 @@ public class ItemWingAuraCascade extends ItemWing {
 
     @Override
     public Wing getWing(ItemStack stack) {
-        checkNBT(stack);
+        WingHelper.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER));
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        checkNBT(stack);
+        WingHelper.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER)).durability;
     }
 
@@ -47,11 +48,11 @@ public class ItemWingAuraCascade extends ItemWing {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
         if (!StringHelper.isShiftKeyDown()) {
-            checkNBT(stack);
+            WingHelper.checkNBT(stack);
 
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
-                list.add(pressShiftForDetails());
+                list.add(WingHelper.pressShiftForDetails());
             }
         } else if (StringHelper.isShiftKeyDown()) {
             if (ConfigHandler.showWingsStats) {

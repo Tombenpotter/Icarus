@@ -12,11 +12,12 @@ public class ConfigHandler {
     public static String compat = "mod compatibilty";
     public static String enchant = "enchantments";
 
-    public static boolean holdSneakToHover, showWingsStats;
+    public static boolean holdSneakToHover, showWingsStats, showWingsHUD;
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat;
     public static int boostEnchantID, hoverEnchantID;
+    public static int[] wingsHUDCoords = new int[2];
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -40,6 +41,8 @@ public class ConfigHandler {
             dimensionNoWingBurn.add(i);
         }
         hungerConsumed = config.getFloat("hungerConsumed", general, 0.5F, 0.25F, Float.MAX_VALUE, "Change the hunger consumed by each flap of the wings.");
+        wingsHUDCoords = config.get(general, "wingsHUDCoords", new int[]{0, 0}, "The coords on the screen where the wings' HUD will show up.\nThe numbers are in pixels.").getIntList();
+        showWingsHUD = config.getBoolean("showWingsHUD", general, true, "Whether or not to show the HUD for the wings.");
 
         //Compat
         enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, "Enable Thaumcraft wings when the mod is present.\nWill do nothing if Thaumcraft isn't in your modlist");
