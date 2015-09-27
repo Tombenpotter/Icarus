@@ -1,5 +1,6 @@
 package tombenpotter.icarus.common.items;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -50,7 +51,9 @@ public class ItemSingleWing extends Item {
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list) {
         for (int i = 0; i < IcarusItems.wingNames.size(); i++) {
-            list.add(new ItemStack(this, 1, i));
+            if (GameRegistry.findItem(Icarus.modid, "Item" + IcarusItems.wingNames.get(i) + "s") != null) {
+                list.add(new ItemStack(this, 1, i));
+            }
         }
     }
 

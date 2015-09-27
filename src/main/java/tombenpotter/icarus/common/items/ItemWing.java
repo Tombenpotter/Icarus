@@ -29,7 +29,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemWing extends ItemArmor implements IWingHUD {
+public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     private Wing wing;
 
@@ -153,7 +153,7 @@ public class ItemWing extends ItemArmor implements IWingHUD {
             if (!specialWing.canWingBeUsed(stack, player)) {
                 return;
             }
-           specialWing.onWingTick(stack, player);
+            specialWing.onWingTick(stack, player);
         }
     }
 
@@ -197,7 +197,7 @@ public class ItemWing extends ItemArmor implements IWingHUD {
 
         if (clientPlayer.fallDistance > 0.0F) {
             int fall = WingHelper.getFallDistanceWithWings(clientPlayer, this, stack);
-            String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
+            String str = StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
             if (fall > 0) {
                 str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;
             }

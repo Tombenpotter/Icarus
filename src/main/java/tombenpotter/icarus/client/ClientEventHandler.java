@@ -31,7 +31,7 @@ public class ClientEventHandler {
 
                 int line = ConfigHandler.wingsHUDCoords[1];
                 for (String string : hud.getDisplayString(minecraft.theWorld, minecraft.thePlayer, stack)) {
-                    minecraft.fontRenderer.drawString(string, ConfigHandler.wingsHUDCoords[0], line++ * 10, 0, false);
+                    minecraft.fontRenderer.drawString(string, ConfigHandler.wingsHUDCoords[0], line++ * 10, 0, true);
                 }
             }
         }

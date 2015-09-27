@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class IcarusItems {
 
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 16
+    //Last damage value used: 27
     public static ItemSingleWing singleWings;
-    public static ItemWing cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
+    public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
     public static ItemWingRF leadstoneWings, electrumWings, enderiumWings;
     public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings;
@@ -40,19 +40,19 @@ public class IcarusItems {
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
 
-        cardboardWings = new ItemWing(CLOTH, new IcarusWing("CardboardWing", 64, 96, 0.25, 0.95, -0.25, -0.5, 0.8));
+        cardboardWings = new ItemWingVanilla(CLOTH, new IcarusWing("CardboardWing", 64, 96, 0.25, 0.95, -0.25, -0.5, 0.8));
         GameRegistry.registerItem(cardboardWings, "ItemCardboardWings");
         addWingRecipe(0, cardboardWings, "logWood", Items.paper);
 
-        featherWings = new ItemWing(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("FeatherWing", 96, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
+        featherWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("FeatherWing", 96, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
         GameRegistry.registerItem(featherWings, "ItemFeatherWings");
         addWingRecipe(1, featherWings, Items.bone, Items.feather);
 
-        ironWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("IronWing", 256, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
+        ironWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.IRON, new IcarusWing("IronWing", 256, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
         GameRegistry.registerItem(ironWings, "ItemIronWings");
         addWingRecipe(2, ironWings, "ingotIron", Items.feather);
 
-        goldDiamondWings = new ItemWing(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("DiamondGoldWing", 1024, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        goldDiamondWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("DiamondGoldWing", 1024, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
         GameRegistry.registerItem(goldDiamondWings, "ItemGoldDiamondWings");
         addWingRecipe(3, goldDiamondWings, "gemDiamond", "ingotGold");
 
@@ -62,7 +62,7 @@ public class IcarusItems {
             addWingRecipe(4, thaumiumWings, "ingotThaumium", "gemAmber");
         }
 
-        bronzeWings = new ItemWing(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
+        bronzeWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.IRON, new IcarusWing("BronzeWing", 384, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
         if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("ingotBronze")) {
             GameRegistry.registerItem(bronzeWings, "ItemBronzeWings");
             addWingRecipe(5, bronzeWings, "ingotBronze", Items.feather);

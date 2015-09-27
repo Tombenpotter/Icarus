@@ -174,7 +174,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     @Override
     public List<String> getDisplayString(World clientWorld, EntityPlayer clientPlayer, ItemStack stack) {
         List<String> list = super.getDisplayString(clientWorld, clientPlayer, stack);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
+        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF" + StringHelper.END);
         return list;
     }
 }
