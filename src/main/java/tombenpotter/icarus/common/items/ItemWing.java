@@ -148,14 +148,12 @@ public class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleTick(World world, EntityPlayer player, ItemStack stack) {
-        if (world.isRemote) {
-            if (stack.getItem() instanceof ISpecialWing) {
-                ISpecialWing specialWing = (ISpecialWing) stack.getItem();
-                if (!specialWing.canWingBeUsed(stack, player)) {
-                    return;
-                }
-                specialWing.onWingTick(stack, player);
+        if (stack.getItem() instanceof ISpecialWing) {
+            ISpecialWing specialWing = (ISpecialWing) stack.getItem();
+            if (!specialWing.canWingBeUsed(stack, player)) {
+                return;
             }
+           specialWing.onWingTick(stack, player);
         }
     }
 
