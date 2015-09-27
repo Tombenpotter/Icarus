@@ -3,10 +3,13 @@ package tombenpotter.icarus.common.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.util.IcarusWing;
@@ -16,7 +19,7 @@ import tombenpotter.icarus.common.util.cofh.StringHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemWingAuraCascade extends ItemWing {
+public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
 
     public static final String NBT_TIER = "Icarus_Tier";
     public static final int MAX_TIER = 11;
@@ -50,6 +53,23 @@ public class ItemWingAuraCascade extends ItemWing {
     public int getMaxDamage(ItemStack stack) {
         WingHelper.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER)).durability;
+    }
+
+    @Override
+    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+    }
+
+    @Override
+    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+        if (source.isUnblockable()) {
+            return new ArmorProperties(0, 0, 0);
+        }
+        return new ArmorProperties(0, damageReduceAmount / 40D, armor.getMaxDamage() + 1 - armor.getItemDamage());
+    }
+
+    @Override
+    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+        return damageReduceAmount;
     }
 
     @Override
