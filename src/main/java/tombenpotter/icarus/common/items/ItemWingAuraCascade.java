@@ -12,6 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.Wing;
+import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
@@ -36,6 +37,7 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
         }
 
         for (int i = 0; i < MAX_TIER; i++) {
+            IcarusItems.singleWings.addTooltip(17 + i, StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (i + 1));
             ItemStack stack = new ItemStack(this);
             stack.setTagCompound(new NBTTagCompound());
             stack.stackTagCompound.setInteger(NBT_TIER, i);
