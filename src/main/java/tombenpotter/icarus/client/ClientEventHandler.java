@@ -53,17 +53,17 @@ public class ClientEventHandler {
         if (stack != null && stack.getItem() instanceof ItemWing && player != null) {
             ItemWing itemWing = (ItemWing) stack.getItem();
             Tessellator tesselator = Tessellator.instance;
-            float flap = event.entityPlayer.onGround ? 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
+            float flap = player.onGround ? 0 : player.motionY < 0.0 ? !player.isSneaking() ? (1.0F + (float) Math.cos(render() / 2.0F)) * 13.0F : 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
 
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             minecraft.renderEngine.bindTexture(new ResourceLocation(Icarus.texturePath + ":textures/items/wings/" + itemWing.getWing(stack).name + ".png"));
-            
-            if (player.isSneaking())
+
+            if (player.isSneaking()) {
                 GL11.glRotatef(28.64789F, 1.0F, 0.0F, 0.0F);
+            }
 
             GL11.glTranslatef(0F, -0.3125F, 0.125F);
-            
 
             GL11.glPushMatrix();
             GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);

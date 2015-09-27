@@ -138,7 +138,7 @@ public class IcarusItems {
     public static void registerItemsInInitBecausePixlepix() {
         ModItemGetter.auraCascadeIngotBecausePixlepixIsDuh();
 
-        angelsteelWings = new ItemWingAuraCascade(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("AngelsteelWing", 512, 512, 0.4, 0.8, -0.3, 0.33, 0.8));
+        angelsteelWings = new ItemWingAuraCascade(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("AngelsteelWing", 512, 192, 0.36, 0.85, -0.3, -0.33, 0.84));
         if (ConfigHandler.enableACCompat && !ModItemGetter.angelsteelIngots.isEmpty()) {
             GameRegistry.registerItem(angelsteelWings, "ItemAngelsteelWings");
             for (int i = 0; i < ModItemGetter.angelsteelIngots.size(); i++) {
@@ -147,42 +147,20 @@ public class IcarusItems {
         }
     }
 
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, Item item1, Item item2) {
-        GameRegistry.addShapedRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2);
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, ItemStack item1, Item item2) {
+    /*
+    * item1 and item2 are only to be either Items, ItemStacks, or Strings.
+    * Method is private to avoid stupidity.
+     */
+    private static void addWingRecipe(int singleWingMeta, ItemWing output, Object item1, Object item2) {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
         GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
     }
 
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, Item item1, ItemStack item2) {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, ItemStack item1, ItemStack item2) {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, String item1, Item item2) {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, String item1, ItemStack item2) {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemWing output, String item1, String item2) {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
-        GameRegistry.addShapelessRecipe(new ItemStack(output), new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
-    }
-
-    public static void addWingRecipe(int singleWingMeta, ItemStack output, ItemStack item1, Item item2) {
+    /*
+    * item1 and item2 are only to be either Items, ItemStacks, or Strings.
+    * Method is private to avoid stupidity.
+     */
+    private static void addWingRecipe(int singleWingMeta, ItemStack output, Object item1, Object item2) {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, singleWingMeta), "XX ", "XYY", " XX", 'X', item1, 'Y', item2));
         GameRegistry.addShapelessRecipe(output, new ItemStack(singleWings, 1, singleWingMeta), new ItemStack(singleWings, 1, singleWingMeta));
     }
