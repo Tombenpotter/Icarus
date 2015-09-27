@@ -70,6 +70,7 @@ tooltip.icarus.drag.water=Water Drag
 tooltip.icarus.fall.reduction=Fall Reduction
 tooltip.icarus.fall.distance=Fall Distance
 tooltip.icarus.tier=Tier
+tooltip.icarus.durability=Durability
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer

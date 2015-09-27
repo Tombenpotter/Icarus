@@ -197,9 +197,11 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
         if (clientPlayer.fallDistance > 0.0F) {
             int fall = WingHelper.getFallDistanceWithWings(clientPlayer, this, stack);
-            String str = StringHelper.LIGHT_GRAY + StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
+            String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
             if (fall > 0) {
                 str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;
+            } else {
+                str = StringHelper.LIGHT_GRAY + str;
             }
             list.add(str);
         }

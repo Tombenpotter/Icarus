@@ -53,7 +53,7 @@ public class ClientEventHandler {
         if (stack != null && stack.getItem() instanceof ItemWing && player != null) {
             ItemWing itemWing = (ItemWing) stack.getItem();
             Tessellator tesselator = Tessellator.instance;
-            float flap = player.onGround ? 0 : player.motionY < 0.0 ? !player.isSneaking() ? (1.0F + (float) Math.cos(render() / 2.0F)) * 13.0F : 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
+            float flap = player.onGround ? 0 : player.motionY < 0.0 ? player.isSneaking() == ConfigHandler.holdSneakToHover ? (1.0F + (float) Math.cos(render() / 2.0F)) * 13.0F : 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
 
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
