@@ -4,11 +4,15 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -32,6 +36,7 @@ import java.util.List;
 public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     private Wing wing;
+    public static final String NBT_ITEMSTACK = "Icarus_ItemStack";
 
     public ItemWing(ArmorMaterial material, Wing wing) {
         super(material, 3, 1);
@@ -176,12 +181,46 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     @Override
     @SideOnly(Side.CLIENT)
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            //Because vanilla is stupid.
+            if (armor == Items.leather_chestplate) {
+                return "textures/models/armor/leather_layer_1.png";
+            } else if (armor == Items.chainmail_chestplate) {
+                return "textures/models/armor/chainmail_layer_1.png";
+            } else if (armor == Items.iron_chestplate) {
+                return "textures/models/armor/iron_layer_1.png";
+            } else if (armor == Items.golden_chestplate) {
+                return "textures/models/armor/gold_layer_1.png";
+            } else if (armor == Items.diamond_chestplate) {
+                return "textures/models/armor/diamond_layer_1.png";
+            } else {
+                return armor.getArmorTexture(armorStack, entity, slot, type);
+            }
+        }
+
         return Icarus.texturePath + ":textures/items/EmptyArmor.png";
+    }
+
+    @Override
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, int armorSlot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
+            return armorStack.getItem().getArmorModel(entityLiving, stack, armorSlot);
+        }
+
+        return super.getArmorModel(entityLiving, stack, armorSlot);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
+        }
+
         if (ConfigHandler.showWingsStats) {
             if (!StringHelper.isShiftKeyDown()) {
                 list.add(WingHelper.pressShiftForDetails());

@@ -71,6 +71,7 @@ tooltip.icarus.fall.reduction=Fall Reduction
 tooltip.icarus.fall.distance=Fall Distance
 tooltip.icarus.tier=Tier
 tooltip.icarus.durability=Durability
+tooltip.icarus.render.armor=Armor Rendered
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer
