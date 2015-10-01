@@ -23,7 +23,7 @@ public class PacketClientConfig implements IMessage, IMessageHandler<PacketClien
     @Override
     public IMessage onMessage(PacketClientConfig message, MessageContext ctx) {
         EventHandler.holdSneakToHoverForPlayer.add(ctx.getServerHandler().playerEntity.getUniqueID());
-        Icarus.logger.info("Clientside config info sent");
+        Icarus.logger.info("Clientside config info received from player " + ctx.getServerHandler().playerEntity.getDisplayName() + " with UUID " + ctx.getServerHandler().playerEntity.getUniqueID());
         return null;
     }
 }

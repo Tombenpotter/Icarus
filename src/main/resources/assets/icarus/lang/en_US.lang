@@ -75,3 +75,20 @@ tooltip.icarus.render.armor=Armor Rendered
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer
+enchantment.icarus.waterproof=Waterpoof
+##Config
+icarus.config.general.desc=General options.
+icarus.config.compat.desc=Enable or disable mod compatibility here.
+icarus.config.enchantments.desc=Change enchantment IDs here.
+icarus.config.sneaktohover.desc=Hold the Sneaking key to make your wings hover.
+icarus.config.sneaktohover.desc.2=If not enabled, you wings will make you hover as soon as you are off the groud.
+icarus.config.sneaktohover.desc.3=Clientside only config, changing it serverside will do nothing.
+icarus.config.shapelesswings.desc=Wings are able to be shapelessly turned back into normal wings.
+icarus.config.showwingsstats.desc=Allows wings stats to be shown when holding shift and hovering over wings.
+icarus.config.showwingsstats.desc.2=Disable to prevent stats to be shown altogether.
+icarus.config.dimensionswingsdontburn.desc=The IDs of the dimensions in which wings will never be able to burn.
+icarus.config.dimensionswingsdisabled.desc=The IDs of the dimensions in which wings will never be functional.
+icarus.config.hunger.desc=Change the hunger consumed by each flap of the wings
+icarus.config.hudcoords.desc=The coords on the screen where the wings' HUD will show up.
+icarus.config.hudcoords.desc.2=The numbers are in pixels.
+icarus.config.winghud.desc=Whether or not to show the HUD for the wings.

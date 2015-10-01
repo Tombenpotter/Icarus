@@ -40,16 +40,15 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
         if (stack.stackTagCompound == null)
             EnergyHelper.setDefaultEnergyTag(stack, 0);
-
         if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
         }
 
-        if (!StringHelper.isShiftKeyDown()) {
-            list.add(WingHelper.pressShiftForDetails());
-        } else if (StringHelper.isShiftKeyDown()) {
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
-            if (ConfigHandler.showWingsStats) {
+        if (ConfigHandler.showWingsStats) {
+            if (!StringHelper.isShiftKeyDown()) {
+                list.add(WingHelper.pressShiftForDetails());
+            } else if (StringHelper.isShiftKeyDown()) {
+                list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
                 list.addAll(tooltip(stack));
             }
         }

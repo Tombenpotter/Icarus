@@ -34,6 +34,7 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
         buf.writeBoolean(isSpecialWing);
     }
 
+    // this will need special handling of things in the travellers slots
     @Override
     public IMessage onMessage(PacketJump message, MessageContext ctx) {
         EntityPlayer player = ctx.getServerHandler().playerEntity;

@@ -5,12 +5,10 @@
   "description": "Wings, the not easy way!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
+  "url": "http://minecraft.curseforge.com/mc-mods/235702-tombenpotters-icarus",
+  "updateUrl": "http://minecraft.curseforge.com/mc-mods/235702-tombenpotters-icarus/files",
   "authorList": ["Tombenpotter"],
   "credits": "GustoniaEagle, for the cool textures!",
-  "logoFile": "IcarusLogo.png",
-  "screenshots": [],
-  "dependencies": []
+  "logoFile": "/IcarusLogo.png"
 }
 ]

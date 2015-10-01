@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
+import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.ArmorWingRecipe;
@@ -18,10 +19,13 @@ import tombenpotter.icarus.common.util.ModItemGetter;
 import vazkii.botania.api.BotaniaAPI;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IcarusItems {
 
     public static ArrayList<String> wingNames = new ArrayList<String>();
+    public static List<ItemStack> armorArray = new ArrayList<>();
+    public static List<ItemStack> wingArray = new ArrayList<>();
     //Last damage value used: 27
     public static ItemSingleWing singleWings;
     public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
@@ -38,7 +42,7 @@ public class IcarusItems {
 
     public static void registerItems() {
         ModItemGetter.load();
-        oreDictArmors();
+        armorRegistry();
 
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
@@ -137,8 +141,7 @@ public class IcarusItems {
             addWingRecipe(16, vibrantWings, "ingotPhasedGold", ModItemGetter.octadicCapacitor);
         }
 
-        //You don't care about the output here, as it gets dynamically changed
-        GameRegistry.addRecipe(new ArmorWingRecipe(cardboardWings, "   ", " X ", " Y ", 'X', "itemArmor", 'Y', "itemIcarusWing"));
+        GameRegistry.addRecipe(new ArmorWingRecipe());
     }
 
     public static void registerItemsInInitBecausePixlepix() {
@@ -155,7 +158,10 @@ public class IcarusItems {
 
     public static void registerWing(ItemWing itemWing, String name){
         GameRegistry.registerItem(itemWing, name);
-        OreDictionary.registerOre("itemIcarusWing", itemWing);
+        ItemStack wingItem = new ItemStack(itemWing);
+        //Icarus.logger.info("Adding " + wingItem.getDisplayName() + " to the list of registered wings.");
+        wingArray.add(wingItem);
+        //OreDictionary.registerOre("itemIcarusWing", itemWing);
     }
 
     /*
@@ -190,10 +196,13 @@ public class IcarusItems {
         return addArmorMaterialWithRepair(name, durability, reductionAmounts, enchantability, OreDictionary.getOres(repairItem).get(0).getItem());
     }
 
-    public static void oreDictArmors() {
+    public static void armorRegistry() {
         for (Item item : GameData.getItemRegistry().typeSafeIterable()) {
             if (item instanceof ItemArmor && ((ItemArmor) item).armorType == 1) {
-                OreDictionary.registerOre("itemArmor", item);
+                ItemStack armorItem = new ItemStack(item);
+                //Icarus.logger.info("Adding " + armorItem.getDisplayName() + " to the list of registered armors.");
+                armorArray.add(armorItem);
+                //OreDictionary.registerOre("itemArmor", item);
             }
         }
     }

@@ -1,7 +1,10 @@
 package tombenpotter.icarus;
 
+
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -10,45 +13,53 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
+import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.IcarusEnchants;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.util.EventHandler;
 import tombenpotter.icarus.common.util.LogHelper;
 import tombenpotter.icarus.proxies.CommonProxy;
+import tombenpotter.icarus.reference.Metadata;
+import tombenpotter.icarus.reference.Reference;
 
-@Mod(modid = Icarus.modid, name = Icarus.name, version = Icarus.version, dependencies = Icarus.depend)
+@Mod(modid = Reference.ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = Reference.MOD_GUI_FACTORY)
 public class Icarus {
+    @Mod.Instance
+    public Icarus instance;
 
-    public static final String modid = "TIcarus";
-    public static final String name = "Icarus";
-    public static final String version = "@VERSION@";
-    public static final String texturePath = "icarus";
-    public static final String channel = "Icarus";
-    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura";
-    public static final String clientProxy = "tombenpotter.icarus.proxies.ClientProxy";
-    public static final String commonProxy = "tombenpotter.icarus.proxies.CommonProxy";
-    public static CreativeTabs creativeTab = new CreativeTabs("tab" + name) {
+    @Mod.Metadata(Reference.ID)
+    public static ModMetadata metadata;
+
+    // point legacy placeholders to reference until main mod is cleaned
+    public static final String modid = Reference.ID;
+    public static final String name = Reference.NAME;
+    public static final String version = Reference.VERSION;
+    public static final String texturePath = Reference.TEXTURE_PATH;
+    public static final String channel = Reference.PACKET_CHANNEL;
+
+    @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
+    public static CommonProxy proxy;
+
+    public static Logger logger;
+
+    public static CreativeTabs creativeTab = new CreativeTabs("tab" + Reference.NAME) {
         @Override
         public Item getTabIconItem() {
             return IcarusItems.goldDiamondWings;
         }
     };
-    public static Logger logger;
-
-    @SidedProxy(serverSide = Icarus.commonProxy, clientSide = Icarus.clientProxy)
-    public static CommonProxy proxy;
-
-    @Mod.Instance(Icarus.modid)
-    public static Icarus instance;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         instance = this;
         logger = LogHelper.getLogger();
+        metadata = Metadata.init(metadata);
         ConfigHandler.init(event.getSuggestedConfigurationFile());
+        FMLCommonHandler.instance().bus().register(new ConfigHandler());
         IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
+        Icarus.logger.info("Running version " + version);
     }
 
     @Mod.EventHandler
@@ -62,5 +73,9 @@ public class Icarus {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        //this should be better handled somehow
+        if (Loader.isModLoaded("Thaumcraft")) {
+            ConfigHandler.dimensionWingsDisabled.add(-42);
+        }
     }
 }

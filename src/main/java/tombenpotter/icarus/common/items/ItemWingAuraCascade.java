@@ -77,13 +77,11 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
-        }
-
         if (!StringHelper.isShiftKeyDown()) {
             WingHelper.checkNBT(stack);
-
+            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
+                list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
+            }
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
                 list.add(WingHelper.pressShiftForDetails());

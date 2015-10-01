@@ -17,34 +17,50 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0.4"
-group= "com.tombenpotter.icarus" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+repositories {
+    maven {
+        name = "forge"
+        url = "http://files.minecraftforge.net/maven"
+    }
+}
+
+group= "Icarus" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Icarus"
 
 minecraft {
-    version = "1.7.10-10.13.4.1492-1.7.10"
+    version = "${version_minecraft}-${version_forge}"
     runDir = "eclipse"
+    replaceIn "Reference.java"
+    replace "@VERSION@", project.version
+
 }
 
-dependencies {
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }
 
-processResources
-{
-    // This will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // Replace stuff in mcmod.info, nothing else
+processResources {
+    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        // Replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+
+        // replace version and mcversion
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
-    // Copy everything else, thats not the mcmod.info
+
+    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar
 }

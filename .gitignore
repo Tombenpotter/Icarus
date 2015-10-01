@@ -9,6 +9,7 @@
 /asm/*
 /bin/*
 /TODO/*
+/libs/*
 
 #File Extensions
 *.psd

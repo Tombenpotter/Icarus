@@ -1,5 +1,6 @@
 package tombenpotter.icarus.client;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
@@ -7,6 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.opengl.GL11;
 import tombenpotter.icarus.ConfigHandler;
@@ -46,9 +48,11 @@ public class ClientEventHandler {
         return (float) tickTime + renderTicks;
     }
 
+    // the rendering of things in travellers slots is still derpy
     @SubscribeEvent
     public void renderPlayerWings(RenderPlayerEvent.Specials.Post event) {
         ItemStack stack = event.entityPlayer.inventory.armorInventory[2];
+
         EntityPlayer player = event.entityPlayer;
         if (stack != null && stack.getItem() instanceof ItemWing && player != null) {
             ItemWing itemWing = (ItemWing) stack.getItem();
@@ -62,9 +66,12 @@ public class ClientEventHandler {
             if (player.isSneaking()) {
                 GL11.glRotatef(28.64789F, 1.0F, 0.0F, 0.0F);
             }
-
-            GL11.glTranslatef(0F, -0.3125F, 0.125F);
-
+            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(ItemWing.NBT_ITEMSTACK)) {
+                //works with most models pushing the wings out slightly further. need to investigate better methods for varying armors
+                GL11.glTranslatef(0F, -0.3125F, 0.225F);
+            } else {
+                GL11.glTranslatef(0F, -0.3125F, 0.125F);
+            }
             GL11.glPushMatrix();
             GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(-flap, 0.0F, 1.0F, 0.0F);
