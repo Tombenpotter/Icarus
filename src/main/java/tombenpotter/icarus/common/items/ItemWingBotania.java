@@ -8,9 +8,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.IcarusItems;
+import tombenpotter.icarus.common.util.cofh.StringHelper;
 import tombenpotter.icarus.common.util.IcarusWing;
 import vazkii.botania.api.mana.IManaUsingItem;
 import vazkii.botania.api.mana.ManaItemHandler;
+
+import java.util.List;
 
 public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsingItem, ISpecialWing {
 
@@ -73,5 +76,14 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     @Override
     public boolean canWingBeUsed(ItemStack stack, EntityPlayer player) {
         return getArmorMaterial().name().equals(IcarusItems.CLOTH.name()) || ManaItemHandler.requestManaExact(stack, player, manaPerDamage, false);
+    }
+
+    @Override
+    public List<String> getDisplayString(World clientWorld, EntityPlayer clientPlayer, ItemStack stack) {
+        List<String> list = super.getDisplayString(clientWorld, clientPlayer, stack);
+        if ((stack.getMaxDamage() - stack.getItemDamage()) < stack.getMaxDamage()) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.durability") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + (stack.getMaxDamage() - stack.getItemDamage()) + " / " + stack.getMaxDamage() + StringHelper.END);
+        }
+        return list;
     }
 }

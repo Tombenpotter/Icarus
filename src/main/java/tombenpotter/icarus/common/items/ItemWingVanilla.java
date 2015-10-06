@@ -5,15 +5,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.Wing;
-import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
+import tombenpotter.icarus.common.util.WingHelper;
 
 import java.util.List;
 
 public class ItemWingVanilla extends ItemWing implements ISpecialWing {
-
-    public static final String NBT_DAMAGE = "Icarus_Damage";
-    private static final int flapsToDamage = 10;
 
     public ItemWingVanilla(ArmorMaterial material, Wing wing) {
         super(material, wing);
@@ -22,7 +19,7 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
     @Override
     public void onWingFlap(ItemStack stack, EntityPlayer player) {
         WingHelper.checkNBT(stack);
-        stack.stackTagCompound.setInteger(NBT_DAMAGE, stack.stackTagCompound.getInteger(NBT_DAMAGE) + 1);
+        stack.stackTagCompound.setInteger(ItemWing.NBT_DAMAGE, stack.stackTagCompound.getInteger(ItemWing.NBT_DAMAGE) + 1);
     }
 
     @Override
@@ -32,9 +29,9 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
     @Override
     public void onWingTick(ItemStack stack, EntityPlayer player) {
         WingHelper.checkNBT(stack);
-        int nbtDamage = stack.stackTagCompound.getInteger(NBT_DAMAGE);
-        if (nbtDamage >= flapsToDamage) {
-            stack.stackTagCompound.setInteger(NBT_DAMAGE, nbtDamage - flapsToDamage);
+        int nbtDamage = stack.stackTagCompound.getInteger(ItemWing.NBT_DAMAGE);
+        if (nbtDamage >= ItemWing.flapsToDamage) {
+            stack.stackTagCompound.setInteger(ItemWing.NBT_DAMAGE, nbtDamage - ItemWing.flapsToDamage);
             stack.damageItem(1, player);
         }
     }
@@ -47,7 +44,9 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
     @Override
     public List<String> getDisplayString(World clientWorld, EntityPlayer clientPlayer, ItemStack stack) {
         List<String> list = super.getDisplayString(clientWorld, clientPlayer, stack);
-        list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.durability") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + (stack.getMaxDamage() - stack.getItemDamage()) + " / " + stack.getMaxDamage() + StringHelper.END);
+        if ((stack.getMaxDamage() - stack.getItemDamage()) < stack.getMaxDamage()) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.durability") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + (stack.getMaxDamage() - stack.getItemDamage()) + " / " + stack.getMaxDamage() + StringHelper.END);
+        }
         return list;
     }
 }

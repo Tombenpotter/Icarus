@@ -1,16 +1,19 @@
 package tombenpotter.icarus.common.items;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -26,23 +29,28 @@ import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
+import tombenpotter.icarus.common.util.LogHelper;
 import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
-
+import travellersgear.api.ITravellersGear;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemWing extends ItemArmor implements IWingHUD {
+@Optional.InterfaceList({
+        @Optional.Interface(iface = "travellersgear.api.ITravellersGear", modid = "TravellersGear")
+})
+public abstract class ItemWing extends ItemArmor implements IWingHUD, ITravellersGear {
 
     private Wing wing;
+    private ISpecialWing specialWing;
     public static final String NBT_ITEMSTACK = "Icarus_ItemStack";
+    public static final String NBT_DAMAGE = "Icarus_Damage";
+    public static final int flapsToDamage = 10;
 
     public ItemWing(ArmorMaterial material, Wing wing) {
         super(material, 3, 1);
-
         this.wing = wing;
-
         setUnlocalizedName(Icarus.name + ".wing." + getWing().name);
         setMaxDamage(getWing().durability);
         setCreativeTab(Icarus.creativeTab);
@@ -77,9 +85,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
                 if (enchantmentLevel > 0) {
                     jumpBoost += (double) enchantmentLevel / 20;
                 }
-
                 PacketHandler.INSTANCE.sendToServer(new PacketJump(jumpBoost, stack.getItem() instanceof ISpecialWing));
-
                 if (stack.getItem() instanceof ISpecialWing) {
                     ISpecialWing specialWing = (ISpecialWing) stack.getItem();
                     if (!specialWing.canWingBeUsed(stack, player)) {
@@ -87,7 +93,6 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
                     }
                     specialWing.onWingFlap(stack, player);
                 }
-
                 player.motionY = jumpBoost;
                 player.fallDistance = 0;
             }
@@ -95,7 +100,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleWater(World world, EntityPlayer player, ItemStack stack) {
-        if (player.isInWater()) {
+        if (player.isInsideOfMaterial(Material.water)) {
             player.motionY = getWing(stack).waterDrag;
         }
     }
@@ -128,14 +133,13 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleHover(World world, EntityPlayer player, ItemStack stack) {
-        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
+        if (!player.onGround && player.motionY < 0) {
             if (stack.getItem() instanceof ISpecialWing) {
                 if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack, player)) {
                     return;
                 }
                 ((ISpecialWing) stack.getItem()).onWingHover(stack, player);
             }
-
             double glideFactor = getWing(stack).glideFactor;
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.hoverEnchantID, stack);
             if (enchantmentLevel > 0) {
@@ -146,7 +150,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }
@@ -164,12 +168,61 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+        doArmorMethods(world, player, stack);
+    }
+
+    private void doArmorMethods(World world, EntityPlayer player, ItemStack stack) {
+        handleTick(world, player, stack);
+        if (player.capabilities.isCreativeMode || ConfigHandler.dimensionWingsDisabled.contains(world.provider.dimensionId)) {
+            return;
+        }
         handleJump(world, player, stack);
         handleWater(world, player, stack);
         handleWeather(world, player, stack);
-        handleHover(world, player, stack);
-        handleHeight(world, player, stack);
-        handleTick(world, player, stack);
+        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player)) {
+            handleHover(world, player, stack);
+        }
+        if (!ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId)){
+            handleHeight(world, player, stack);
+        }
+    }
+
+    
+    /** @return the Equipment slot or -1 if it isn't supposed to go into one.<br>
+     * 0: Cloak
+     * 1: Shoulders
+     * 2: Vambraces
+     * 3: Title
+     */
+    @Optional.Method(modid = "TravellersGear")
+    @Override
+    public int getSlot(ItemStack stack) {
+        /*
+        //prevent compounded wings from being added to travellers inv to fix derpy potential dual armor rendering
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
+            return -1;
+        } else {
+            return 0;
+        }*/
+        return -1
+    }
+
+    @Optional.Method(modid = "TravellersGear")
+    @Override
+    public void onTravelGearTick(EntityPlayer player, ItemStack stack) {
+        /*World world = player.worldObj;
+        doArmorMethods(world, player, stack);
+        */
+    }
+    
+    @Optional.Method(modid = "TravellersGear")
+    @Override
+    public void onTravelGearEquip(EntityPlayer player, ItemStack stack) {
+    }
+    
+    @Optional.Method(modid = "TravellersGear")
+    @Override
+    public void onTravelGearUnequip(EntityPlayer player, ItemStack stack) {
     }
 
     @Override
@@ -210,7 +263,6 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
             ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
             return armorStack.getItem().getArmorModel(entityLiving, stack, armorSlot);
         }
-
         return super.getArmorModel(entityLiving, stack, armorSlot);
     }
 

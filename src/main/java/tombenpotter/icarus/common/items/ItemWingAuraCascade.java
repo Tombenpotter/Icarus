@@ -82,8 +82,7 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
         }
 
         if (!StringHelper.isShiftKeyDown()) {
-            WingHelper.checkNBT(stack);
-
+            WingHelper.checkNBT(stack);    
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
                 list.add(WingHelper.pressShiftForDetails());
