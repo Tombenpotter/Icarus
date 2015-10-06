@@ -3,6 +3,7 @@ package tombenpotter.icarus.common.items;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,7 +27,7 @@ import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
-import tombenpotter.icarus.common.util.WingHelper;
+import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.lang.reflect.Field;
@@ -95,7 +96,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleWater(World world, EntityPlayer player, ItemStack stack) {
-        if (player.isInWater()) {
+        if (player.isInsideOfMaterial(Material.water)) {
             player.motionY = getWing(stack).waterDrag;
         }
     }
@@ -146,7 +147,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId) && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
+        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && !ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId)) {
             player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }
@@ -164,6 +165,9 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+        if (ConfigHandler.dimensionWingsDisabled.contains(world.provider.dimensionId)) {
+            return;
+        }
         handleJump(world, player, stack);
         handleWater(world, player, stack);
         handleWeather(world, player, stack);
@@ -223,7 +227,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
         if (ConfigHandler.showWingsStats) {
             if (!StringHelper.isShiftKeyDown()) {
-                list.add(WingHelper.pressShiftForDetails());
+                list.add(IcarusUtil.pressShiftForDetails());
             } else if (StringHelper.isShiftKeyDown()) {
                 list.addAll(tooltip(stack));
             }
@@ -235,7 +239,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
         List<String> list = new ArrayList<String>();
 
         if (clientPlayer.fallDistance > 0.0F) {
-            int fall = WingHelper.getFallDistanceWithWings(clientPlayer, this, stack);
+            int fall = IcarusUtil.getFallDistanceWithWings(clientPlayer, this, stack);
             String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
             if (fall > 0) {
                 str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;

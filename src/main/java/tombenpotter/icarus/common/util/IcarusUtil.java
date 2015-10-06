@@ -9,9 +9,9 @@ import net.minecraft.util.MathHelper;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
-public class WingHelper {
+public class IcarusUtil {
 
-    private WingHelper() {
+    private IcarusUtil() {
     }
 
     public static String pressShiftForDetails() {

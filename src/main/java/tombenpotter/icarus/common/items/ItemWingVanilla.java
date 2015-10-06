@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.Wing;
-import tombenpotter.icarus.common.util.WingHelper;
+import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
 
     @Override
     public void onWingFlap(ItemStack stack, EntityPlayer player) {
-        WingHelper.checkNBT(stack);
+        IcarusUtil.checkNBT(stack);
         stack.stackTagCompound.setInteger(NBT_DAMAGE, stack.stackTagCompound.getInteger(NBT_DAMAGE) + 1);
     }
 
@@ -31,7 +31,7 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
 
     @Override
     public void onWingTick(ItemStack stack, EntityPlayer player) {
-        WingHelper.checkNBT(stack);
+        IcarusUtil.checkNBT(stack);
         int nbtDamage = stack.stackTagCompound.getInteger(NBT_DAMAGE);
         if (nbtDamage >= flapsToDamage) {
             stack.stackTagCompound.setInteger(NBT_DAMAGE, nbtDamage - flapsToDamage);

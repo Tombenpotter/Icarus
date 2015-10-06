@@ -15,6 +15,7 @@ public class ConfigHandler {
     public static boolean holdSneakToHover, showWingsStats, showWingsHUD;
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
+    public static HashSet<Integer> dimensionWingsDisabled = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat;
     public static int boostEnchantID, hoverEnchantID;
     public static int[] wingsHUDCoords = new int[2];
@@ -43,6 +44,10 @@ public class ConfigHandler {
         hungerConsumed = config.getFloat("hungerConsumed", general, 0.5F, 0.25F, Float.MAX_VALUE, "Change the hunger consumed by each flap of the wings.");
         wingsHUDCoords = config.get(general, "wingsHUDCoords", new int[]{0, 0}, "The coords on the screen where the wings' HUD will show up.\nThe numbers are in pixels.").getIntList();
         showWingsHUD = config.getBoolean("showWingsHUD", general, true, "Whether or not to show the HUD for the wings.");
+        int[] dimsNoWork = config.get(general, "dimensionsWingsDisabled", new int[]{}, "The IDs of the dimensions where Wings will never be able to work.").getIntList();
+        for (int i : dimsNoWork) {
+            dimensionWingsDisabled.add(i);
+        }
 
         //Compat
         enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, "Enable Thaumcraft wings when the mod is present.\nWill do nothing if Thaumcraft isn't in your modlist");

@@ -14,7 +14,7 @@ import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
-import tombenpotter.icarus.common.util.WingHelper;
+import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.EnergyHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
@@ -46,7 +46,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         }
 
         if (!StringHelper.isShiftKeyDown()) {
-            list.add(WingHelper.pressShiftForDetails());
+            list.add(IcarusUtil.pressShiftForDetails());
         } else if (StringHelper.isShiftKeyDown()) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
             if (ConfigHandler.showWingsStats) {

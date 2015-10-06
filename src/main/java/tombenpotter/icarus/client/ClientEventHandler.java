@@ -63,7 +63,11 @@ public class ClientEventHandler {
                 GL11.glRotatef(28.64789F, 1.0F, 0.0F, 0.0F);
             }
 
-            GL11.glTranslatef(0F, -0.3125F, 0.125F);
+            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(ItemWing.NBT_ITEMSTACK)) {
+                GL11.glTranslatef(0F, -0.3125F, 0.225F);
+            } else {
+                GL11.glTranslatef(0F, -0.3125F, 0.125F);
+            }
 
             GL11.glPushMatrix();
             GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);

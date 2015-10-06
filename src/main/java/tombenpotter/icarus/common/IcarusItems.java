@@ -1,6 +1,5 @@
 package tombenpotter.icarus.common;
 
-import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,7 +37,6 @@ public class IcarusItems {
 
     public static void registerItems() {
         ModItemGetter.load();
-        oreDictArmors();
 
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
@@ -137,8 +135,7 @@ public class IcarusItems {
             addWingRecipe(16, vibrantWings, "ingotPhasedGold", ModItemGetter.octadicCapacitor);
         }
 
-        //You don't care about the output here, as it gets dynamically changed
-        GameRegistry.addRecipe(new ArmorWingRecipe(cardboardWings, "   ", " X ", " Y ", 'X', "itemArmor", 'Y', "itemIcarusWing"));
+        GameRegistry.addRecipe(new ArmorWingRecipe());
     }
 
     public static void registerItemsInInitBecausePixlepix() {
@@ -153,9 +150,8 @@ public class IcarusItems {
         }
     }
 
-    public static void registerWing(ItemWing itemWing, String name){
+    public static void registerWing(ItemWing itemWing, String name) {
         GameRegistry.registerItem(itemWing, name);
-        OreDictionary.registerOre("itemIcarusWing", itemWing);
     }
 
     /*
@@ -188,13 +184,5 @@ public class IcarusItems {
 
     public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, String repairItem) {
         return addArmorMaterialWithRepair(name, durability, reductionAmounts, enchantability, OreDictionary.getOres(repairItem).get(0).getItem());
-    }
-
-    public static void oreDictArmors() {
-        for (Item item : GameData.getItemRegistry().typeSafeIterable()) {
-            if (item instanceof ItemArmor && ((ItemArmor) item).armorType == 1) {
-                OreDictionary.registerOre("itemArmor", item);
-            }
-        }
     }
 }

@@ -1,6 +1,7 @@
 package tombenpotter.icarus;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -9,13 +10,14 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import org.apache.logging.log4j.Logger;
+import net.minecraftforge.common.config.Configuration;
 import tombenpotter.icarus.common.IcarusEnchants;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.util.EventHandler;
-import tombenpotter.icarus.common.util.LogHelper;
 import tombenpotter.icarus.proxies.CommonProxy;
+
+import java.io.File;
 
 @Mod(modid = Icarus.modid, name = Icarus.name, version = Icarus.version, dependencies = Icarus.depend)
 public class Icarus {
@@ -34,7 +36,6 @@ public class Icarus {
             return IcarusItems.goldDiamondWings;
         }
     };
-    public static Logger logger;
 
     @SidedProxy(serverSide = Icarus.commonProxy, clientSide = Icarus.clientProxy)
     public static CommonProxy proxy;
@@ -45,10 +46,14 @@ public class Icarus {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         instance = this;
-        logger = LogHelper.getLogger();
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
+
+        if (Loader.isModLoaded("Thaumcraft")) {
+            Configuration thaumcraftConfig = new Configuration(new File(event.getModConfigurationDirectory(), "Thaumcraft.cfg"));
+            ConfigHandler.dimensionWingsDisabled.add(thaumcraftConfig.get("Biomes", "outer_lands_dim", -42).getInt());
+        }
     }
 
     @Mod.EventHandler

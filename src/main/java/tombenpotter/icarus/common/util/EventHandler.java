@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import tombenpotter.icarus.ConfigHandler;
-import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.network.PacketClientConfig;
 import tombenpotter.icarus.common.network.PacketHandler;
@@ -27,7 +26,6 @@ public class EventHandler {
         if (event.entity instanceof EntityPlayer && !holdSneakToHoverForPlayer.contains(event.entity.getUniqueID())) {
             if (event.world.isRemote) {
                 if (ConfigHandler.holdSneakToHover) {
-                    Icarus.logger.info("Sending clientside config info from Client to Server");
                     PacketHandler.INSTANCE.sendToServer(new PacketClientConfig());
                     holdSneakToHoverForPlayer.add(event.entity.getUniqueID());
                 }

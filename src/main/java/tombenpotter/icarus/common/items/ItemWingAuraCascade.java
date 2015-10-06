@@ -14,7 +14,7 @@ import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.util.IcarusWing;
-import tombenpotter.icarus.common.util.WingHelper;
+import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.ArrayList;
@@ -47,13 +47,13 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
 
     @Override
     public Wing getWing(ItemStack stack) {
-        WingHelper.checkNBT(stack);
+        IcarusUtil.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER));
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        WingHelper.checkNBT(stack);
+        IcarusUtil.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER)).durability;
     }
 
@@ -82,11 +82,11 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
         }
 
         if (!StringHelper.isShiftKeyDown()) {
-            WingHelper.checkNBT(stack);
+            IcarusUtil.checkNBT(stack);
 
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
-                list.add(WingHelper.pressShiftForDetails());
+                list.add(IcarusUtil.pressShiftForDetails());
             }
         } else if (StringHelper.isShiftKeyDown()) {
             if (ConfigHandler.showWingsStats) {
