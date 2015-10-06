@@ -30,7 +30,6 @@ import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
 import tombenpotter.icarus.common.util.EventHandler;
 import tombenpotter.icarus.common.util.LogHelper;
-import tombenpotter.icarus.common.util.TravellersHandler;
 import tombenpotter.icarus.common.util.WingHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 import travellersgear.api.ITravellersGear;
@@ -152,7 +151,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD, ITraveller
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
         if (player.posY > getWing(stack).maxHeight && world.isDaytime() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-            player.setFire(2);
+            player.setFire(1);
             player.attackEntityFrom(DamageSource.inFire, 1.0F);
         }
     }
@@ -198,20 +197,22 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD, ITraveller
     @Optional.Method(modid = "TravellersGear")
     @Override
     public int getSlot(ItemStack stack) {
+        /*
         //prevent compounded wings from being added to travellers inv to fix derpy potential dual armor rendering
         if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
             return -1;
         } else {
             return 0;
-        }
+        }*/
+        return -1
     }
 
-    //pretty much a word for word of the armortick but with a special method for handling the world object
     @Optional.Method(modid = "TravellersGear")
     @Override
     public void onTravelGearTick(EntityPlayer player, ItemStack stack) {
-        World world = player.worldObj;
+        /*World world = player.worldObj;
         doArmorMethods(world, player, stack);
+        */
     }
     
     @Optional.Method(modid = "TravellersGear")
@@ -262,7 +263,6 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD, ITraveller
             ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
             return armorStack.getItem().getArmorModel(entityLiving, stack, armorSlot);
         }
-
         return super.getArmorModel(entityLiving, stack, armorSlot);
     }
 

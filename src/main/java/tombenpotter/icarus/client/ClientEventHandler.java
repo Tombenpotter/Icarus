@@ -48,7 +48,6 @@ public class ClientEventHandler {
         return (float) tickTime + renderTicks;
     }
 
-    // the rendering of things in travellers slots is still derpy
     @SubscribeEvent
     public void renderPlayerWings(RenderPlayerEvent.Specials.Post event) {
         ItemStack stack = event.entityPlayer.inventory.armorInventory[2];
