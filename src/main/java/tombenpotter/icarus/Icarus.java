@@ -59,7 +59,6 @@ public class Icarus {
         FMLCommonHandler.instance().bus().register(new ConfigHandler());
         IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
-        Icarus.logger.info("Running version " + version);
     }
 
     @Mod.EventHandler

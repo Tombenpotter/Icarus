@@ -101,7 +101,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD, ITraveller
     }
 
     public void handleWater(World world, EntityPlayer player, ItemStack stack) {
-        if (player.isInsideOfMaterial(Material.water) && !player.capabilities.isCreativeMode) {
+        if (player.isInsideOfMaterial(Material.water)) {
             player.motionY = getWing(stack).waterDrag;
         }
     }
@@ -289,7 +289,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD, ITraveller
         if (clientPlayer.fallDistance > 0.0F) {
             int fall = WingHelper.getFallDistanceWithWings(clientPlayer, this, stack);
             String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
-            if (fall >= 1) {
+            if (fall > 0) {
                 str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;
             } else {
                 str = StringHelper.LIGHT_GRAY + str;

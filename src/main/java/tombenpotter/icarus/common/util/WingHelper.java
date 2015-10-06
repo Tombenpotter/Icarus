@@ -29,7 +29,6 @@ public class WingHelper {
     public static int getFallDistanceWithWings(EntityPlayer player, ItemWing itemWing, ItemStack stack){
         PotionEffect potionEffect = player.getActivePotionEffect(Potion.jump);
         float amplifier = potionEffect != null ? (float) (potionEffect.getAmplifier() + 1) : 0.0F;
-        // players are 2 blocks high not 3
-        return (int) (MathHelper.ceiling_float_int(player.fallDistance - 2.0F - amplifier) * itemWing.getWing(stack).fallReductionFactor);
+        return (int) (MathHelper.ceiling_float_int(player.fallDistance - 3.0F - amplifier) * itemWing.getWing(stack).fallReductionFactor);
     }
 }

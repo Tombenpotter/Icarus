@@ -52,7 +52,6 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void renderPlayerWings(RenderPlayerEvent.Specials.Post event) {
         ItemStack stack = event.entityPlayer.inventory.armorInventory[2];
-
         EntityPlayer player = event.entityPlayer;
         if (stack != null && stack.getItem() instanceof ItemWing && player != null) {
             ItemWing itemWing = (ItemWing) stack.getItem();
