@@ -75,3 +75,5 @@ tooltip.icarus.render.armor=Armor Rendered
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer
+##NEICompat
+text.icarus.nei.wing.crafting=Wing Crafting

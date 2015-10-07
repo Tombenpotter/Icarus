@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.opengl.GL11;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.common.items.ItemWing;
 
@@ -63,7 +64,7 @@ public class ClientEventHandler {
                 GL11.glRotatef(28.64789F, 1.0F, 0.0F, 0.0F);
             }
 
-            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(ItemWing.NBT_ITEMSTACK)) {
+            if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
                 GL11.glTranslatef(0F, -0.3125F, 0.225F);
             } else {
                 GL11.glTranslatef(0F, -0.3125F, 0.125F);

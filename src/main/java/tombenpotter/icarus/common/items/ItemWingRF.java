@@ -12,6 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.IcarusUtil;
@@ -41,8 +42,8 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         if (stack.stackTagCompound == null)
             EnergyHelper.setDefaultEnergyTag(stack, 0);
 
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK)).getDisplayName());
         }
 
         if (!StringHelper.isShiftKeyDown()) {

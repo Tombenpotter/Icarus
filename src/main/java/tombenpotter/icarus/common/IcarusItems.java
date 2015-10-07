@@ -1,5 +1,6 @@
 package tombenpotter.icarus.common;
 
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -12,6 +13,7 @@ import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.ArmorWingRecipe;
+import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.ModItemGetter;
 import vazkii.botania.api.BotaniaAPI;
@@ -37,6 +39,7 @@ public class IcarusItems {
 
     public static void registerItems() {
         ModItemGetter.load();
+        IcarusItems.addArmorsToList();
 
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
@@ -134,8 +137,6 @@ public class IcarusItems {
             registerWing(vibrantWings, "ItemVibrantWings");
             addWingRecipe(16, vibrantWings, "ingotPhasedGold", ModItemGetter.octadicCapacitor);
         }
-
-        GameRegistry.addRecipe(new ArmorWingRecipe());
     }
 
     public static void registerItemsInInitBecausePixlepix() {
@@ -152,6 +153,8 @@ public class IcarusItems {
 
     public static void registerWing(ItemWing itemWing, String name) {
         GameRegistry.registerItem(itemWing, name);
+        IcarusUtil.wingList.add(itemWing);
+        GameRegistry.addRecipe(new ArmorWingRecipe(itemWing));
     }
 
     /*
@@ -184,5 +187,13 @@ public class IcarusItems {
 
     public static ItemArmor.ArmorMaterial addArmorMaterialWithRepair(String name, int durability, int[] reductionAmounts, int enchantability, String repairItem) {
         return addArmorMaterialWithRepair(name, durability, reductionAmounts, enchantability, OreDictionary.getOres(repairItem).get(0).getItem());
+    }
+
+    public static void addArmorsToList() {
+        for (Item item : GameData.getItemRegistry().typeSafeIterable()) {
+            if (item instanceof ItemArmor && ((ItemArmor) item).armorType == 1) {
+                IcarusUtil.armorList.add(new ItemStack(item));
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.util.IcarusWing;
@@ -22,7 +23,6 @@ import java.util.List;
 
 public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
 
-    public static final String NBT_TIER = "Icarus_Tier";
     public static final int MAX_TIER = 11;
     public static ArrayList<ItemStack> angelsteelWings = new ArrayList<ItemStack>();
 
@@ -40,7 +40,7 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
             IcarusItems.singleWings.addTooltip(17 + i, StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (i + 1));
             ItemStack stack = new ItemStack(this);
             stack.setTagCompound(new NBTTagCompound());
-            stack.stackTagCompound.setInteger(NBT_TIER, i);
+            stack.stackTagCompound.setInteger(IcarusConstants.NBT_TIER, i);
             angelsteelWings.add(stack);
         }
     }
@@ -48,13 +48,13 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
     @Override
     public Wing getWing(ItemStack stack) {
         IcarusUtil.checkNBT(stack);
-        return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER));
+        return wingList.get(stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER));
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
         IcarusUtil.checkNBT(stack);
-        return wingList.get(stack.stackTagCompound.getInteger(NBT_TIER)).durability;
+        return wingList.get(stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER)).durability;
     }
 
     @Override
@@ -77,14 +77,14 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK)).getDisplayName());
         }
 
         if (!StringHelper.isShiftKeyDown()) {
             IcarusUtil.checkNBT(stack);
 
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(NBT_TIER) + 1));
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
                 list.add(IcarusUtil.pressShiftForDetails());
             }

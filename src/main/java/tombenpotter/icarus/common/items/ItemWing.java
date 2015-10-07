@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.api.wings.Wing;
@@ -37,7 +38,6 @@ import java.util.List;
 public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     private Wing wing;
-    public static final String NBT_ITEMSTACK = "Icarus_ItemStack";
 
     public ItemWing(ArmorMaterial material, Wing wing) {
         super(material, 3, 1);
@@ -71,7 +71,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleJump(World world, EntityPlayer player, ItemStack stack) {
-        if (world.isRemote) {
+        if (!player.onGround && world.isRemote) {
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
                 double jumpBoost = getWing(stack).jumpBoost;
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.boostEnchantID, stack);
@@ -185,8 +185,8 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     @Override
     @SideOnly(Side.CLIENT)
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
             Item armor = armorStack.getItem();
 
             //Because vanilla is stupid.
@@ -210,8 +210,8 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
     @Override
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, int armorSlot) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK));
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
             return armorStack.getItem().getArmorModel(entityLiving, stack, armorSlot);
         }
 
@@ -221,8 +221,8 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean held) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(NBT_ITEMSTACK)) {
-            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(NBT_ITEMSTACK)).getDisplayName());
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.render.armor") + StringHelper.END + ": " + ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK)).getDisplayName());
         }
 
         if (ConfigHandler.showWingsStats) {

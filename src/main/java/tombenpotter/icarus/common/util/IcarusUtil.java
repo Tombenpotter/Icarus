@@ -9,7 +9,12 @@ import net.minecraft.util.MathHelper;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
+import java.util.ArrayList;
+
 public class IcarusUtil {
+
+    public static ArrayList<ItemWing> wingList = new ArrayList<ItemWing>();
+    public static ArrayList<ItemStack> armorList = new ArrayList<ItemStack>();
 
     private IcarusUtil() {
     }
