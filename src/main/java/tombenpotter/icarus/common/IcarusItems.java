@@ -34,6 +34,7 @@ public class IcarusItems {
     public static ItemWingAuraCascade angelsteelWings;
     public static ItemWingWitchery witchHunterWings, vampireWings;
     public static ItemWingCreeper creeperKingWings;
+    public static ItemWingRadioactive radioactiveWings;
 
     //Equivalent of the cloth material, without the coloring stuffs
     public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
@@ -188,6 +189,12 @@ public class IcarusItems {
         registerWing(creeperKingWings, "ItemCreeperKingWings");
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 33), "AB ", "XYY", " XX", 'A', "ingotGold", 'B', "dyeRed", 'X', Blocks.tnt, 'Y', new ItemStack(Items.skull, 1, 4)));
         GameRegistry.addShapelessRecipe(new ItemStack(creeperKingWings), new ItemStack(singleWings, 1, 33), new ItemStack(singleWings, 1, 33));
+
+        radioactiveWings = new ItemWingRadioactive(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("RadioactiveWing", 1024, 1024, 0.69, 0.38, -0.15, -0.19, 0.36));
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("ingotUranium")) {
+            registerWing(radioactiveWings, "ItemRadioactiveWings");
+            addWingRecipe(34, radioactiveWings, "ingotUranium", Items.spider_eye);
+        }
     }
 
     public static void registerWing(ItemWing itemWing, String name) {
