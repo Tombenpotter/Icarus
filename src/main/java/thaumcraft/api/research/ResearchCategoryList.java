@@ -32,14 +32,13 @@ public class ResearchCategoryList {
      */
     public ResourceLocation icon;
     public ResourceLocation background;
+    //Research
+    public Map<String, ResearchItem> research = new HashMap<String, ResearchItem>();
 
     public ResearchCategoryList(ResourceLocation icon, ResourceLocation background) {
         this.icon = icon;
         this.background = background;
     }
-
-    //Research
-    public Map<String, ResearchItem> research = new HashMap<String, ResearchItem>();
 
 
 }

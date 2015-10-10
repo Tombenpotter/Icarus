@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class IcarusItems {
 
+    public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
+    public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
     //Last damage value used: 27
     public static ItemSingleWing singleWings;
@@ -35,11 +37,8 @@ public class IcarusItems {
     public static ItemWingWitchery witchHunterWings, vampireWings;
     public static ItemWingCreeper creeperKingWings;
     public static ItemWingRadioactive radioactiveWings;
-
     //Equivalent of the cloth material, without the coloring stuffs
     public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
-    public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
-    public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
 
     public static void registerItems() {
         ModItemGetter.load();

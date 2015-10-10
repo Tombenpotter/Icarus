@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class WandTriggerRegistry {
 
-    private static HashMap<String, HashMap<List, List>> triggers = new HashMap<String, HashMap<List, List>>();
     private static final String DEFAULT = "default";
+    private static HashMap<String, HashMap<List, List>> triggers = new HashMap<String, HashMap<List, List>>();
 
     /**
      * Registers an action to perform when a casting wand right clicks on a specific block.

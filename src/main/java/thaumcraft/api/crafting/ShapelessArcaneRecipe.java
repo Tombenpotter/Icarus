@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ShapelessArcaneRecipe implements IArcaneRecipe {
-    private ItemStack output = null;
-    private ArrayList input = new ArrayList();
-
     public AspectList aspects = null;
     public String research;
+    private ItemStack output = null;
+    private ArrayList input = new ArrayList();
 
     public ShapelessArcaneRecipe(String research, Block result, AspectList aspects, Object... recipe) {
         this(research, new ItemStack(result), aspects, recipe);

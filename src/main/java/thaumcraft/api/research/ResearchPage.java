@@ -14,29 +14,13 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import java.util.List;
 
 public class ResearchPage {
-    public static enum PageType {
-        TEXT,
-        TEXT_CONCEALED,
-        IMAGE,
-        CRUCIBLE_CRAFTING,
-        ARCANE_CRAFTING,
-        ASPECTS,
-        NORMAL_CRAFTING,
-        INFUSION_CRAFTING,
-        COMPOUND_CRAFTING,
-        INFUSION_ENCHANTMENT,
-        SMELTING
-    }
-
     public PageType type = PageType.TEXT;
-
     public String text = null;
     public String research = null;
     public ResourceLocation image = null;
     public AspectList aspects = null;
     public Object recipe = null;
     public ItemStack recipeOutput = null;
-
     /**
      * @param text this can (but does not have to) be a reference to a localization variable, not the actual text.
      */
@@ -187,6 +171,20 @@ public class ResearchPage {
             if (ret.isEmpty()) ret = text;
         }
         return ret;
+    }
+
+    public static enum PageType {
+        TEXT,
+        TEXT_CONCEALED,
+        IMAGE,
+        CRUCIBLE_CRAFTING,
+        ARCANE_CRAFTING,
+        ASPECTS,
+        NORMAL_CRAFTING,
+        INFUSION_CRAFTING,
+        COMPOUND_CRAFTING,
+        INFUSION_ENCHANTMENT,
+        SMELTING
     }
 
 

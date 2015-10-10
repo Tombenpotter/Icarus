@@ -16,8 +16,11 @@ import java.util.HashMap;
  */
 public abstract class TileVisNode extends TileThaumcraft {
 
+    public boolean nodeRefresh = false;
+    protected int nodeCounter = 0;
     WeakReference<TileVisNode> parent = null;
     ArrayList<WeakReference<TileVisNode>> children = new ArrayList<WeakReference<TileVisNode>>();
+    private boolean nodeRegged = false;
 
     /**
      * @return the WorldCoordinates location of where this node is located
@@ -80,7 +83,6 @@ public abstract class TileVisNode extends TileThaumcraft {
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-
     @Override
     public void invalidate() {
         removeThisNode();
@@ -98,19 +100,19 @@ public abstract class TileVisNode extends TileThaumcraft {
     }
 
     /**
+     * @param parent
+     */
+    public void setParent(WeakReference<TileVisNode> parent) {
+        this.parent = parent;
+    }
+
+    /**
      * @return
      */
     public WeakReference<TileVisNode> getRootSource() {
         return VisNetHandler.isNodeValid(getParent()) ?
                 getParent().get().getRootSource() : this.isSource() ?
                 new WeakReference(this) : null;
-    }
-
-    /**
-     * @param parent
-     */
-    public void setParent(WeakReference<TileVisNode> parent) {
-        this.parent = parent;
     }
 
     /**
@@ -124,10 +126,6 @@ public abstract class TileVisNode extends TileThaumcraft {
     public boolean canUpdate() {
         return true;
     }
-
-    protected int nodeCounter = 0;
-    private boolean nodeRegged = false;
-    public boolean nodeRefresh = false;
 
     @Override
     public void updateEntity() {

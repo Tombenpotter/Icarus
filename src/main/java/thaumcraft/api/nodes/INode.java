@@ -30,18 +30,18 @@ public interface INode extends IAspectContainer {
     public void setNodeType(NodeType nodeType);
 
     /**
-     * Set the node modifier
-     *
-     * @return
-     */
-    public void setNodeModifier(NodeModifier nodeModifier);
-
-    /**
      * Return the node modifier
      *
      * @return
      */
     public NodeModifier getNodeModifier();
+
+    /**
+     * Set the node modifier
+     *
+     * @return
+     */
+    public void setNodeModifier(NodeModifier nodeModifier);
 
     /**
      * Return the maximum capacity of each aspect the node can hold

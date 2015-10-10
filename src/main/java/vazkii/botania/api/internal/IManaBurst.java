@@ -2,72 +2,72 @@
  * This class was created by <Vazkii>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
- * 
+ *
  * Botania is Open Source and distributed under the
  * Botania License: http://botaniamod.net/license.php
- * 
+ *
  * File Created @ [Jan 31, 2014, 4:36:13 PM (GMT)]
  */
 package vazkii.botania.api.internal;
 
-import java.util.UUID;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
+
+import java.util.UUID;
 
 /**
  * Interface for the Mana Burst entity. This can safely be casted to EntityThrowable.
  */
 public interface IManaBurst {
 
-	public boolean isFake();
+    public boolean isFake();
 
-	public void setMotion(double x, double y, double z);
+    public void setFake(boolean fake);
 
-	public int getColor();
+    public void setMotion(double x, double y, double z);
 
-	public void setColor(int color);
+    public int getColor();
 
-	public int getMana();
+    public void setColor(int color);
 
-	public void setMana(int mana);
+    public int getMana();
 
-	public int getStartingMana();
+    public void setMana(int mana);
 
-	public void setStartingMana(int mana);
+    public int getStartingMana();
 
-	public int getMinManaLoss();
+    public void setStartingMana(int mana);
 
-	public void setMinManaLoss(int minManaLoss);
+    public int getMinManaLoss();
 
-	public float getManaLossPerTick();
+    public void setMinManaLoss(int minManaLoss);
 
-	public void setManaLossPerTick(float mana);
+    public float getManaLossPerTick();
 
-	public float getGravity();
+    public void setManaLossPerTick(float mana);
 
-	public void setGravity(float gravity);
+    public float getGravity();
 
-	public ChunkCoordinates getBurstSourceChunkCoordinates();
+    public void setGravity(float gravity);
 
-	public void setBurstSourceCoords(int x, int y, int z);
+    public ChunkCoordinates getBurstSourceChunkCoordinates();
 
-	public ItemStack getSourceLens();
+    public void setBurstSourceCoords(int x, int y, int z);
 
-	public void setSourceLens(ItemStack lens);
+    public ItemStack getSourceLens();
 
-	public boolean hasAlreadyCollidedAt(int x, int y, int z);
+    public void setSourceLens(ItemStack lens);
 
-	public void setCollidedAt(int x, int y, int z);
+    public boolean hasAlreadyCollidedAt(int x, int y, int z);
 
-	public int getTicksExisted();
+    public void setCollidedAt(int x, int y, int z);
 
-	public void setFake(boolean fake);
+    public int getTicksExisted();
 
-	public void setShooterUUID(UUID uuid);
+    public void setShooterUUID(UUID uuid);
 
-	public UUID getShooterUIID();
+    public UUID getShooterUIID();
 
-	public void ping();
+    public void ping();
 
 }

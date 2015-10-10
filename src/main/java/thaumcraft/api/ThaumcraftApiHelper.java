@@ -21,6 +21,9 @@ import java.util.Iterator;
 
 public class ThaumcraftApiHelper {
 
+    private static HashMap<Integer, AspectList> allAspects = new HashMap<Integer, AspectList>();
+    private static HashMap<Integer, AspectList> allCompoundAspects = new HashMap<Integer, AspectList>();
+
     public static AspectList cullTags(AspectList temp) {
         AspectList temp2 = new AspectList();
         for (Aspect tag : temp.getAspects()) {
@@ -141,7 +144,6 @@ public class ThaumcraftApiHelper {
                 ((target.getItemDamage() == OreDictionary.WILDCARD_VALUE && !strict) || target.getItemDamage() == input.getItemDamage()));
     }
 
-
     public static TileEntity getConnectableTile(World world, int x, int y, int z, ForgeDirection face) {
         TileEntity te = world.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
         if (te instanceof IEssentiaTransport && ((IEssentiaTransport) te).isConnectable(face.getOpposite()))
@@ -157,9 +159,6 @@ public class ThaumcraftApiHelper {
         else
             return null;
     }
-
-    private static HashMap<Integer, AspectList> allAspects = new HashMap<Integer, AspectList>();
-    private static HashMap<Integer, AspectList> allCompoundAspects = new HashMap<Integer, AspectList>();
 
     public static AspectList getAllAspects(int amount) {
         if (allAspects.get(amount) == null) {

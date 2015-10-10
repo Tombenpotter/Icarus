@@ -23,14 +23,14 @@ import java.util.List;
 
 public class ItemFocusBasic extends Item {
 
+    public IIcon icon;
+
     public ItemFocusBasic() {
         super();
         maxStackSize = 1;
         canRepair = false;
         this.setMaxDamage(0);
     }
-
-    public IIcon icon;
 
     @SideOnly(Side.CLIENT)
     @Override
@@ -110,10 +110,6 @@ public class ItemFocusBasic extends Item {
         return null;
     }
 
-    public enum WandFocusAnimation {
-        WAVE, CHARGE;
-    }
-
     public WandFocusAnimation getAnimation(ItemStack focusstack) {
         return WandFocusAnimation.WAVE;
     }
@@ -128,7 +124,6 @@ public class ItemFocusBasic extends Item {
         }
         return out;
     }
-
 
     /**
      * How much vis does this focus consume per activation.
@@ -260,6 +255,10 @@ public class ItemFocusBasic extends Item {
             stack.stackTagCompound.removeTag("ench");
         }
         super.onUpdate(stack, world, entity, p_77663_4_, p_77663_5_);
+    }
+
+    public enum WandFocusAnimation {
+        WAVE, CHARGE;
     }
 
 

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class InfusionRecipe {
     protected AspectList aspects;
     protected String research;
-    private ItemStack[] components;
-    private ItemStack recipeInput;
     protected Object recipeOutput;
     protected int instability;
+    private ItemStack[] components;
+    private ItemStack recipeInput;
 
     public InfusionRecipe(String research, Object output, int inst,
                           AspectList aspects2, ItemStack input, ItemStack[] recipe) {
@@ -25,6 +25,31 @@ public class InfusionRecipe {
         this.aspects = aspects2;
         this.components = recipe;
         this.instability = inst;
+    }
+
+    public static boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy) {
+        if (stack0 == null && stack1 != null) return false;
+        if (stack0 != null && stack1 == null) return false;
+        if (stack0 == null && stack1 == null) return true;
+
+        //nbt
+        boolean t1 = ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(stack0, stack1);
+        if (!t1) return false;
+
+        if (fuzzy) {
+            Integer od = OreDictionary.getOreID(stack0);
+            if (od != -1) {
+                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
+                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
+                    return true;
+            }
+        }
+
+        //damage
+        boolean damage = stack0.getItemDamage() == stack1.getItemDamage() ||
+                stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE;
+
+        return stack0.getItem() != stack1.getItem() ? false : (!damage ? false : stack0.stackSize <= stack0.getMaxStackSize());
     }
 
     /**
@@ -67,31 +92,6 @@ public class InfusionRecipe {
             if (!b) return false;
         }
         return ii.size() == 0 ? true : false;
-    }
-
-    public static boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean fuzzy) {
-        if (stack0 == null && stack1 != null) return false;
-        if (stack0 != null && stack1 == null) return false;
-        if (stack0 == null && stack1 == null) return true;
-
-        //nbt
-        boolean t1 = ThaumcraftApiHelper.areItemStackTagsEqualForCrafting(stack0, stack1);
-        if (!t1) return false;
-
-        if (fuzzy) {
-            Integer od = OreDictionary.getOreID(stack0);
-            if (od != -1) {
-                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
-                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
-                    return true;
-            }
-        }
-
-        //damage
-        boolean damage = stack0.getItemDamage() == stack1.getItemDamage() ||
-                stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE;
-
-        return stack0.getItem() != stack1.getItem() ? false : (!damage ? false : stack0.stackSize <= stack0.getMaxStackSize());
     }
 
     public Object getRecipeOutput() {

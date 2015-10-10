@@ -10,13 +10,11 @@ import java.util.ArrayList;
 
 public class CrucibleRecipe {
 
-    private ItemStack recipeOutput;
-
     public Object catalyst;
     public AspectList aspects;
     public String key;
-
     public int hash;
+    private ItemStack recipeOutput;
 
     public CrucibleRecipe(String researchKey, ItemStack result, Object cat, AspectList tags) {
         recipeOutput = result;

@@ -14,40 +14,33 @@ import java.util.LinkedHashMap;
 public class WandRod {
 
 
-    private String tag;
-
+    public static LinkedHashMap<String, WandRod> rods = new LinkedHashMap<String, WandRod>();
     /**
-     * Cost to craft this wand. Combined with the rod cost.
+     * The texture that will be used for the ingame wand rod
      */
-    private int craftCost;
-
+    protected ResourceLocation texture;
     /**
      * The amount of vis that can be stored - this number is actually multiplied
      * by 100 for use by the wands internals
      */
     int capacity;
-
-    /**
-     * The texture that will be used for the ingame wand rod
-     */
-    protected ResourceLocation texture;
-
     /**
      * the actual item that makes up this rod and will be used to generate the wand recipes
      */
     ItemStack item;
-
     /**
      * A class that will be called whenever the wand onUpdate tick is run
      */
     IWandRodOnUpdate onUpdate;
-
     /**
      * Does the rod glow in the dark?
      */
     boolean glow;
-
-    public static LinkedHashMap<String, WandRod> rods = new LinkedHashMap<String, WandRod>();
+    private String tag;
+    /**
+     * Cost to craft this wand. Combined with the rod cost.
+     */
+    private int craftCost;
 
     public WandRod(String tag, int capacity, ItemStack item, int craftCost, ResourceLocation texture) {
         this.setTag(tag);

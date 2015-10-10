@@ -8,6 +8,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 
 public class PotionVisExhaust extends Potion {
+    static final ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/misc/potions.png");
     public static PotionVisExhaust instance = null; // will be instantiated at runtime
     private int statusIconIndex = -1;
 
@@ -33,8 +34,6 @@ public class PotionVisExhaust extends Potion {
         Minecraft.getMinecraft().renderEngine.bindTexture(rl);
         return super.getStatusIconIndex();
     }
-
-    static final ResourceLocation rl = new ResourceLocation("thaumcraft", "textures/misc/potions.png");
 
     @Override
     public void performEffect(EntityLivingBase target, int par2) {

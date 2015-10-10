@@ -22,13 +22,12 @@ import tombenpotter.icarus.common.util.HoverHandler;
 
 public class ClientEventHandler {
 
+    private static final Minecraft minecraft = Minecraft.getMinecraft();
     private static float renderTicks;
     private static long tickTime = 0L;
-    private static final Minecraft minecraft = Minecraft.getMinecraft();
-
     private static KeyBinding keyHover = new KeyBinding("key.icarus.hover", Keyboard.KEY_M, Icarus.name);
 
-    public static void registerKeybindings(){
+    public static void registerKeybindings() {
         ClientRegistry.registerKeyBinding(keyHover);
     }
 

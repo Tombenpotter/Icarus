@@ -21,12 +21,26 @@ public class ResearchItem {
      * The aspect tags and their values required to complete this research
      */
     public final AspectList tags;
-
+    /**
+     * the horizontal position of the research icon
+     */
+    public final int displayColumn;
+    /**
+     * the vertical position of the research icon
+     */
+    public final int displayRow;
+    /**
+     * the icon to be used for this research
+     */
+    public final ItemStack icon_item;
+    /**
+     * the icon to be used for this research
+     */
+    public final ResourceLocation icon_resource;
     /**
      * This links to any research that needs to be completed before this research can be discovered or learnt.
      */
     public String[] parents = null;
-
     /**
      * Like parent above, but a line will not be displayed in the thaumonomicon linking them. Just used to prevent clutter.
      */
@@ -35,27 +49,6 @@ public class ResearchItem {
      * any research linked to this that will be unlocked automatically when this research is complete
      */
     public String[] siblings = null;
-
-    /**
-     * the horizontal position of the research icon
-     */
-    public final int displayColumn;
-
-    /**
-     * the vertical position of the research icon
-     */
-    public final int displayRow;
-
-    /**
-     * the icon to be used for this research
-     */
-    public final ItemStack icon_item;
-
-    /**
-     * the icon to be used for this research
-     */
-    public final ResourceLocation icon_resource;
-
     /**
      * How large the research grid is. Valid values are 1 to 3.
      */
@@ -212,27 +205,12 @@ public class ResearchItem {
         return this;
     }
 
-    public ResearchItem setPages(ResearchPage... par) {
-        this.pages = par;
-        return this;
-    }
-
     public ResearchPage[] getPages() {
         return pages;
     }
 
-    public ResearchItem setItemTriggers(ItemStack... par) {
-        this.itemTriggers = par;
-        return this;
-    }
-
-    public ResearchItem setEntityTriggers(String... par) {
-        this.entityTriggers = par;
-        return this;
-    }
-
-    public ResearchItem setAspectTriggers(Aspect... par) {
-        this.aspectTriggers = par;
+    public ResearchItem setPages(ResearchPage... par) {
+        this.pages = par;
         return this;
     }
 
@@ -240,12 +218,27 @@ public class ResearchItem {
         return itemTriggers;
     }
 
+    public ResearchItem setItemTriggers(ItemStack... par) {
+        this.itemTriggers = par;
+        return this;
+    }
+
     public String[] getEntityTriggers() {
         return entityTriggers;
     }
 
+    public ResearchItem setEntityTriggers(String... par) {
+        this.entityTriggers = par;
+        return this;
+    }
+
     public Aspect[] getAspectTriggers() {
         return aspectTriggers;
+    }
+
+    public ResearchItem setAspectTriggers(Aspect... par) {
+        this.aspectTriggers = par;
+        return this;
     }
 
     public ResearchItem registerResearchItem() {

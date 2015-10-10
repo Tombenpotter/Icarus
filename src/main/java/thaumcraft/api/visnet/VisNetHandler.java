@@ -17,6 +17,10 @@ public class VisNetHandler {
 
     // NODE DRAINING
 
+    public static HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>> sources = new HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>>();
+    static ArrayList<WorldCoordinates> cache = new ArrayList<WorldCoordinates>();
+    private static HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>> nearbyNodes = new HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>>();
+
     /**
      * This method drains vis from a relay or source near the passed in
      * location. The amount received can be less than the amount requested so
@@ -66,8 +70,6 @@ public class VisNetHandler {
     public static void generateVisEffect(int dim, int x, int y, int z, int x2, int y2, int z2, int color) {
         ThaumcraftApi.internalMethods.generateVisEffect(dim, x, y, z, x2, y2, z2, color);
     }
-
-    public static HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>> sources = new HashMap<Integer, HashMap<WorldCoordinates, WeakReference<TileVisNode>>>();
 
     public static void addSource(World world, TileVisNode vs) {
         HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = sources
@@ -136,8 +138,6 @@ public class VisNetHandler {
         return null;
     }
 
-    static ArrayList<WorldCoordinates> cache = new ArrayList<WorldCoordinates>();
-
     public static ArrayList<Object[]> findClosestNodes(TileVisNode target,
                                                        TileVisNode parent, ArrayList<Object[]> in) {
 
@@ -165,8 +165,6 @@ public class VisNetHandler {
         float distance = cc1.getDistanceSquaredToWorldCoordinates(cc2);
         return distance > range * range ? -1 : distance;
     }
-
-    private static HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>> nearbyNodes = new HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>>();
 
     private static void calculateNearbyNodes(World world, int x, int y, int z) {
 

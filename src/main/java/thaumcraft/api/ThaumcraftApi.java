@@ -63,28 +63,20 @@ public class ThaumcraftApi {
     //RESEARCH/////////////////////////////////////////
     public static ArrayList<IScanEventHandler> scanEventhandlers = new ArrayList<IScanEventHandler>();
     public static ArrayList<EntityTags> scanEntities = new ArrayList<EntityTags>();
-
-    public static class EntityTagsNBT {
-        public EntityTagsNBT(String name, Object value) {
-            this.name = name;
-            this.value = value;
-        }
-
-        public String name;
-        public Object value;
-    }
-
-    public static class EntityTags {
-        public EntityTags(String entityName, AspectList aspects, EntityTagsNBT... nbts) {
-            this.entityName = entityName;
-            this.nbts = nbts;
-            this.aspects = aspects;
-        }
-
-        public String entityName;
-        public EntityTagsNBT[] nbts;
-        public AspectList aspects;
-    }
+    public static ConcurrentHashMap<List, AspectList> objectTags = new ConcurrentHashMap<List, AspectList>();
+    public static ConcurrentHashMap<List, int[]> groupedObjectTags = new ConcurrentHashMap<List, int[]>();
+    //RECIPES/////////////////////////////////////////
+    private static ArrayList craftingRecipes = new ArrayList();
+    private static HashMap<Object, ItemStack> smeltingBonus = new HashMap<Object, ItemStack>();
+    /**
+     * Used by the thaumonomicon drilldown feature.
+     *
+     * @param stack the item
+     * @return the thaumcraft recipe key that produces that item.
+     */
+    private static HashMap<int[], Object[]> keyCache = new HashMap<int[], Object[]>();
+    //WARP ///////////////////////////////////////////////////////////////////////////////////////
+    private static HashMap<Object, Integer> warpMap = new HashMap<Object, Integer>();
 
     /**
      * not really working atm, so ignore it for now
@@ -109,10 +101,6 @@ public class ThaumcraftApi {
     public static void registerEntityTag(String entityName, AspectList aspects, EntityTagsNBT... nbt) {
         scanEntities.add(new EntityTags(entityName, aspects, nbt));
     }
-
-    //RECIPES/////////////////////////////////////////
-    private static ArrayList craftingRecipes = new ArrayList();
-    private static HashMap<Object, ItemStack> smeltingBonus = new HashMap<Object, ItemStack>();
 
     /**
      * This method is used to determine what bonus items are generated when the infernal furnace smelts items
@@ -232,7 +220,6 @@ public class ThaumcraftApi {
         return null;
     }
 
-
     /**
      * @param key      the research key required for this recipe to work.
      * @param result   the output result
@@ -245,7 +232,6 @@ public class ThaumcraftApi {
         getCraftingRecipes().add(rc);
         return rc;
     }
-
 
     /**
      * @param stack the recipe result
@@ -275,13 +261,7 @@ public class ThaumcraftApi {
         return null;
     }
 
-    /**
-     * Used by the thaumonomicon drilldown feature.
-     *
-     * @param stack the item
-     * @return the thaumcraft recipe key that produces that item.
-     */
-    private static HashMap<int[], Object[]> keyCache = new HashMap<int[], Object[]>();
+    //ASPECTS////////////////////////////////////////
 
     public static Object[] getCraftingRecipeKey(EntityPlayer player, ItemStack stack) {
         int[] key = new int[]{Item.getIdFromItem(stack.getItem()), stack.getItemDamage()};
@@ -319,11 +299,6 @@ public class ThaumcraftApi {
         keyCache.put(key, null);
         return null;
     }
-
-    //ASPECTS////////////////////////////////////////
-
-    public static ConcurrentHashMap<List, AspectList> objectTags = new ConcurrentHashMap<List, AspectList>();
-    public static ConcurrentHashMap<List, int[]> groupedObjectTags = new ConcurrentHashMap<List, int[]>();
 
     /**
      * Checks to see if the passed item/block already has aspects associated with it.
@@ -363,7 +338,6 @@ public class ThaumcraftApi {
         } catch (Exception e) {
         }
     }
-
 
     /**
      * Used to assign apsects to the given item/block. Here is an example of the declaration for cobblestone:<p>
@@ -432,9 +406,6 @@ public class ThaumcraftApi {
         }
     }
 
-    //WARP ///////////////////////////////////////////////////////////////////////////////////////
-    private static HashMap<Object, Integer> warpMap = new HashMap<Object, Integer>();
-
     /**
      * This method is used to determine how much warp is gained if the item is crafted. The warp
      * added is "sticky" warp
@@ -472,8 +443,6 @@ public class ThaumcraftApi {
         return 0;
     }
 
-    //LOOT BAGS //////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * Used to add possible loot to treasure bags. As a reference, the weight of gold coins are 2000
      * and a diamond is 50.
@@ -502,6 +471,28 @@ public class ThaumcraftApi {
                         break;
                 }
             }
+        }
+    }
+
+    public static class EntityTagsNBT {
+        public String name;
+        public Object value;
+        public EntityTagsNBT(String name, Object value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+    //LOOT BAGS //////////////////////////////////////////////////////////////////////////////////////////
+
+    public static class EntityTags {
+        public String entityName;
+        public EntityTagsNBT[] nbts;
+        public AspectList aspects;
+        public EntityTags(String entityName, AspectList aspects, EntityTagsNBT... nbts) {
+            this.entityName = entityName;
+            this.nbts = nbts;
+            this.aspects = aspects;
         }
     }
 

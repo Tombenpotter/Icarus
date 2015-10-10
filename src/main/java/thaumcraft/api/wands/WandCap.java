@@ -15,39 +15,32 @@ import java.util.List;
  */
 public class WandCap {
 
-    private String tag;
-
-    /**
-     * Cost to craft this wand. Combined with the rod cost.
-     */
-    private int craftCost;
-
+    public static LinkedHashMap<String, WandCap> caps = new LinkedHashMap<String, WandCap>();
     /**
      * the amount by which all aspect costs are multiplied
      */
     float baseCostModifier;
-
     /**
      * specifies a list of primal aspects that use the special discount figure instead of the normal discount.
      */
     List<Aspect> specialCostModifierAspects;
-
     /**
      * the amount by which the specified aspect costs are multiplied
      */
     float specialCostModifier;
-
     /**
      * The texture that will be used for the ingame wand cap
      */
     ResourceLocation texture;
-
     /**
      * the actual item that makes up this cap and will be used to generate the wand recipes
      */
     ItemStack item;
-
-    public static LinkedHashMap<String, WandCap> caps = new LinkedHashMap<String, WandCap>();
+    private String tag;
+    /**
+     * Cost to craft this wand. Combined with the rod cost.
+     */
+    private int craftCost;
 
     public WandCap(String tag, float discount, ItemStack item, int craftCost) {
         this.setTag(tag);

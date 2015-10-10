@@ -52,14 +52,14 @@ public class ItemWingBotania extends ItemWing implements IManaUsingItem, ISpecia
 
     @Override
     public void onWingFlap(ItemStack stack, EntityPlayer player) {
-        if(!getArmorMaterial().name().equals(IcarusItems.CLOTH.name())){
+        if (!getArmorMaterial().name().equals(IcarusItems.CLOTH.name())) {
             ManaItemHandler.requestManaExact(stack, player, manaPerDamage / 2, true);
         }
     }
 
     @Override
     public void onWingHover(ItemStack stack, EntityPlayer player) {
-        if(!getArmorMaterial().name().equals(IcarusItems.CLOTH.name())){
+        if (!getArmorMaterial().name().equals(IcarusItems.CLOTH.name())) {
             ManaItemHandler.requestManaExact(stack, player, manaPerDamage / 4, true);
         }
     }
@@ -67,7 +67,7 @@ public class ItemWingBotania extends ItemWing implements IManaUsingItem, ISpecia
     @Override
     public void onWingTick(ItemStack stack, EntityPlayer player) {
         if (stack.getItemDamage() > 0 && ManaItemHandler.requestManaExact(stack, player, manaPerDamage, true)) {
-                stack.setItemDamage(stack.getItemDamage() - 1);
+            stack.setItemDamage(stack.getItemDamage() - 1);
         }
     }
 
