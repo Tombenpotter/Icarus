@@ -25,8 +25,8 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
         this.itemWing = new ItemStack(wing);
 
         this.input = new Object[9];
-        input[4] = IcarusHelper.armorList;
-        input[7] = this.itemWing;
+        input[4] = this.itemWing;
+        input[7] = IcarusHelper.armorList;
     }
 
     @Override
@@ -34,10 +34,7 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
         ItemStack wingStack = inventoryCrafting.getStackInSlot(4);
         ItemStack armorStack = inventoryCrafting.getStackInSlot(7);
 
-        if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {
-            return true;
-        }
-        return false;
+        return armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing);
     }
 
     @Override
@@ -49,14 +46,16 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
         if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {
             result = wingStack.copy();
 
-            if (wingStack.stackTagCompound == null) {
-                wingStack.setTagCompound(new NBTTagCompound());
+            if (result.stackTagCompound == null) {
+                result.setTagCompound(new NBTTagCompound());
             }
-            result.setTagCompound(wingStack.getTagCompound());
+            if (wingStack.stackTagCompound != null) {
+                result.setTagCompound(wingStack.getTagCompound());
+            }
 
             NBTTagCompound tag = new NBTTagCompound();
             armorStack.writeToNBT(tag);
-            wingStack.stackTagCompound.setTag(IcarusConstants.NBT_ITEMSTACK, tag);
+            result.stackTagCompound.setTag(IcarusConstants.NBT_ITEMSTACK, tag);
         }
         return result;
     }

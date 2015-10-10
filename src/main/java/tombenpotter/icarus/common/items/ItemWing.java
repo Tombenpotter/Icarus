@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.api.IcarusConstants;
@@ -35,7 +36,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemWing extends ItemArmor implements IWingHUD {
+public abstract class ItemWing extends ItemArmor implements ISpecialArmor, IWingHUD {
 
     private Wing wing;
 
@@ -237,13 +238,38 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, int armorSlot) {
         if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
             ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
-            return armorStack.getItem().getArmorModel(entityLiving, stack, armorSlot);
+            return armorStack.getItem().getArmorModel(entityLiving, armorStack, armorSlot);
         }
 
         return super.getArmorModel(entityLiving, stack, armorSlot);
+    }
+
+    @Override
+    public boolean hasColor(ItemStack stack) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            return ((ItemArmor) armorStack.getItem()).hasColor(stack);
+        }
+
+        return super.hasColor(stack);
+    }
+
+    @Override
+    public int getColor(ItemStack stack) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            return ((ItemArmor) armorStack.getItem()).getColor(stack);
+        }
+        return super.getColor(stack);
+    }
+
+    @Override
+    public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_) {
+        return super.getColorFromItemStack(p_82790_1_, p_82790_2_);
     }
 
     @Override
@@ -278,5 +304,49 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
         }
 
         return list;
+    }
+
+    @Override
+    public ArmorProperties getProperties(EntityLivingBase entity, ItemStack stack, DamageSource source, double damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getProperties(entity, stack, source, damage, slot);
+            }
+        }
+
+        if (source.isUnblockable()) {
+            return new ArmorProperties(0, 0, 0);
+        }
+        return new ArmorProperties(0, damageReduceAmount / 25D, stack.getMaxDamage() + 1 - stack.getItemDamage());
+    }
+
+    @Override
+    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
+            }
+        }
+        return damageReduceAmount;
+    }
+
+    @Override
+    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                ((ISpecialArmor) armor).damageArmor(entity, stack, source, damage, slot);
+            }
+        }
+
+        stack.damageItem(1, entity);
     }
 }

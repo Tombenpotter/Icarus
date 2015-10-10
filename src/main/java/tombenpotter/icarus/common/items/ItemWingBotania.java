@@ -17,7 +17,7 @@ import vazkii.botania.api.mana.ManaItemHandler;
 
 import java.util.List;
 
-public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsingItem, ISpecialWing {
+public class ItemWingBotania extends ItemWing implements IManaUsingItem, ISpecialWing {
 
     public int manaPerDamage = 70;
 
@@ -34,27 +34,6 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     @Override
     public boolean usesMana(ItemStack stack) {
         return true;
-    }
-
-    @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
-        if (source.isUnblockable()) {
-            return new ArmorProperties(0, 0, 0);
-        }
-        return new ArmorProperties(0, damageReduceAmount / 25D, armor.getMaxDamage() + 1 - armor.getItemDamage());
-    }
-
-    @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
-            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
-            Item armor = armorStack.getItem();
-
-            if (armor instanceof ISpecialArmor) {
-                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
-            }
-        }
-        return damageReduceAmount;
     }
 
     @Override

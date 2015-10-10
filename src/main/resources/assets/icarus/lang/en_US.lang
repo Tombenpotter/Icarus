@@ -32,6 +32,9 @@ item.Icarus.wing.AngelsteelWing.name=Angel's Steel Wings
 ###Immersive Engineering
 item.Icarus.wing.TreatedCardboardWing.name=Treated Cardboard Wings
 item.Icarus.wing.HempFabricWing.name=Hemp Fabric Wings
+###Witchery
+item.Icarus.wing.WitchHunterWing.name=Witch Hunter's Wings
+item.Icarus.wing.VampireWing.name=Vampire Wings
 
 ##Single Wing item
 ###Vanilla
@@ -63,6 +66,9 @@ item.Icarus.singleWing.AngelsteelWing.name=Angel's Steel Wing
 ###Immersive Engineering
 item.Icarus.singleWing.TreatedCardboardWing.name=Treated Cardboard Wing
 item.Icarus.singleWing.HempFabricWing.name=Hemp Fabric Wing
+###Witchery
+item.Icarus.singleWing.WitchHunterWing.name=Witch Hunter's Wing
+item.Icarus.singleWing.VampireWing.name=Vampire Wing
 
 #Text
 ##Tooltips

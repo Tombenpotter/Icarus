@@ -21,7 +21,7 @@ import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.List;
 
-public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContainerItem, ISpecialWing {
+public class ItemWingRF extends ItemWing implements IEnergyContainerItem, ISpecialWing {
 
     public static final ArmorProperties FLUX = new ArmorProperties(0, 0.20D, Integer.MAX_VALUE);
     public double absorbRatio = 0.9D;

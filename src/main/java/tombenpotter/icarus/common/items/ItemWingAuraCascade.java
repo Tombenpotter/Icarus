@@ -21,7 +21,7 @@ import tombenpotter.icarus.common.util.cofh.StringHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
+public class ItemWingAuraCascade extends ItemWing {
 
     public static final int MAX_TIER = 11;
     public static ArrayList<ItemStack> angelsteelWings = new ArrayList<ItemStack>();
@@ -67,36 +67,6 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
                 ((ISpecialArmor) armor).damageArmor(entity, stack, source, damage, slot);
             }
         }
-    }
-
-    @Override
-    public ArmorProperties getProperties(EntityLivingBase entity, ItemStack stack, DamageSource source, double damage, int slot) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
-            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
-            Item armor = armorStack.getItem();
-
-            if (armor instanceof ISpecialArmor) {
-                return ((ISpecialArmor) armor).getProperties(entity, stack, source, damage, slot);
-            }
-        }
-
-        if (source.isUnblockable()) {
-            return new ArmorProperties(0, 0, 0);
-        }
-        return new ArmorProperties(0, damageReduceAmount / 40D, stack.getMaxDamage() + 1 - stack.getItemDamage());
-    }
-
-    @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
-        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
-            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
-            Item armor = armorStack.getItem();
-
-            if (armor instanceof ISpecialArmor) {
-                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
-            }
-        }
-        return damageReduceAmount;
     }
 
     @Override

@@ -31,6 +31,7 @@ public class IcarusItems {
     public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings, manaweaveWings;
     public static ItemWingRF conductiveWings, energeticWings, vibrantWings;
     public static ItemWingAuraCascade angelsteelWings;
+    public static ItemWingWitchery witchHunterWings, vampireWings;
 
     //Equivalent of the cloth material, without the coloring stuffs
     public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
@@ -168,6 +169,19 @@ public class IcarusItems {
             registerWing(hempFabricWings, "ItemHempFabricWings");
             addWingRecipe(30, hempFabricWings, "fabricHemp", Items.feather);
         }
+
+        witchHunterWings = new ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("WitchHunterWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
+        if (ConfigHandler.enableWitcheryCompat && ModItemGetter.nullifiedLeather != null && ModItemGetter.mandrakeRoot != null) {
+            registerWing(witchHunterWings, "ItemWitchHunterWings");
+            addWingRecipe(31, witchHunterWings, ModItemGetter.nullifiedLeather, ModItemGetter.mandrakeRoot);
+        }
+
+        vampireWings = new ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("VampireWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
+        if (ConfigHandler.enableWitcheryCompat && ModItemGetter.wowenCruor != null && ModItemGetter.tongueOfDog != null) {
+            registerWing(vampireWings, "ItemVampireWings");
+            addWingRecipe(32, vampireWings, ModItemGetter.wowenCruor, ModItemGetter.tongueOfDog);
+        }
+
     }
 
     public static void registerWing(ItemWing itemWing, String name) {

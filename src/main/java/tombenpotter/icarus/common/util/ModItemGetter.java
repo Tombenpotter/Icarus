@@ -19,6 +19,11 @@ public abstract class ModItemGetter {
 
     public static ArrayList<ItemStack> angelsteelIngots = new ArrayList<ItemStack>();
 
+    public static ItemStack nullifiedLeather = null;
+    public static ItemStack wowenCruor = null;
+    public static ItemStack mandrakeRoot = null;
+    public static ItemStack tongueOfDog = null;
+
     private ModItemGetter() {
     }
 
@@ -30,6 +35,12 @@ public abstract class ModItemGetter {
         basicCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 0);
         doubleLayeredCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 1);
         octadicCapacitor = findItem("EnderIO", "itemBasicCapacitor", 1, 2);
+
+        nullifiedLeather = findItem("witchery", "ingredient", 1, 131);
+        wowenCruor = findItem("witchery", "ingredient", 110, 161);
+        mandrakeRoot = findItem("witchery", "ingredient", 1, 22);
+        tongueOfDog = findItem("witchery", "ingredient", 1, 25);
+
     }
 
     public static void auraCascadeIngotBecausePixlepixIsDuh() {
@@ -44,9 +55,6 @@ public abstract class ModItemGetter {
     public static ItemStack findItem(String modID, String itemName, int amount, int meta) {
         Item item = GameRegistry.findItem(modID, itemName);
 
-        if (item != null) {
-            return new ItemStack(item, amount, meta);
-        }
-        return null;
+        return item != null ? new ItemStack(item, amount, meta) : null;
     }
 }
