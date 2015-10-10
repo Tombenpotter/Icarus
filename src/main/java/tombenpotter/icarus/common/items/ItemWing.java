@@ -106,9 +106,15 @@ public abstract class ItemWing extends ItemArmor implements ISpecialArmor, IWing
         if (player.worldObj.isRaining()) {
             Field enableRain = ReflectionHelper.findField(BiomeGenBase.class, "field_76765_S", "enableRain", "ax");
             try {
+                double rainDrag = getWing(stack).rainDrag;
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.waterproofEnchantID, stack);
+                if (enchantmentLevel > 0) {
+                    rainDrag += 0.03 * enchantmentLevel;
+                }
+
                 if (enableRain.getBoolean(world.getBiomeGenForCoords((int) player.posX, (int) player.posZ)) &&
                         world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                    player.motionY = getWing(stack).rainDrag;
+                    player.motionY = rainDrag;
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -116,14 +122,19 @@ public abstract class ItemWing extends ItemArmor implements ISpecialArmor, IWing
         }
 
         if (player.worldObj.isThundering()) {
+            double rainDrag = getWing(stack).rainDrag;
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.waterproofEnchantID, stack);
+            if (enchantmentLevel > 0) {
+                rainDrag += 0.03 * enchantmentLevel;
+            }
+
             if (world.getBiomeGenForCoords((int) player.posX, (int) player.posZ).canSpawnLightningBolt() &&
                     world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ)) {
-                player.motionY = getWing(stack).rainDrag;
+                player.motionY = rainDrag;
             }
 
             if (!player.onGround && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && world.rand.nextInt(500) == 0) {
                 world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
-                //player.attackEntityFrom(DamageSource.magic, player.getMaxHealth() / 2);
                 player.motionY -= 1.5;
             }
         }
@@ -190,6 +201,7 @@ public abstract class ItemWing extends ItemArmor implements ISpecialArmor, IWing
         if (ConfigHandler.dimensionWingsDisabled.contains(world.provider.dimensionId)) {
             return;
         }
+
         handleJump(world, player, stack);
         handleHover(world, player, stack);
         handleHeight(world, player, stack);

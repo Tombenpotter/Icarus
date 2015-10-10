@@ -17,7 +17,7 @@ public class ConfigHandler {
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static HashSet<Integer> dimensionWingsDisabled = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat, enableIECompat, enableWitcheryCompat;
-    public static int boostEnchantID, hoverEnchantID;
+    public static int boostEnchantID, hoverEnchantID, waterproofEnchantID;
     public static int[] wingsHUDCoords = new int[2];
 
     public static void init(File file) {
@@ -62,6 +62,7 @@ public class ConfigHandler {
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 255, "Change the ID for the Flight Boost Enchant here.\nDo not go over 255 or the game will crash!");
         hoverEnchantID = config.getInt("hoverEnchantID", enchant, 101, 0, 255, "Change the ID for the Hover Enchant here.\nDo not go over 255 or the game will crash!");
+        waterproofEnchantID = config.getInt("waterproofEnchantID", enchant, 102, 0, 255, "Change the ID for the Waterproof Enchant here.\nDo not go over 255 or the game will crash!");
 
         config.save();
     }

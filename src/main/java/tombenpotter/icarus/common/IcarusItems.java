@@ -2,6 +2,7 @@ package tombenpotter.icarus.common;
 
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -32,6 +33,7 @@ public class IcarusItems {
     public static ItemWingRF conductiveWings, energeticWings, vibrantWings;
     public static ItemWingAuraCascade angelsteelWings;
     public static ItemWingWitchery witchHunterWings, vampireWings;
+    public static ItemWingCreeper creeperKingWings;
 
     //Equivalent of the cloth material, without the coloring stuffs
     public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
@@ -164,7 +166,7 @@ public class IcarusItems {
             addWingRecipe(29, treatedCardboardWings, "plankTreatedWood", Items.paper);
         }
 
-        hempFabricWings = new ItemWingVanilla(CLOTH, new IcarusWing("HempFabricWing", 100, 128, 0.33, 0.61, -0.3, -0.25, 0.55));
+        hempFabricWings = new ItemWingVanilla(CLOTH, new IcarusWing("HempFabricWing", 100, 128, 0.33, 0.5, -0.3, -0.25, 0.55));
         if (ConfigHandler.enableIECompat && OreDictionary.doesOreNameExist("fabricHemp")) {
             registerWing(hempFabricWings, "ItemHempFabricWings");
             addWingRecipe(30, hempFabricWings, "fabricHemp", Items.feather);
@@ -182,6 +184,10 @@ public class IcarusItems {
             addWingRecipe(32, vampireWings, ModItemGetter.wowenCruor, ModItemGetter.tongueOfDog);
         }
 
+        creeperKingWings = new ItemWingCreeper(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("CreeperKingWing", 256, 128, 0.55, 0.65, -0.15, -0.3, 0.39));
+        registerWing(creeperKingWings, "ItemCreeperKingWings");
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 33), "AB ", "XYY", " XX", 'A', "ingotGold", 'B', "dyeRed", 'X', Blocks.tnt, 'Y', new ItemStack(Items.skull, 1, 4)));
+        GameRegistry.addShapelessRecipe(new ItemStack(creeperKingWings), new ItemStack(singleWings, 1, 33), new ItemStack(singleWings, 1, 33));
     }
 
     public static void registerWing(ItemWing itemWing, String name) {
@@ -191,7 +197,7 @@ public class IcarusItems {
     }
 
     /*
-    * item1 and item2 are only to be either Items, ItemStacks, or Strings.
+    * item1 and item2 are only to be either Items, Blocks, ItemStacks, or Strings.
     * Method is private to avoid stupidity.
      */
     private static void addWingRecipe(int singleWingMeta, ItemWing output, Object item1, Object item2) {
@@ -200,7 +206,7 @@ public class IcarusItems {
     }
 
     /*
-    * item1 and item2 are only to be either Items, ItemStacks, or Strings.
+    * item1 and item2 are only to be either Items, Blocks, ItemStacks, or Strings.
     * Method is private to avoid stupidity.
      */
     private static void addWingRecipe(int singleWingMeta, ItemStack output, Object item1, Object item2) {

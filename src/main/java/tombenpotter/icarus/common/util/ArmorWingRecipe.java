@@ -46,11 +46,11 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
         if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {
             result = wingStack.copy();
 
-            if (result.stackTagCompound == null) {
-                result.setTagCompound(new NBTTagCompound());
-            }
             if (wingStack.stackTagCompound != null) {
                 result.setTagCompound(wingStack.getTagCompound());
+            }
+            if (result.stackTagCompound == null) {
+                result.setTagCompound(new NBTTagCompound());
             }
 
             NBTTagCompound tag = new NBTTagCompound();
