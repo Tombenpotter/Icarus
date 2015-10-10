@@ -10,24 +10,15 @@ import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.network.PacketClientConfig;
 import tombenpotter.icarus.common.network.PacketHandler;
 
-import java.util.HashSet;
-import java.util.UUID;
-
 public class EventHandler {
-
-    public static HashSet<UUID> holdSneakToHoverForPlayer = new HashSet<UUID>();
-
-    public static boolean getHoldSneakToHover(EntityPlayer player) {
-        return holdSneakToHoverForPlayer.contains(player.getUniqueID());
-    }
 
     @SubscribeEvent
     public void onPlayerJoin(EntityJoinWorldEvent event) {
-        if (event.entity instanceof EntityPlayer && !holdSneakToHoverForPlayer.contains(event.entity.getUniqueID())) {
+        if (event.entity instanceof EntityPlayer && !HoverHandler.getHoldKeyToHover((EntityPlayer) event.entity)) {
             if (event.world.isRemote) {
-                if (ConfigHandler.holdSneakToHover) {
+                if (ConfigHandler.holdKeyToHover) {
                     PacketHandler.INSTANCE.sendToServer(new PacketClientConfig());
-                    holdSneakToHoverForPlayer.add(event.entity.getUniqueID());
+                    HoverHandler.addHoldKeyToHover((EntityPlayer) event.entity);
                 }
             }
         }

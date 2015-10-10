@@ -14,8 +14,8 @@ import net.minecraftforge.common.ISpecialArmor;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
+import tombenpotter.icarus.common.util.IcarusHelper;
 import tombenpotter.icarus.common.util.IcarusWing;
-import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.EnergyHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
@@ -47,7 +47,7 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         }
 
         if (!StringHelper.isShiftKeyDown()) {
-            list.add(IcarusUtil.pressShiftForDetails());
+            list.add(IcarusHelper.pressShiftForDetails());
         } else if (StringHelper.isShiftKeyDown()) {
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF");
             if (ConfigHandler.showWingsStats) {
@@ -76,38 +76,65 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
         return capacity - stack.stackTagCompound.getInteger("Energy");
     }
 
-    protected int getEnergyPerDamage(ItemStack stack) {
+    public int getEnergyPerDamage(ItemStack stack) {
         return energyPerDamage;
     }
 
     //ISpecialArmor stuff
     @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(EntityLivingBase entity, ItemStack stack, DamageSource source, double damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getProperties(entity, stack, source, damage, slot);
+            }
+        }
+
         if (source.damageType.equals("flux")) {
             return FLUX;
         } else if (source.isUnblockable()) {
-            int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+            int absorbMax = getEnergyPerDamage(stack) > 0 ? 25 * getEnergyStored(stack) / getEnergyPerDamage(stack) : 0;
             return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
         }
-        int absorbMax = getEnergyPerDamage(armor) > 0 ? 25 * getEnergyStored(armor) / getEnergyPerDamage(armor) : 0;
+        int absorbMax = getEnergyPerDamage(stack) > 0 ? 25 * getEnergyStored(stack) / getEnergyPerDamage(stack) : 0;
         return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
-        if (getEnergyStored(armor) >= getEnergyPerDamage(armor)) {
+    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
+            }
+        }
+
+        if (getEnergyStored(stack) >= getEnergyPerDamage(stack)) {
             return 20 * 40 / 100;
         }
         return 0;
     }
 
     @Override
-    public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
+    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                ((ISpecialArmor) armor).damageArmor(entity, stack, source, damage, slot);
+            }
+        }
+
         if (source.damageType.equals("flux")) {
             boolean p = source.getEntity() == null;
-            receiveEnergy(armor, damage * (p ? energyPerDamage / 2 : getEnergyPerDamage(armor)), false);
+            receiveEnergy(stack, damage * (p ? energyPerDamage / 2 : getEnergyPerDamage(stack)), false);
         } else {
-            extractEnergy(armor, damage * getEnergyPerDamage(armor), false);
+            extractEnergy(stack, damage * getEnergyPerDamage(stack), false);
         }
     }
 
@@ -155,6 +182,17 @@ public class ItemWingRF extends ItemWing implements ISpecialArmor, IEnergyContai
     @Override
     public int getMaxEnergyStored(ItemStack stack) {
         return capacity;
+    }
+
+    @Override
+    public void handleExhaustion(World world, EntityPlayer player, ItemStack stack) {
+        float exhaustion = ConfigHandler.hungerConsumed / 2;
+        if (player.worldObj.provider.dimensionId == -1) {
+            exhaustion += 0.25F;
+        } else if (player.worldObj.provider.dimensionId == 1) {
+            exhaustion -= 0.125F;
+        }
+        player.addExhaustion(exhaustion);
     }
 
     @Override

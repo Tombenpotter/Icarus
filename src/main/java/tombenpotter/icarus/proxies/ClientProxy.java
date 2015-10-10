@@ -10,5 +10,6 @@ public class ClientProxy extends CommonProxy {
     public void registerRenders() {
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         FMLCommonHandler.instance().bus().register(new ClientEventHandler());
+        ClientEventHandler.registerKeybindings();
     }
 }

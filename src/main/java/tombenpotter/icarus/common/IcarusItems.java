@@ -13,7 +13,7 @@ import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.ArmorWingRecipe;
-import tombenpotter.icarus.common.util.IcarusUtil;
+import tombenpotter.icarus.common.util.IcarusHelper;
 import tombenpotter.icarus.common.util.IcarusWing;
 import tombenpotter.icarus.common.util.ModItemGetter;
 import vazkii.botania.api.BotaniaAPI;
@@ -25,10 +25,10 @@ public class IcarusItems {
     public static ArrayList<String> wingNames = new ArrayList<String>();
     //Last damage value used: 27
     public static ItemSingleWing singleWings;
-    public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings;
+    public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings, steelWings, treatedCardboardWings, hempFabricWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
     public static ItemWingRF leadstoneWings, electrumWings, enderiumWings;
-    public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings;
+    public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings, manaweaveWings;
     public static ItemWingRF conductiveWings, energeticWings, vibrantWings;
     public static ItemWingAuraCascade angelsteelWings;
 
@@ -139,6 +139,7 @@ public class IcarusItems {
         }
     }
 
+    //TODO: Move this back to pre-init once pixlepix stops duuhing
     public static void registerItemsInInitBecausePixlepix() {
         ModItemGetter.auraCascadeIngotBecausePixlepixIsDuh();
 
@@ -149,11 +150,29 @@ public class IcarusItems {
                 addWingRecipe(17 + i, ItemWingAuraCascade.angelsteelWings.get(i), ModItemGetter.angelsteelIngots.get(i), Items.feather);
             }
         }
+
+        manaweaveWings = new ItemWingBotania(CLOTH, new IcarusWing("ManaweaveWing", 100, 128, 0.36, 0.63, -0.3, -0.3, 0.62));
+        if (ConfigHandler.enableBotaniaCompat && OreDictionary.doesOreNameExist("clothManaweave")) {
+            registerWing(manaweaveWings, "ItemManaweaveWings");
+            addWingRecipe(28, manaweaveWings, "clothManaweave", Items.feather);
+        }
+
+        treatedCardboardWings = new ItemWingVanilla(CLOTH, new IcarusWing("TreatedCardboardWings", 128, 100, 0.26, 0.93, -0.25, -0.5, 0.77));
+        if (ConfigHandler.enableIECompat && OreDictionary.doesOreNameExist("plankTreatedWood")) {
+            registerWing(treatedCardboardWings, "ItemTreatedCardboardWings");
+            addWingRecipe(29, treatedCardboardWings, "plankTreatedWood", Items.paper);
+        }
+
+        hempFabricWings = new ItemWingVanilla(CLOTH, new IcarusWing("HempFabricWing", 100, 128, 0.33, 0.61, -0.3, -0.25, 0.55));
+        if (ConfigHandler.enableIECompat && OreDictionary.doesOreNameExist("fabricHemp")) {
+            registerWing(hempFabricWings, "ItemHempFabricWings");
+            addWingRecipe(30, hempFabricWings, "fabricHemp", Items.feather);
+        }
     }
 
     public static void registerWing(ItemWing itemWing, String name) {
         GameRegistry.registerItem(itemWing, name);
-        IcarusUtil.wingList.add(itemWing);
+        IcarusHelper.wingList.add(new ItemStack(itemWing));
         GameRegistry.addRecipe(new ArmorWingRecipe(itemWing));
     }
 
@@ -192,7 +211,7 @@ public class IcarusItems {
     public static void addArmorsToList() {
         for (Item item : GameData.getItemRegistry().typeSafeIterable()) {
             if (item instanceof ItemArmor && ((ItemArmor) item).armorType == 1) {
-                IcarusUtil.armorList.add(new ItemStack(item));
+                IcarusHelper.armorList.add(new ItemStack(item));
             }
         }
     }

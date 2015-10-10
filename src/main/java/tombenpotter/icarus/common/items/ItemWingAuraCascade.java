@@ -14,8 +14,8 @@ import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.IcarusItems;
+import tombenpotter.icarus.common.util.IcarusHelper;
 import tombenpotter.icarus.common.util.IcarusWing;
-import tombenpotter.icarus.common.util.IcarusUtil;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.ArrayList;
@@ -47,30 +47,55 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
 
     @Override
     public Wing getWing(ItemStack stack) {
-        IcarusUtil.checkNBT(stack);
+        IcarusHelper.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER));
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        IcarusUtil.checkNBT(stack);
+        IcarusHelper.checkNBT(stack);
         return wingList.get(stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER)).durability;
     }
 
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                ((ISpecialArmor) armor).damageArmor(entity, stack, source, damage, slot);
+            }
+        }
     }
 
     @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(EntityLivingBase entity, ItemStack stack, DamageSource source, double damage, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getProperties(entity, stack, source, damage, slot);
+            }
+        }
+
         if (source.isUnblockable()) {
             return new ArmorProperties(0, 0, 0);
         }
-        return new ArmorProperties(0, damageReduceAmount / 40D, armor.getMaxDamage() + 1 - armor.getItemDamage());
+        return new ArmorProperties(0, damageReduceAmount / 40D, stack.getMaxDamage() + 1 - stack.getItemDamage());
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
+            }
+        }
         return damageReduceAmount;
     }
 
@@ -82,11 +107,11 @@ public class ItemWingAuraCascade extends ItemWing implements ISpecialArmor {
         }
 
         if (!StringHelper.isShiftKeyDown()) {
-            IcarusUtil.checkNBT(stack);
+            IcarusHelper.checkNBT(stack);
 
             list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.tier") + StringHelper.END + ": " + (stack.stackTagCompound.getInteger(IcarusConstants.NBT_TIER) + 1));
             if (ConfigHandler.showWingsStats) {
-                list.add(IcarusUtil.pressShiftForDetails());
+                list.add(IcarusHelper.pressShiftForDetails());
             }
         } else if (StringHelper.isShiftKeyDown()) {
             if (ConfigHandler.showWingsStats) {

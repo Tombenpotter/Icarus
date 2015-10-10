@@ -12,11 +12,11 @@ public class ConfigHandler {
     public static String compat = "mod compatibilty";
     public static String enchant = "enchantments";
 
-    public static boolean holdSneakToHover, showWingsStats, showWingsHUD;
+    public static boolean holdKeyToHover, showWingsStats, showWingsHUD;
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static HashSet<Integer> dimensionWingsDisabled = new HashSet<Integer>();
-    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat;
+    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat, enableIECompat;
     public static int boostEnchantID, hoverEnchantID;
     public static int[] wingsHUDCoords = new int[2];
 
@@ -35,7 +35,7 @@ public class ConfigHandler {
         config.addCustomCategoryComment(enchant, "Change enchantment IDs here");
 
         //General
-        holdSneakToHover = config.getBoolean("holdSneakToHover", general, false, "Hold the Sneaking key to make your wings hover.\nIf not enabled, you wings will make you hover as soon as you are off the groud.\nClientside only config, changing it serverside will do nothing.");
+        holdKeyToHover = config.getBoolean("holdKeyToHover", general, false, "Hold the Hovering key to make your wings hover.\nIf not enabled, you wings will make you hover as soon as you are off the groud.\nClientside only config, changing it serverside will do nothing.");
         showWingsStats = config.getBoolean("showWingsStats", general, true, "Allows wings stats to be shown when holding shift and hovering over wings.\nDisable to prevent stats to be shown altogether");
         int[] dimsNoBurn = config.get(general, "dimensionsWingsDontBurn", new int[]{1}, "The IDs of the dimensions where Wings will never be able to burn.").getIntList();
         for (int i : dimsNoBurn) {
@@ -50,17 +50,22 @@ public class ConfigHandler {
         }
 
         //Compat
-        enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, "Enable Thaumcraft wings when the mod is present.\nWill do nothing if Thaumcraft isn't in your modlist");
-        enableTECompat = config.getBoolean("enableTECompatibility", compat, true, "Enable Thermal Expansion wings when the mod is present.\nWill do nothing if Thermal Expansion isn't in your modlist");
+        enableThaumcraftCompat = config.getBoolean("enableThaumcraftCompatibility", compat, true, modCompat("Thaumcraft"));
+        enableTECompat = config.getBoolean("enableTECompatibility", compat, true, modCompat("Thermal Expansion"));
         enableOreDictCompat = config.getBoolean("enableOreDictCompatibilty", compat, true, "Enable Ore Dictionary wings when the ores exist in the Ore Dict.\nWill do nothing if the Ore Dictionary entries don't exist");
-        enableBotaniaCompat = config.getBoolean("enableBotaniaCompatibility", compat, true, "Enable Botania wings when the mod is present.\nWill do nothing if Botania isn't in your modlist");
-        enableEIOCompat = config.getBoolean("enableEnderIOCompatibility", compat, true, "Enable EnderIO wings when the mod is present.\nWill do nothing if EnderIO isn't in your modlist");
-        enableACCompat = config.getBoolean("enableAuraCascadeCompatibility", compat, true, "Enable Aura Cascade wings when the mod is present.\nWill do nothing if Aura Cascade isn't in your modlist");
+        enableBotaniaCompat = config.getBoolean("enableBotaniaCompatibility", compat, true, modCompat("Botania"));
+        enableEIOCompat = config.getBoolean("enableEnderIOCompatibility", compat, true, modCompat("EnderIO"));
+        enableACCompat = config.getBoolean("enableAuraCascadeCompatibility", compat, true, modCompat("Aura Cascade"));
+        enableIECompat = config.getBoolean("enableImmersiveEngineeringCompatibility", compat, true, modCompat("Immersive Engineering"));
 
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 255, "Change the ID for the Flight Boost Enchant here.\nDo not go over 255 or the game will crash!");
         hoverEnchantID = config.getInt("hoverEnchantID", enchant, 101, 0, 255, "Change the ID for the Hover Enchant here.\nDo not go over 255 or the game will crash!");
 
         config.save();
+    }
+
+    private static String modCompat(String mod) {
+        return "Enable " + mod + " wings when the mod is present.\nWill do nothing if " + mod + " isn't in your modlist";
     }
 }

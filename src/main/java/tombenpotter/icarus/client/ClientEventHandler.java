@@ -1,25 +1,36 @@
 package tombenpotter.icarus.client;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.common.items.ItemWing;
+import tombenpotter.icarus.common.util.HoverHandler;
 
 public class ClientEventHandler {
 
     private static float renderTicks;
     private static long tickTime = 0L;
     private static final Minecraft minecraft = Minecraft.getMinecraft();
+
+    private static KeyBinding keyHover = new KeyBinding("key.icarus.hover", Keyboard.KEY_M, Icarus.name);
+
+    public static void registerKeybindings(){
+        ClientRegistry.registerKeyBinding(keyHover);
+    }
 
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
@@ -54,7 +65,7 @@ public class ClientEventHandler {
         if (stack != null && stack.getItem() instanceof ItemWing && player != null) {
             ItemWing itemWing = (ItemWing) stack.getItem();
             Tessellator tesselator = Tessellator.instance;
-            float flap = player.onGround ? 0 : player.motionY < 0.0 ? player.isSneaking() == ConfigHandler.holdSneakToHover ? (1.0F + (float) Math.cos(render() / 2.0F)) * 13.0F : 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
+            float flap = player.onGround ? 0 : player.motionY < 0.0 ? player.isSneaking() == ConfigHandler.holdKeyToHover ? (1.0F + (float) Math.cos(render() / 2.0F)) * 13.0F : 0 : (1.0F + (float) Math.cos(render() / 4.0F)) * 13.0F;
 
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -92,6 +103,15 @@ public class ClientEventHandler {
             tesselator.draw();
             GL11.glPopMatrix();
             GL11.glPopMatrix();
+        }
+    }
+
+    @SubscribeEvent
+    public void onKeyPressed(InputEvent.KeyInputEvent event) {
+        boolean hoverStatus = keyHover.getIsKeyPressed();
+        boolean lastHoverState = HoverHandler.getHover(minecraft.thePlayer);
+        if (hoverStatus != lastHoverState) {
+            HoverHandler.setHover(minecraft.thePlayer, hoverStatus);
         }
     }
 }

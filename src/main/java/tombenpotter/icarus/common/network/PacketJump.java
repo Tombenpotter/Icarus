@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import tombenpotter.icarus.ConfigHandler;
+import net.minecraft.item.ItemStack;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.items.ItemWing;
 
@@ -37,9 +37,16 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
     @Override
     public IMessage onMessage(PacketJump message, MessageContext ctx) {
         EntityPlayer player = ctx.getServerHandler().playerEntity;
+        ItemStack wingStack = player.inventory.armorInventory[2];
 
-        if (message.isSpecialWing && player.inventory.armorInventory[2] != null && player.inventory.armorInventory[2].getItem() instanceof ItemWing) {
-            ISpecialWing specialWing = (ISpecialWing) player.inventory.armorInventory[2].getItem();
+        if (wingStack == null || !(wingStack.getItem() instanceof ItemWing)) {
+            return null;
+        }
+
+        ItemWing itemWing = (ItemWing) wingStack.getItem();
+
+        if (message.isSpecialWing) {
+            ISpecialWing specialWing = (ISpecialWing) itemWing;
             if (!specialWing.canWingBeUsed(player.inventory.armorInventory[2], player)) {
                 return null;
             }
@@ -49,13 +56,7 @@ public class PacketJump implements IMessage, IMessageHandler<PacketJump, IMessag
         player.motionY = message.jump;
         player.fallDistance = 0;
 
-        float exhaustion = ConfigHandler.hungerConsumed;
-        if (player.worldObj.provider.dimensionId == -1) {
-            exhaustion += 0.5F;
-        } else if (player.worldObj.provider.dimensionId == 1) {
-            exhaustion -= 0.25F;
-        }
-        player.addExhaustion(exhaustion);
+        itemWing.handleExhaustion(player.worldObj, player, wingStack);
 
         return null;
     }

@@ -25,14 +25,14 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
         this.itemWing = new ItemStack(wing);
 
         this.input = new Object[9];
-        input[4] = this.itemWing;
-        input[7] = IcarusUtil.armorList;
+        input[4] = IcarusHelper.armorList;
+        input[7] = this.itemWing;
     }
 
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
-        ItemStack armorStack = inventoryCrafting.getStackInSlot(4);
-        ItemStack wingStack = inventoryCrafting.getStackInSlot(7);
+        ItemStack wingStack = inventoryCrafting.getStackInSlot(4);
+        ItemStack armorStack = inventoryCrafting.getStackInSlot(7);
 
         if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {
             return true;
@@ -42,8 +42,8 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
-        ItemStack armorStack = inventoryCrafting.getStackInSlot(4);
-        ItemStack wingStack = inventoryCrafting.getStackInSlot(7);
+        ItemStack wingStack = inventoryCrafting.getStackInSlot(4);
+        ItemStack armorStack = inventoryCrafting.getStackInSlot(7);
         ItemStack result = null;
 
         if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {

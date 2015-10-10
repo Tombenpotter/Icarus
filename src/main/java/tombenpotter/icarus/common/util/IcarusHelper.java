@@ -11,12 +11,12 @@ import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.util.ArrayList;
 
-public class IcarusUtil {
+public class IcarusHelper {
 
-    public static ArrayList<ItemWing> wingList = new ArrayList<ItemWing>();
+    public static ArrayList<ItemStack> wingList = new ArrayList<ItemStack>();
     public static ArrayList<ItemStack> armorList = new ArrayList<ItemStack>();
 
-    private IcarusUtil() {
+    private IcarusHelper() {
     }
 
     public static String pressShiftForDetails() {
@@ -31,7 +31,7 @@ public class IcarusUtil {
         }
     }
 
-    public static int getFallDistanceWithWings(EntityPlayer player, ItemWing itemWing, ItemStack stack){
+    public static int getFallDistanceWithWings(EntityPlayer player, ItemWing itemWing, ItemStack stack) {
         PotionEffect potionEffect = player.getActivePotionEffect(Potion.jump);
         float amplifier = potionEffect != null ? (float) (potionEffect.getAmplifier() + 1) : 0.0F;
 

@@ -2,10 +2,12 @@ package tombenpotter.icarus.common.items;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.util.IcarusWing;
@@ -43,13 +45,30 @@ public class ItemWingBotania extends ItemWing implements ISpecialArmor, IManaUsi
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+    public int getArmorDisplay(EntityPlayer player, ItemStack stack, int slot) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                return ((ISpecialArmor) armor).getArmorDisplay(player, stack, slot);
+            }
+        }
         return damageReduceAmount;
     }
 
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
         damageItem(stack, damage, entity, manaPerDamage);
+
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            if (armor instanceof ISpecialArmor) {
+                ((ISpecialArmor) armor).damageArmor(entity, stack, source, damage, slot);
+            }
+        }
     }
 
     @Override

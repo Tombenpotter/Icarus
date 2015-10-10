@@ -22,12 +22,16 @@ item.Icarus.wing.LivingwoodWing.name=Livingwood Wings
 item.Icarus.wing.ManasteelWing.name=Manasteel Wings
 item.Icarus.wing.TerrasteelWing.name=Terrasteel Wings
 item.Icarus.wing.ElementiumWing.name=Elementium Wings
+item.Icarus.wing.ManaweaveWing.name=Manaweave Wings
 ###EnderIO
 item.Icarus.wing.ConductiveWing.name=Conductive Wings
 item.Icarus.wing.EnergeticWing.name=Energetic Wings
 item.Icarus.wing.VibrantWing.name=Vibrant Wings
 ###Aura Cascade
 item.Icarus.wing.AngelsteelWing.name=Angel's Steel Wings
+###Immersive Engineering
+item.Icarus.wing.TreatedCardboardWing.name=Treated Cardboard Wings
+item.Icarus.wing.HempFabricWing.name=Hemp Fabric Wings
 
 ##Single Wing item
 ###Vanilla
@@ -49,12 +53,16 @@ item.Icarus.singleWing.LivingwoodWing.name=Livingwood Wing
 item.Icarus.singleWing.ManasteelWing.name=Manasteel Wing
 item.Icarus.singleWing.TerrasteelWing.name=Terrasteel Wing
 item.Icarus.singleWing.ElementiumWing.name=Elementium Wing
+item.Icarus.singleWing.ManaweaveWing.name=Manaweave Wing
 ###EnderIO
 item.Icarus.singleWing.ConductiveWing.name=Conductive Wing
 item.Icarus.singleWing.EnergeticWing.name=Energetic Wing
 item.Icarus.singleWing.VibrantWing.name=Vibrant Wing
 ###Aura Cascade
 item.Icarus.singleWing.AngelsteelWing.name=Angel's Steel Wing
+###Immersive Engineering
+item.Icarus.singleWing.TreatedCardboardWing.name=Treated Cardboard Wing
+item.Icarus.singleWing.HempFabricWing.name=Hemp Fabric Wing
 
 #Text
 ##Tooltips
@@ -75,5 +83,5 @@ tooltip.icarus.render.armor=Armor Rendered
 ##Enchantments
 enchantment.icarus.boost=Flappy Burd
 enchantment.icarus.hover=Swiffer
-##NEICompat
-text.icarus.nei.wing.crafting=Wing Crafting
+##Keybindings
+key.icarus.hover=Enable/Disable Hovering Key

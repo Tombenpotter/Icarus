@@ -27,8 +27,8 @@ import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.api.wings.Wing;
 import tombenpotter.icarus.common.network.PacketHandler;
 import tombenpotter.icarus.common.network.PacketJump;
-import tombenpotter.icarus.common.util.EventHandler;
-import tombenpotter.icarus.common.util.IcarusUtil;
+import tombenpotter.icarus.common.util.HoverHandler;
+import tombenpotter.icarus.common.util.IcarusHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
 import java.lang.reflect.Field;
@@ -129,7 +129,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
     }
 
     public void handleHover(World world, EntityPlayer player, ItemStack stack) {
-        if (player.isSneaking() == EventHandler.getHoldSneakToHover(player) && !player.onGround && player.motionY < 0) {
+        if (HoverHandler.getHover(player) == HoverHandler.getHoldKeyToHover(player) && !player.onGround && player.motionY < 0) {
             if (stack.getItem() instanceof ISpecialWing) {
                 if (!((ISpecialWing) stack.getItem()).canWingBeUsed(stack, player)) {
                     return;
@@ -163,17 +163,45 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
         }
     }
 
+    public void handleExhaustion(World world, EntityPlayer player, ItemStack stack) {
+        float exhaustion = ConfigHandler.hungerConsumed;
+        if (player.worldObj.provider.dimensionId == -1) {
+            exhaustion += 0.5F;
+        } else if (player.worldObj.provider.dimensionId == 1) {
+            exhaustion -= 0.25F;
+        }
+        player.addExhaustion(exhaustion);
+    }
+
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            ItemArmor armor = (ItemArmor) armorStack.getItem();
+
+            armor.onArmorTick(world, player, stack);
+        }
+
+        handleTick(world, player, stack);
+        handleWater(world, player, stack);
+        handleWeather(world, player, stack);
+
         if (ConfigHandler.dimensionWingsDisabled.contains(world.provider.dimensionId)) {
             return;
         }
         handleJump(world, player, stack);
-        handleWater(world, player, stack);
-        handleWeather(world, player, stack);
         handleHover(world, player, stack);
         handleHeight(world, player, stack);
-        handleTick(world, player, stack);
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held) {
+        if (stack.hasTagCompound() && stack.stackTagCompound.hasKey(IcarusConstants.NBT_ITEMSTACK)) {
+            ItemStack armorStack = ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag(IcarusConstants.NBT_ITEMSTACK));
+            Item armor = armorStack.getItem();
+
+            armor.onUpdate(stack, world, entity, slot, held);
+        }
     }
 
     @Override
@@ -227,7 +255,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
 
         if (ConfigHandler.showWingsStats) {
             if (!StringHelper.isShiftKeyDown()) {
-                list.add(IcarusUtil.pressShiftForDetails());
+                list.add(IcarusHelper.pressShiftForDetails());
             } else if (StringHelper.isShiftKeyDown()) {
                 list.addAll(tooltip(stack));
             }
@@ -239,7 +267,7 @@ public abstract class ItemWing extends ItemArmor implements IWingHUD {
         List<String> list = new ArrayList<String>();
 
         if (clientPlayer.fallDistance > 0.0F) {
-            int fall = IcarusUtil.getFallDistanceWithWings(clientPlayer, this, stack);
+            int fall = IcarusHelper.getFallDistanceWithWings(clientPlayer, this, stack);
             String str = StringHelper.localize("tooltip.icarus.fall.distance") + ": " + fall + StringHelper.END;
             if (fall > 0) {
                 str = StringHelper.BOLD + StringHelper.ITALIC + StringHelper.LIGHT_RED + str;
