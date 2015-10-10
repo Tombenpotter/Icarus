@@ -161,7 +161,7 @@ public class IcarusItems {
             addWingRecipe(28, manaweaveWings, "clothManaweave", Items.feather);
         }
 
-        treatedCardboardWings = new ItemWingVanilla(CLOTH, new IcarusWing("TreatedCardboardWings", 128, 100, 0.26, 0.93, -0.25, -0.5, 0.77));
+        treatedCardboardWings = new ItemWingVanilla(CLOTH, new IcarusWing("TreatedCardboardWing", 128, 100, 0.26, 0.93, -0.25, -0.5, 0.77));
         if (ConfigHandler.enableIECompat && OreDictionary.doesOreNameExist("plankTreatedWood")) {
             registerWing(treatedCardboardWings, "ItemTreatedCardboardWings");
             addWingRecipe(29, treatedCardboardWings, "plankTreatedWood", Items.paper);

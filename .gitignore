@@ -19,4 +19,4 @@
 *.project
 
 #Specific files
-TODO.txt
+*Thumbs.db
