@@ -10,6 +10,7 @@ item.Icarus.wing.IronWing.name=Iron Wings
 item.Icarus.wing.DiamondGoldWing.name=Gold Plated Diamond Wings
 item.Icarus.wing.CreeperKingWing.name=Creeper King Wings
 item.Icarus.wing.GlowstoneWing.name=Glowstone Wings
+item.Icarus.wing.HalloweenWing.name=Halloweengs
 ###Thaumcraft
 item.Icarus.wing.ThaumiumWing.name=Thaumium Wings
 item.Icarus.wing.VoidMetalWing.name=Void Metal Wings
@@ -52,6 +53,7 @@ item.Icarus.singleWing.IronWing.name=Iron Wing
 item.Icarus.singleWing.DiamondGoldWing.name=Gold Plated Diamond Wing
 item.Icarus.singleWing.CreeperKingWing.name=Creeper King Wing
 item.Icarus.singleWing.GlowstoneWing.name=Glowstone Wing
+item.Icarus.singleWing.HalloweenWing.name=Halloween Wing
 ###Thaumcraft
 item.Icarus.singleWing.ThaumiumWing.name=Thaumium Wing
 item.Icarus.singleWing.VoidMetalWing.name=Void Metal Wing

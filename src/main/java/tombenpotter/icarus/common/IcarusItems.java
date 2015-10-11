@@ -41,6 +41,7 @@ public class IcarusItems {
     public static ItemWingVanilla.ItemWingRadioactive radioactiveWings;
     public static ItemWingVanilla.ItemWingErebus petrifiedWoodWings, exoskeletonWings, jadeWings, altarWings;
     public static ItemWingVanilla.ItemWingGlowstone glowstoneWings;
+    public static ItemWingHalloween halloweenWings;
 
     public static void registerItems() {
         ModItemGetter.load();
@@ -224,6 +225,10 @@ public class IcarusItems {
         glowstoneWings = new ItemWingVanilla.ItemWingGlowstone(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("GlowstoneWing", 192, 96, 0.35, 0.65, -0.15, -0.3, 0.6));
         registerWing(glowstoneWings, "ItemGlowstoneWings");
         addWingRecipe(39, glowstoneWings, Blocks.glowstone, Items.blaze_powder);
+
+        halloweenWings = new ItemWingHalloween(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("HalloweenWing", 96, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
+        registerWing(halloweenWings, "ItemHalloweenWings");
+        addWingRecipe(40, halloweenWings, Blocks.lit_pumpkin, Blocks.soul_sand);
     }
 
     public static void registerWing(ItemWing itemWing, String name) {
