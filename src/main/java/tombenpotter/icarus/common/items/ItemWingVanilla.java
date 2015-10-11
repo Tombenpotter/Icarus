@@ -1,10 +1,12 @@
 package tombenpotter.icarus.common.items;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import tombenpotter.icarus.IcarusBlocks;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.Wing;
@@ -60,7 +62,6 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
      */
 
     public static class ItemWingCreeper extends ItemWingVanilla {
-
         public ItemWingCreeper(ArmorMaterial material, Wing wing) {
             super(material, wing);
         }
@@ -77,7 +78,6 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
     }
 
     public static class ItemWingRadioactive extends ItemWingVanilla {
-
         public ItemWingRadioactive(ArmorMaterial material, Wing wing) {
             super(material, wing);
         }
@@ -94,6 +94,25 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
             super.onWingTick(stack, player);
 
             player.addPotionEffect(new PotionEffect(Potion.hunger.getId(), 0, 1));
+        }
+    }
+
+    public static class ItemWingGlowstone extends ItemWingVanilla {
+        public ItemWingGlowstone(ArmorMaterial material, Wing wing) {
+            super(material, wing);
+        }
+
+        @Override
+        public void onWingTick(ItemStack stack, EntityPlayer player) {
+            super.onWingTick(stack, player);
+
+            World world = player.worldObj;
+            int x = (int) Math.floor(player.posX);
+            int y = (int) player.posY + 1;
+            int z = (int) Math.floor(player.posZ);
+            if (!world.isRemote && world.getBlock(x, y, z) == Blocks.air) {
+                world.setBlock(x, y, z, IcarusBlocks.invisiLight);
+            }
         }
     }
 

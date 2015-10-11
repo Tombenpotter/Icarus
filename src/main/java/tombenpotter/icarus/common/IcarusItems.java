@@ -28,7 +28,7 @@ public class IcarusItems {
     public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
     public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 38
+    //Last damage value used: 39
     public static ItemSingleWing singleWings;
     public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings, steelWings, treatedCardboardWings, hempFabricWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
@@ -40,6 +40,7 @@ public class IcarusItems {
     public static ItemWingVanilla.ItemWingCreeper creeperKingWings;
     public static ItemWingVanilla.ItemWingRadioactive radioactiveWings;
     public static ItemWingVanilla.ItemWingErebus petrifiedWoodWings, exoskeletonWings, jadeWings, altarWings;
+    public static ItemWingVanilla.ItemWingGlowstone glowstoneWings;
 
     public static void registerItems() {
         ModItemGetter.load();
@@ -196,29 +197,33 @@ public class IcarusItems {
             addWingRecipe(34, radioactiveWings, "ingotUranium", Items.spider_eye);
         }
 
-        petrifiedWoodWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.IRON, new IcarusWing("PetrifiedWoodWing", 256, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
+        petrifiedWoodWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("PetrifiedWoodWing", 256, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
         if (ConfigHandler.enableErebusCompat && ModItemGetter.petrifiedWood != null && ModItemGetter.shardBone != null) {
             registerWing(petrifiedWoodWings, "ItemPetrifiedWoodWings");
             addWingRecipe(35, petrifiedWoodWings, ModItemGetter.petrifiedWood, ModItemGetter.shardBone);
         }
 
-        exoskeletonWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("ExoskeletonWing", 384, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        exoskeletonWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.IRON, new IcarusWing("ExoskeletonWing", 384, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
         if (ConfigHandler.enableErebusCompat && ModItemGetter.exoskeletonPlate != null && ModItemGetter.shardBone != null) {
             registerWing(exoskeletonWings, "ItemExoskeletonWings");
             addWingRecipe(36, exoskeletonWings, ModItemGetter.exoskeletonPlate, ModItemGetter.shardBone);
         }
 
-        jadeWings = new ItemWingVanilla.ItemWingErebus(ELECTRUM, new IcarusWing("JadeWing", 512, 256, 0.7, 0.55, -0.3, -0.4, 0.45));
+        jadeWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("JadeWing", 512, 256, 0.7, 0.55, -0.3, -0.4, 0.45));
         if (ConfigHandler.enableErebusCompat && ModItemGetter.jade != null && ModItemGetter.flyWing != null) {
             registerWing(jadeWings, "ItemJadeWings");
             addWingRecipe(37, jadeWings, ModItemGetter.jade, ModItemGetter.flyWing);
         }
 
-        altarWings = new ItemWingVanilla.ItemWingErebus(ENDERIUM, new IcarusWing("AltarWing", 1024, 384, 0.68, 0.35, -0.2, -0.3, 0.2));
+        altarWings = new ItemWingVanilla.ItemWingErebus(ELECTRUM, new IcarusWing("AltarWing", 1024, 384, 0.68, 0.35, -0.2, -0.3, 0.2));
         if (ConfigHandler.enableErebusCompat && ModItemGetter.altarFragment != null && ModItemGetter.flyWing != null) {
             registerWing(altarWings, "ItemAltarWings");
             addWingRecipe(38, altarWings, ModItemGetter.altarFragment, ModItemGetter.flyWing);
         }
+
+        glowstoneWings = new ItemWingVanilla.ItemWingGlowstone(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("GlowstoneWing", 192, 96, 0.35, 0.65, -0.15, -0.3, 0.6));
+        registerWing(glowstoneWings, "ItemGlowstoneWings");
+        addWingRecipe(39, glowstoneWings, Blocks.glowstone, Items.blaze_powder);
     }
 
     public static void registerWing(ItemWing itemWing, String name) {

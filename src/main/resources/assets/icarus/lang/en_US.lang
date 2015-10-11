@@ -9,6 +9,7 @@ item.Icarus.wing.FeatherWing.name=Feather Wings
 item.Icarus.wing.IronWing.name=Iron Wings
 item.Icarus.wing.DiamondGoldWing.name=Gold Plated Diamond Wings
 item.Icarus.wing.CreeperKingWing.name=Creeper King Wings
+item.Icarus.wing.GlowstoneWing.name=Glowstone Wings
 ###Thaumcraft
 item.Icarus.wing.ThaumiumWing.name=Thaumium Wings
 item.Icarus.wing.VoidMetalWing.name=Void Metal Wings
@@ -50,6 +51,7 @@ item.Icarus.singleWing.FeatherWing.name=Feather Wing
 item.Icarus.singleWing.IronWing.name=Iron Wing
 item.Icarus.singleWing.DiamondGoldWing.name=Gold Plated Diamond Wing
 item.Icarus.singleWing.CreeperKingWing.name=Creeper King Wing
+item.Icarus.singleWing.GlowstoneWing.name=Glowstone Wing
 ###Thaumcraft
 item.Icarus.singleWing.ThaumiumWing.name=Thaumium Wing
 item.Icarus.singleWing.VoidMetalWing.name=Void Metal Wing
@@ -83,6 +85,9 @@ item.Icarus.singleWing.PetrifiedWoodWing.name=Petrified Wood Wing
 item.Icarus.singleWing.ExoskeletonWing.name=Exoskeleton Wing
 item.Icarus.singleWing.JadeWing.name=Jade Wing
 item.Icarus.singleWing.AltarWing.name=Altar Wing
+
+#Blocks
+tile.Icarus.invisilight.name=Invisible Light
 
 #Text
 ##Tooltips

@@ -50,6 +50,8 @@ public class Icarus {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
+        IcarusBlocks.registerBlocks();
+        IcarusBlocks.registerTiles();
 
         configDir = event.getModConfigurationDirectory();
     }

@@ -10,10 +10,6 @@
  */
 package vazkii.botania.api.subtile;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -30,8 +26,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.internal.IManaNetwork;
 import vazkii.botania.api.mana.IManaCollector;
-import vazkii.botania.common.core.handler.ConfigHandler;
-import vazkii.botania.common.core.helper.ItemNBTHelper;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The basic class for a Generating Flower.
@@ -194,15 +192,15 @@ public class SubTileGenerating extends SubTileEntity {
 	}
 
 	public void populateDropStackNBTs(List<ItemStack> drops) {
-		if(isPassiveFlower() && ticksExisted > 0 && ConfigHandler.hardcorePassiveGeneration > 0)
-			ItemNBTHelper.setInt(drops.get(0), TAG_PASSIVE_DECAY_TICKS, passiveDecayTicks);
+		//if(isPassiveFlower() && ticksExisted > 0 && ConfigHandler.hardcorePassiveGeneration > 0)
+			//ItemNBTHelper.setInt(drops.get(0), TAG_PASSIVE_DECAY_TICKS, passiveDecayTicks);
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
-		if(isPassiveFlower())
-			passiveDecayTicks = ItemNBTHelper.getInt(stack, TAG_PASSIVE_DECAY_TICKS, 0);
+		//if(isPassiveFlower())
+			//passiveDecayTicks = ItemNBTHelper.getInt(stack, TAG_PASSIVE_DECAY_TICKS, 0);
 	}
 
 	@Override
