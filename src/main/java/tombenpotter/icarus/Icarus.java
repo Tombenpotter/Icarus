@@ -27,9 +27,10 @@ public class Icarus {
     public static final String version = "@VERSION@";
     public static final String texturePath = "icarus";
     public static final String channel = "Icarus";
-    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura;after:witchery";
+    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura;after:witchery;after:erebus";
     public static final String clientProxy = "tombenpotter.icarus.proxies.ClientProxy";
     public static final String commonProxy = "tombenpotter.icarus.proxies.CommonProxy";
+    private File configDir;
     public static CreativeTabs creativeTab = new CreativeTabs("tab" + name) {
         @Override
         public Item getTabIconItem() {
@@ -50,10 +51,7 @@ public class Icarus {
         IcarusEnchants.registerEnchants();
         IcarusItems.registerItems();
 
-        if (Loader.isModLoaded("Thaumcraft")) {
-            Configuration thaumcraftConfig = new Configuration(new File(event.getModConfigurationDirectory(), "Thaumcraft.cfg"));
-            ConfigHandler.dimensionWingsDisabled.add(thaumcraftConfig.get("Biomes", "outer_lands_dim", -42).getInt());
-        }
+        configDir = event.getModConfigurationDirectory();
     }
 
     @Mod.EventHandler
@@ -67,5 +65,9 @@ public class Icarus {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        if (Loader.isModLoaded("Thaumcraft")) {
+            Configuration thaumcraftConfig = new Configuration(new File(configDir, "Thaumcraft.cfg"));
+            ConfigHandler.dimensionWingsDisabled.add(thaumcraftConfig.get("Biomes", "outer_lands_dim", -42).getInt());
+        }
     }
 }

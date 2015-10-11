@@ -2,6 +2,8 @@ package tombenpotter.icarus.common.items;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
@@ -51,5 +53,60 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
         List<String> list = super.getDisplayString(clientWorld, clientPlayer, stack);
         list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.durability") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + (stack.getMaxDamage() - stack.getItemDamage()) + " / " + stack.getMaxDamage() + StringHelper.END);
         return list;
+    }
+
+    /*
+    * Custom wings that require no, or close to no modifications go here
+     */
+
+    public static class ItemWingCreeper extends ItemWingVanilla {
+
+        public ItemWingCreeper(ArmorMaterial material, Wing wing) {
+            super(material, wing);
+        }
+
+        @Override
+        public void onWingFlap(ItemStack stack, EntityPlayer player) {
+            super.onWingFlap(stack, player);
+
+            player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "random.explode", 1.0F, 1.0F);
+            if (player.worldObj.isRemote) {
+                player.worldObj.spawnParticle("largeexplode", player.posX, player.posY, player.posZ, 1, 1, 1);
+            }
+        }
+    }
+
+    public static class ItemWingRadioactive extends ItemWingVanilla {
+
+        public ItemWingRadioactive(ArmorMaterial material, Wing wing) {
+            super(material, wing);
+        }
+
+        @Override
+        public void onWingFlap(ItemStack stack, EntityPlayer player) {
+            super.onWingFlap(stack, player);
+
+            player.addPotionEffect(new PotionEffect(Potion.poison.getId(), 40, 3));
+        }
+
+        @Override
+        public void onWingTick(ItemStack stack, EntityPlayer player) {
+            super.onWingTick(stack, player);
+
+            player.addPotionEffect(new PotionEffect(Potion.hunger.getId(), 0, 1));
+        }
+    }
+
+    /* These ones exist just for clarity's sake */
+    public static class ItemWingWitchery extends ItemWingVanilla {
+        public ItemWingWitchery(ArmorMaterial material, Wing wing) {
+            super(material, wing);
+        }
+    }
+
+    public static class ItemWingErebus extends ItemWingVanilla {
+        public ItemWingErebus(ArmorMaterial material, Wing wing) {
+            super(material, wing);
+        }
     }
 }

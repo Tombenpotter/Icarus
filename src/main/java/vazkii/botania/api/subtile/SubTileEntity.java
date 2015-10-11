@@ -2,16 +2,16 @@
  * This class was created by <Vazkii>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
- *
+ * 
  * Botania is Open Source and distributed under the
  * Botania License: http://botaniamod.net/license.php
- *
+ * 
  * File Created @ [Jan 24, 2014, 3:59:06 PM (GMT)]
  */
 package vazkii.botania.api.subtile;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,8 +26,8 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.internal.VanillaPacketDispatcher;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.wand.IWandBindable;
-
-import java.util.ArrayList;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * A Sub-TileEntity, this is used for the flower system. Make sure to map subclasses
@@ -36,187 +36,195 @@ import java.util.ArrayList;
  */
 public class SubTileEntity {
 
-    /**
-     * The Tag items should use to store which sub tile they are. *
-     */
-    public static final String TAG_TYPE = "type";
-    public static final String TAG_TICKS_EXISTED = "ticksExisted";
-    public int ticksExisted = 0;
-    protected TileEntity supertile;
+	protected TileEntity supertile;
 
-    public void setSupertile(TileEntity tile) {
-        supertile = tile;
-    }
+	public int ticksExisted = 0;
 
-    public boolean canUpdate() {
-        return true;
-    }
+	/** true if this flower is working on Enchanted Soil **/
+	public boolean overgrowth = false;
+	/** true if this flower is working on Enchanted Soil and this is the second tick **/
+	public boolean overgrowthBoost = false;
 
-    public void onUpdate() {
-        ticksExisted++;
-    }
+	/** The Tag items should use to store which sub tile they are. **/
+	public static final String TAG_TYPE = "type";
+	public static final String TAG_TICKS_EXISTED = "ticksExisted";
 
-    public final void writeToPacketNBTInternal(NBTTagCompound cmp) {
-        cmp.setInteger(TAG_TICKS_EXISTED, ticksExisted);
-        writeToPacketNBT(cmp);
-    }
+	public void setSupertile(TileEntity tile) {
+		supertile = tile;
+	}
 
-    public final void readFromPacketNBTInternal(NBTTagCompound cmp) {
-        if (cmp.hasKey(TAG_TICKS_EXISTED))
-            ticksExisted = cmp.getInteger(TAG_TICKS_EXISTED);
-        readFromPacketNBT(cmp);
-    }
+	public boolean canUpdate() {
+		return true;
+	}
 
-    /**
-     * Writes some extra data to a network packet. This data is read
-     * by readFromPacketNBT on the client that receives the packet.
-     * Note: This method is also used to write to the world NBT.
-     */
-    public void writeToPacketNBT(NBTTagCompound cmp) {
-    }
+	public void onUpdate() {
+		ticksExisted++;
+	}
 
-    /**
-     * Reads data from a network packet. This data is written by
-     * writeToPacketNBT in the server. Note: This method is also used
-     * to read from the world NBT.
-     */
-    public void readFromPacketNBT(NBTTagCompound cmp) {
-    }
+	public final void writeToPacketNBTInternal(NBTTagCompound cmp) {
+		cmp.setInteger(TAG_TICKS_EXISTED, ticksExisted);
+		writeToPacketNBT(cmp);
+	}
 
-    public void sync() {
-        VanillaPacketDispatcher.dispatchTEToNearbyPlayers(supertile);
-    }
+	public final void readFromPacketNBTInternal(NBTTagCompound cmp) {
+		if(cmp.hasKey(TAG_TICKS_EXISTED))
+			ticksExisted = cmp.getInteger(TAG_TICKS_EXISTED);
+		readFromPacketNBT(cmp);
+	}
 
-    public String getUnlocalizedName() {
-        return BotaniaAPI.getSubTileStringMapping(getClass());
-    }
+	/**
+	 * Writes some extra data to a network packet. This data is read
+	 * by readFromPacketNBT on the client that receives the packet.
+	 * Note: This method is also used to write to the world NBT.
+	 */
+	public void writeToPacketNBT(NBTTagCompound cmp) { }
 
-    /**
-     * Gets the icon for this SubTileEntity, this is a block icon.
-     */
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon() {
-        return BotaniaAPI.internalHandler.getSubTileIconForName(getUnlocalizedName());
-    }
+	/**
+	 * Reads data from a network packet. This data is written by
+	 * writeToPacketNBT in the server. Note: This method is also used
+	 * to read from the world NBT.
+	 */
+	public void readFromPacketNBT(NBTTagCompound cmp) { }
 
-    /**
-     * Called when a Wand of the Forest is used on this sub tile. Note that the
-     * player parameter can be null if this is called from a dispenser.
-     */
-    public boolean onWanded(EntityPlayer player, ItemStack wand) {
-        return false;
-    }
+	public void sync() {
+		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(supertile);
+	}
 
-    /**
-     * Called when this sub tile is placed in the world (by an entity).
-     */
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-        // NO-OP
-    }
+	public String getUnlocalizedName() {
+		return BotaniaAPI.getSubTileStringMapping(getClass());
+	}
 
-    /**
-     * Called when a player right clicks this sub tile.
-     */
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        return false;
-    }
+	/**
+	 * Gets the icon for this SubTileEntity, this is a block icon.
+	 */
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon() {
+		return BotaniaAPI.internalHandler.getSubTileIconForName(getUnlocalizedName());
+	}
 
-    /**
-     * Called when this sub tile is added to the world.
-     */
-    public void onBlockAdded(World world, int x, int y, int z) {
-        //NO-OP
-    }
+	/**
+	 * Called when a Wand of the Forest is used on this sub tile. Note that the
+	 * player parameter can be null if this is called from a dispenser.
+	 */
+	public boolean onWanded(EntityPlayer player, ItemStack wand) {
+		return false;
+	}
 
-    /**
-     * Called when this sub tile is harvested
-     */
-    public void onBlockHarvested(World world, int x, int y, int z, int side, EntityPlayer player) {
-        //NO-OP
-    }
+	/**
+	 * Called when this sub tile is placed in the world (by an entity).
+	 */
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		// NO-OP
+	}
 
-    /**
-     * Allows additional processing of sub tile drops
-     */
-    public ArrayList<ItemStack> getDrops(ArrayList<ItemStack> list) {
-        return list;
-    }
+	/**
+	 * Called when a player right clicks this sub tile.
+	 */
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) { return false; }
 
-    /**
-     * Gets which Lexicon Entry to open when this sub tile is right clicked with a lexicon.
-     */
-    public LexiconEntry getEntry() {
-        return null;
-    }
+	/**
+	 * Called when this sub tile is added to the world.
+	 */
+	public void onBlockAdded(World world, int x, int y, int z) {
+		//NO-OP
+	}
 
-    /**
-     * Gets the block coordinates this is bound to, for use with the wireframe render
-     * when the sub tile is being hovered with a wand of the forest.
-     */
-    @SideOnly(Side.CLIENT)
-    public ChunkCoordinates getBinding() {
-        return null;
-    }
+	/**
+	 * Called when this sub tile is harvested
+	 */
+	public void onBlockHarvested(World world, int x, int y, int z, int side, EntityPlayer player) {
+		//NO-OP
+	}
 
-    /**
-     * Returns a descriptor for the radius of this sub tile. This is called while a player
-     * is looking at the block with a Manaseer Monocle (IBurstViewerBauble).
-     */
-    @SideOnly(Side.CLIENT)
-    public RadiusDescriptor getRadius() {
-        return null;
-    }
+	/**
+	 * Allows additional processing of sub tile drops
+	 */
+	public ArrayList<ItemStack> getDrops(ArrayList<ItemStack> list) {
+		return list;
+	}
 
-    /**
-     * Gets a ChunkCoordinates instance with the position of this sub tile.
-     */
-    public ChunkCoordinates toChunkCoordinates() {
-        return new ChunkCoordinates(supertile.xCoord, supertile.yCoord, supertile.zCoord);
-    }
+	/**
+	 * Gets which Lexicon Entry to open when this sub tile is right clicked with a lexicon.
+	 */
+	public LexiconEntry getEntry() {
+		return null;
+	}
 
-    /**
-     * @see IWandBindable#canSelect(EntityPlayer, ItemStack, int, int, int, int)
-     */
-    public boolean canSelect(EntityPlayer player, ItemStack wand, int x, int y, int z, int side) {
-        return false;
-    }
+	/**
+	 * Gets the block coordinates this is bound to, for use with the wireframe render
+	 * when the sub tile is being hovered with a wand of the forest.
+	 */
+	@SideOnly(Side.CLIENT)
+	public ChunkCoordinates getBinding() {
+		return null;
+	}
 
-    /**
-     * @see IWandBindable#bindTo(EntityPlayer, ItemStack, int, int, int, int)
-     */
-    public boolean bindTo(EntityPlayer player, ItemStack wand, int x, int y, int z, int side) {
-        return false;
-    }
+	/**
+	 * Returns a descriptor for the radius of this sub tile. This is called while a player
+	 * is looking at the block with a Manaseer Monocle (IBurstViewerBauble).
+	 */
+	@SideOnly(Side.CLIENT)
+	public RadiusDescriptor getRadius() {
+		return null;
+	}
 
-    /**
-     * Called on the client when the block being pointed at is the one with this sub tile.
-     * Used to render a HUD portraying some data from this sub tile.
-     */
-    @SideOnly(Side.CLIENT)
-    public void renderHUD(Minecraft mc, ScaledResolution res) {
-        // NO-OP
-    }
+	/**
+	 * Gets a ChunkCoordinates instance with the position of this sub tile.
+	 */
+	public ChunkCoordinates toChunkCoordinates() {
+		return new ChunkCoordinates(supertile.xCoord, supertile.yCoord, supertile.zCoord);
+	}
 
-    /**
-     * Gets the light value for this SubTileEntity, this is a int (-1 to default to the flower)
-     */
-    public int getLightValue() {
-        return -1;
-    }
+	/**
+	 * @see IWandBindable#canSelect(EntityPlayer, ItemStack, int, int, int, int)
+	 */
+	public boolean canSelect(EntityPlayer player, ItemStack wand, int x, int y, int z, int side) {
+		return false;
+	}
 
-    /**
-     * Gets the comparator input value for this SubTileEntity
-     */
-    public int getComparatorInputOverride(int side) {
-        return 0;
-    }
+	/**
+	 * @see IWandBindable#bindTo(EntityPlayer, ItemStack, int, int, int, int)
+	 */
+	public boolean bindTo(EntityPlayer player, ItemStack wand, int x, int y, int z, int side) {
+		return false;
+	}
 
-    /**
-     * Gets the redstone power level for this SubTileEntity
-     */
-    public int getPowerLevel(int side) {
-        return 0;
-    }
+	/**
+	 * Called on the client when the block being pointed at is the one with this sub tile.
+	 * Used to render a HUD portraying some data from this sub tile.
+	 */
+	@SideOnly(Side.CLIENT)
+	public void renderHUD(Minecraft mc, ScaledResolution res) {
+		// NO-OP
+	}
+
+	/**
+	 * Gets the light value for this SubTileEntity, this is a int (-1 to default to the flower)
+	 */
+	public int getLightValue() {
+		return -1;
+	}
+
+	/**
+	 * Gets the comparator input value for this SubTileEntity
+	 */
+	public int getComparatorInputOverride(int side) {
+		return 0;
+	}
+
+	/**
+	 * Gets the redstone power level for this SubTileEntity
+	 */
+	public int getPowerLevel(int side) {
+		return 0;
+	}
+
+	/**
+	 * Gets if this SubTileEntity is affected by Enchanted Soil's speed boost.
+	 */
+	public boolean isOvergrowthAffected() {
+		return true;
+	}
 
 
 }

@@ -16,7 +16,7 @@ public class ConfigHandler {
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static HashSet<Integer> dimensionWingsDisabled = new HashSet<Integer>();
-    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat, enableIECompat, enableWitcheryCompat;
+    public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat, enableIECompat, enableWitcheryCompat, enableErebusCompat;
     public static int boostEnchantID, hoverEnchantID, waterproofEnchantID;
     public static int[] wingsHUDCoords = new int[2];
 
@@ -58,6 +58,7 @@ public class ConfigHandler {
         enableACCompat = config.getBoolean("enableAuraCascadeCompatibility", compat, true, modCompat("Aura Cascade"));
         enableIECompat = config.getBoolean("enableImmersiveEngineeringCompatibility", compat, true, modCompat("Immersive Engineering"));
         enableWitcheryCompat = config.getBoolean("enableWitcheryCompatibility", compat, true, modCompat("Witchery"));
+        enableErebusCompat = config.getBoolean("enableErebusCompatibility", compat, true, modCompat("Erebus"));
 
         //Enchants
         boostEnchantID = config.getInt("boostEnchantID", enchant, 100, 0, 255, "Change the ID for the Flight Boost Enchant here.\nDo not go over 255 or the game will crash!");

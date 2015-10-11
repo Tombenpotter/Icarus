@@ -37,6 +37,11 @@ item.Icarus.wing.HempFabricWing.name=Hemp Fabric Wings
 ###Witchery
 item.Icarus.wing.WitchHunterWing.name=Witch Hunter's Wings
 item.Icarus.wing.VampireWing.name=Vampire Wings
+###Erebus
+item.Icarus.wing.PetrifiedWoodWing.name=Petrified Wood Wings
+item.Icarus.wing.ExoskeletonWing.name=Exoskeleton Wings
+item.Icarus.wing.JadeWing.name=Jade Wings
+item.Icarus.wing.AltarWing.name=Altar Wings
 
 ##Single Wing item
 ###Vanilla
@@ -73,6 +78,11 @@ item.Icarus.singleWing.HempFabricWing.name=Hemp Fabric Wing
 ###Witchery
 item.Icarus.singleWing.WitchHunterWing.name=Witch Hunter's Wing
 item.Icarus.singleWing.VampireWing.name=Vampire Wing
+###Erebus
+item.Icarus.singleWing.PetrifiedWoodWing.name=Petrified Wood Wing
+item.Icarus.singleWing.ExoskeletonWing.name=Exoskeleton Wing
+item.Icarus.singleWing.JadeWing.name=Jade Wing
+item.Icarus.singleWing.AltarWing.name=Altar Wing
 
 #Text
 ##Tooltips

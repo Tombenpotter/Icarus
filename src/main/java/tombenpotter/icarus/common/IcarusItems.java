@@ -23,10 +23,12 @@ import java.util.ArrayList;
 
 public class IcarusItems {
 
+    //Equivalent of the cloth material, without the coloring stuffs
+    public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
     public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
     public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 27
+    //Last damage value used: 38
     public static ItemSingleWing singleWings;
     public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings, steelWings, treatedCardboardWings, hempFabricWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
@@ -34,11 +36,10 @@ public class IcarusItems {
     public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings, manaweaveWings;
     public static ItemWingRF conductiveWings, energeticWings, vibrantWings;
     public static ItemWingAuraCascade angelsteelWings;
-    public static ItemWingWitchery witchHunterWings, vampireWings;
-    public static ItemWingCreeper creeperKingWings;
-    public static ItemWingRadioactive radioactiveWings;
-    //Equivalent of the cloth material, without the coloring stuffs
-    public static ItemArmor.ArmorMaterial CLOTH = addArmorMaterialWithRepair("ICARUS_CLOTH", 5, new int[]{1, 3, 2, 1}, 15, Items.string);
+    public static ItemWingVanilla.ItemWingWitchery witchHunterWings, vampireWings;
+    public static ItemWingVanilla.ItemWingCreeper creeperKingWings;
+    public static ItemWingVanilla.ItemWingRadioactive radioactiveWings;
+    public static ItemWingVanilla.ItemWingErebus petrifiedWoodWings, exoskeletonWings, jadeWings, altarWings;
 
     public static void registerItems() {
         ModItemGetter.load();
@@ -172,27 +173,51 @@ public class IcarusItems {
             addWingRecipe(30, hempFabricWings, "fabricHemp", Items.feather);
         }
 
-        witchHunterWings = new ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("WitchHunterWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
+        witchHunterWings = new ItemWingVanilla.ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("WitchHunterWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
         if (ConfigHandler.enableWitcheryCompat && ModItemGetter.nullifiedLeather != null && ModItemGetter.mandrakeRoot != null) {
             registerWing(witchHunterWings, "ItemWitchHunterWings");
             addWingRecipe(31, witchHunterWings, ModItemGetter.nullifiedLeather, ModItemGetter.mandrakeRoot);
         }
 
-        vampireWings = new ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("VampireWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
+        vampireWings = new ItemWingVanilla.ItemWingWitchery(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("VampireWing", 768, 192, 0.45, 0.48, -0.2, -0.1, 0.36));
         if (ConfigHandler.enableWitcheryCompat && ModItemGetter.wowenCruor != null && ModItemGetter.tongueOfDog != null) {
             registerWing(vampireWings, "ItemVampireWings");
             addWingRecipe(32, vampireWings, ModItemGetter.wowenCruor, ModItemGetter.tongueOfDog);
         }
 
-        creeperKingWings = new ItemWingCreeper(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("CreeperKingWing", 256, 128, 0.55, 0.65, -0.15, -0.3, 0.39));
+        creeperKingWings = new ItemWingVanilla.ItemWingCreeper(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("CreeperKingWing", 256, 128, 0.55, 0.65, -0.15, -0.3, 0.39));
         registerWing(creeperKingWings, "ItemCreeperKingWings");
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(singleWings, 1, 33), "AB ", "XYY", " XX", 'A', "ingotGold", 'B', "dyeRed", 'X', Blocks.tnt, 'Y', new ItemStack(Items.skull, 1, 4)));
         GameRegistry.addShapelessRecipe(new ItemStack(creeperKingWings), new ItemStack(singleWings, 1, 33), new ItemStack(singleWings, 1, 33));
 
-        radioactiveWings = new ItemWingRadioactive(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("RadioactiveWing", 1024, 1024, 0.69, 0.38, -0.15, -0.19, 0.36));
+        radioactiveWings = new ItemWingVanilla.ItemWingRadioactive(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("RadioactiveWing", 1024, 1024, 0.69, 0.38, -0.15, -0.19, 0.36));
         if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("ingotUranium")) {
             registerWing(radioactiveWings, "ItemRadioactiveWings");
             addWingRecipe(34, radioactiveWings, "ingotUranium", Items.spider_eye);
+        }
+
+        petrifiedWoodWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.IRON, new IcarusWing("PetrifiedWoodWing", 256, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
+        if (ConfigHandler.enableErebusCompat && ModItemGetter.petrifiedWood != null && ModItemGetter.shardBone != null) {
+            registerWing(petrifiedWoodWings, "ItemPetrifiedWoodWings");
+            addWingRecipe(35, petrifiedWoodWings, ModItemGetter.petrifiedWood, ModItemGetter.shardBone);
+        }
+
+        exoskeletonWings = new ItemWingVanilla.ItemWingErebus(ItemArmor.ArmorMaterial.DIAMOND, new IcarusWing("ExoskeletonWing", 384, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        if (ConfigHandler.enableErebusCompat && ModItemGetter.exoskeletonPlate != null && ModItemGetter.shardBone != null) {
+            registerWing(exoskeletonWings, "ItemExoskeletonWings");
+            addWingRecipe(36, exoskeletonWings, ModItemGetter.exoskeletonPlate, ModItemGetter.shardBone);
+        }
+
+        jadeWings = new ItemWingVanilla.ItemWingErebus(ELECTRUM, new IcarusWing("JadeWing", 512, 256, 0.7, 0.55, -0.3, -0.4, 0.45));
+        if (ConfigHandler.enableErebusCompat && ModItemGetter.jade != null && ModItemGetter.flyWing != null) {
+            registerWing(jadeWings, "ItemJadeWings");
+            addWingRecipe(37, jadeWings, ModItemGetter.jade, ModItemGetter.flyWing);
+        }
+
+        altarWings = new ItemWingVanilla.ItemWingErebus(ENDERIUM, new IcarusWing("AltarWing", 1024, 384, 0.68, 0.35, -0.2, -0.3, 0.2));
+        if (ConfigHandler.enableErebusCompat && ModItemGetter.altarFragment != null && ModItemGetter.flyWing != null) {
+            registerWing(altarWings, "ItemAltarWings");
+            addWingRecipe(38, altarWings, ModItemGetter.altarFragment, ModItemGetter.flyWing);
         }
     }
 

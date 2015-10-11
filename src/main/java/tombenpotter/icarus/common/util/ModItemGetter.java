@@ -9,20 +9,32 @@ import java.util.ArrayList;
 
 public abstract class ModItemGetter {
 
+    /* Thermal Expansion */
     public static ItemStack leadstoneCapacitor = null;
     public static ItemStack redstoneCapacitor = null;
     public static ItemStack resonantCapacitor = null;
 
+    /* EnderIO */
     public static ItemStack basicCapacitor = null;
     public static ItemStack doubleLayeredCapacitor = null;
     public static ItemStack octadicCapacitor = null;
 
+    /* Aura Cascade */
     public static ArrayList<ItemStack> angelsteelIngots = new ArrayList<ItemStack>();
 
+    /* Witchery */
     public static ItemStack nullifiedLeather = null;
     public static ItemStack wowenCruor = null;
     public static ItemStack mandrakeRoot = null;
     public static ItemStack tongueOfDog = null;
+
+    /* Erebus */
+    public static ItemStack petrifiedWood = null;
+    public static ItemStack exoskeletonPlate = null;
+    public static ItemStack jade = null;
+    public static ItemStack altarFragment = null;
+    public static ItemStack shardBone = null;
+    public static ItemStack flyWing = null;
 
     private ModItemGetter() {
     }
@@ -41,6 +53,12 @@ public abstract class ModItemGetter {
         mandrakeRoot = findItem("witchery", "ingredient", 1, 22);
         tongueOfDog = findItem("witchery", "ingredient", 1, 25);
 
+        petrifiedWood = findItem("erebus", "materials", 1, 7);
+        exoskeletonPlate = findItem("erebus", "materials", 1, 0);
+        jade = findItem("erebus", "materials", 1, 1);
+        altarFragment = findItem("erebus", "materials", 1, 15);
+        shardBone = findItem("erebus", "materials", 1, 2);
+        flyWing = findItem("erebus", "materials", 1, 6);
     }
 
     public static void auraCascadeIngotBecausePixlepixIsDuh() {
