@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import tombenpotter.icarus.IcarusBlocks;
+import tombenpotter.icarus.common.IcarusBlocks;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.Wing;

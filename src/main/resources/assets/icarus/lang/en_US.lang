@@ -18,9 +18,14 @@ item.Icarus.wing.VoidMetalWing.name=Void Metal Wings
 item.Icarus.wing.LeadstoneWing.name=Leadstone Wings
 item.Icarus.wing.ElectrumWing.name=Electrum Wings
 item.Icarus.wing.EnderiumWing.name=Enderium Wings
+item.Icarus.wing.PotatoWing.name=Tuberous Wings
 ###OreDict
 item.Icarus.wing.BronzeWing.name=Bronze Wings
 item.Icarus.wing.RadioactiveWing.name=Radioactive Wings
+item.Icarus.wing.SteelWing.name=Steel Wings
+item.Icarus.wing.SapphireWing.name=Sapphire Wings
+item.Icarus.wing.PeridotWing.name=Peridot Wings
+item.Icarus.wing.RubyWing.name=Ruby Wings
 ###Botania
 item.Icarus.wing.LivingwoodWing.name=Livingwood Wings
 item.Icarus.wing.ManasteelWing.name=Manasteel Wings
@@ -61,9 +66,14 @@ item.Icarus.singleWing.VoidMetalWing.name=Void Metal Wing
 item.Icarus.singleWing.LeadstoneWing.name=Leadstone Wing
 item.Icarus.singleWing.ElectrumWing.name=Electrum Wing
 item.Icarus.singleWing.EnderiumWing.name=Enderium Wing
+item.Icarus.singleWing.PotatoWing.name=Tuberous Wing
 ###OreDict
 item.Icarus.singleWing.BronzeWing.name=Bronze Wing
 item.Icarus.singleWing.RadioactiveWing.name=Radioactive Wing
+item.Icarus.singleWing.SteelWing.name=Steel Wing
+item.Icarus.singleWing.SapphireWing.name=Sapphire Wing
+item.Icarus.singleWing.PeridotWing.name=Peridot Wing
+item.Icarus.singleWing.RubyWing.name=Ruby Wing
 ###Botania
 item.Icarus.singleWing.LivingwoodWing.name=Livingwood Wing
 item.Icarus.singleWing.ManasteelWing.name=Manasteel Wing

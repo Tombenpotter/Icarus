@@ -220,4 +220,22 @@ public class ItemWingRF extends ItemWing implements IEnergyContainerItem, ISpeci
         list.add(StringHelper.LIGHT_BLUE + StringHelper.localize("tooltip.icarus.energy") + StringHelper.END + StringHelper.LIGHT_GRAY + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " RF" + StringHelper.END);
         return list;
     }
+
+    public static class ItemWingPotato extends ItemWingRF {
+
+        public ItemWingPotato(ArmorMaterial material, IcarusWing icarusWing) {
+            super(material, icarusWing);
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void getSubItems(Item item, CreativeTabs tab, List list) {
+            list.add(EnergyHelper.setDefaultEnergyTag(new ItemStack(this, 1, 0), getMaxEnergyStored(new ItemStack(item))));
+        }
+
+        @Override
+        public int receiveEnergy(ItemStack stack, int i, boolean simulate) {
+            return 0;
+        }
+    }
 }

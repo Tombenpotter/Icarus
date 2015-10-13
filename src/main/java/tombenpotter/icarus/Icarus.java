@@ -11,6 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import tombenpotter.icarus.common.IcarusBlocks;
 import tombenpotter.icarus.common.IcarusEnchants;
 import tombenpotter.icarus.common.IcarusItems;
 import tombenpotter.icarus.common.network.PacketHandler;
@@ -27,7 +28,8 @@ public class Icarus {
     public static final String version = "@VERSION@";
     public static final String texturePath = "icarus";
     public static final String channel = "Icarus";
-    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura;after:witchery;after:erebus";
+    public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura;" +
+            "after:witchery;after:erebus;after:ProjRed|Core;after:bluepower;after:BiomesOPlenty";
     public static final String clientProxy = "tombenpotter.icarus.proxies.ClientProxy";
     public static final String commonProxy = "tombenpotter.icarus.proxies.CommonProxy";
     private File configDir;
@@ -37,6 +39,7 @@ public class Icarus {
             return IcarusItems.goldDiamondWings;
         }
     };
+    public static final boolean isDevelopmentEnvironment = version.equals("@VERSION@");
 
     @SidedProxy(serverSide = Icarus.commonProxy, clientSide = Icarus.clientProxy)
     public static CommonProxy proxy;

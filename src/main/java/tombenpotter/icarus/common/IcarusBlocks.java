@@ -1,6 +1,7 @@
-package tombenpotter.icarus;
+package tombenpotter.icarus.common;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.common.blocks.BlockInvisiLight;
 
 public class IcarusBlocks {

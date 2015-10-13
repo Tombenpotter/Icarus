@@ -12,6 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
+import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.ArmorWingRecipe;
 import tombenpotter.icarus.common.util.IcarusHelper;
@@ -30,7 +31,8 @@ public class IcarusItems {
     public static ArrayList<String> wingNames = new ArrayList<String>();
     //Last damage value used: 39
     public static ItemSingleWing singleWings;
-    public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings, steelWings, treatedCardboardWings, hempFabricWings;
+    public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings,
+            treatedCardboardWings, hempFabricWings, steelWings, rubyWings, sapphireWings, peridotWings;
     public static ItemWingThaumcraft thaumiumWings, voidMetalWings;
     public static ItemWingRF leadstoneWings, electrumWings, enderiumWings;
     public static ItemWingBotania livingwoodWings, manasteelWings, terrasteelWings, elementiumWings, manaweaveWings;
@@ -42,10 +44,17 @@ public class IcarusItems {
     public static ItemWingVanilla.ItemWingErebus petrifiedWoodWings, exoskeletonWings, jadeWings, altarWings;
     public static ItemWingVanilla.ItemWingGlowstone glowstoneWings;
     public static ItemWingHalloween halloweenWings;
+    public static ItemWingRF.ItemWingPotato potatoWings;
 
     public static void registerItems() {
         ModItemGetter.load();
         IcarusItems.addArmorsToList();
+
+        if (Icarus.isDevelopmentEnvironment) {
+            OreDictionary.registerOre("gemSapphire", Items.cooked_beef);
+            OreDictionary.registerOre("gemPeridot", Items.cooked_chicken);
+            OreDictionary.registerOre("gemRuby", Items.cooked_porkchop);
+        }
 
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
@@ -229,6 +238,36 @@ public class IcarusItems {
         halloweenWings = new ItemWingHalloween(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("HalloweenWing", 96, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
         registerWing(halloweenWings, "ItemHalloweenWings");
         addWingRecipe(40, halloweenWings, Blocks.lit_pumpkin, Blocks.soul_sand);
+
+        steelWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.IRON, new IcarusWing("SteelWing", 384, 132, 0.5, 0.9, -0.2, -0.4, 0.5));
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("ingotSteel")) {
+            registerWing(steelWings, "ItemSteemWings");
+            addWingRecipe(41, steelWings, "ingotSteel", Items.feather);
+        }
+
+        sapphireWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("SapphireWing", 768, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("gemSapphire")) {
+            registerWing(sapphireWings, "ItemSapphireWings");
+            addWingRecipe(42, sapphireWings, "gemSapphire", Items.feather);
+        }
+
+        peridotWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("PeridotWing", 768, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("gemPeridot")) {
+            registerWing(peridotWings, "ItemPeridotWings");
+            addWingRecipe(43, peridotWings, "gemPeridot", Items.feather);
+        }
+
+        rubyWings = new ItemWingVanilla(ItemArmor.ArmorMaterial.GOLD, new IcarusWing("RubyWing", 768, 196, 0.6, 0.7, -0.2, -0.3, 0.4));
+        if (ConfigHandler.enableOreDictCompat && OreDictionary.doesOreNameExist("gemRuby")) {
+            registerWing(rubyWings, "ItemRubyWings");
+            addWingRecipe(44, rubyWings, "gemRuby", Items.feather);
+        }
+
+        potatoWings = new ItemWingRF.ItemWingPotato(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("PotatoWing", 32962, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
+        if (ConfigHandler.enableTECompat && ModItemGetter.potatoCapacitor != null) {
+            registerWing(potatoWings, "ItemPotatoWing");
+            addWingRecipe(45, potatoWings, Items.potato, ModItemGetter.potatoCapacitor);
+        }
     }
 
     public static void registerWing(ItemWing itemWing, String name) {

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public abstract class ModItemGetter {
 
     /* Thermal Expansion */
+    public static ItemStack potatoCapacitor = null;
     public static ItemStack leadstoneCapacitor = null;
     public static ItemStack redstoneCapacitor = null;
     public static ItemStack resonantCapacitor = null;
@@ -40,6 +41,7 @@ public abstract class ModItemGetter {
     }
 
     public static void load() {
+        potatoCapacitor = findItem("ThermalExpansion", "capacitor", 1, 1);
         leadstoneCapacitor = findItem("ThermalExpansion", "capacitor", 1, 2);
         redstoneCapacitor = findItem("ThermalExpansion", "capacitor", 1, 4);
         resonantCapacitor = findItem("ThermalExpansion", "capacitor", 1, 5);
