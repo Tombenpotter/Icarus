@@ -6,10 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import tombenpotter.icarus.common.IcarusBlocks;
 import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.ISpecialWing;
 import tombenpotter.icarus.api.wings.Wing;
+import tombenpotter.icarus.common.IcarusBlocks;
 import tombenpotter.icarus.common.util.IcarusHelper;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
@@ -110,7 +110,7 @@ public class ItemWingVanilla extends ItemWing implements ISpecialWing {
             int x = (int) Math.floor(player.posX);
             int y = (int) player.posY + 1;
             int z = (int) Math.floor(player.posZ);
-            if (!world.isRemote && world.getBlock(x, y, z) == Blocks.air) {
+            if (!world.isRemote && world.getTotalWorldTime() % 20 == 0 && world.getBlock(x, y, z) == Blocks.air) {
                 world.setBlock(x, y, z, IcarusBlocks.invisiLight);
             }
         }

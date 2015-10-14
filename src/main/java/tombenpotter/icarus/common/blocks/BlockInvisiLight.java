@@ -2,7 +2,9 @@ package tombenpotter.icarus.common.blocks;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -23,6 +25,10 @@ public class BlockInvisiLight extends BlockContainer {
         this.setBlockBounds(0, 0, 0, 0, 0, 0);
         this.getLightValue();
         this.setBlockName(Icarus.name + ".invisilight");
+    }
+
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
     }
 
     @Override
@@ -91,7 +97,6 @@ public class BlockInvisiLight extends BlockContainer {
     }
 
     public static class TileInvisibleLight extends TileEntity {
-
         @Override
         public void updateEntity() {
             if (worldObj.getTotalWorldTime() % 20 == 0) {
@@ -105,7 +110,6 @@ public class BlockInvisiLight extends BlockContainer {
         @Override
         public void markDirty() {
             super.markDirty();
-
             this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }

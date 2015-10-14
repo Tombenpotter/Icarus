@@ -19,42 +19,43 @@ public class ArmorWingRecipe extends ShapedOreRecipe {
 
     public ItemStack itemWing;
     public Object[] input;
+    private static final int wingPos = 0;
+    private static final int armorPos = 3;
 
     public ArmorWingRecipe(ItemWing wing) {
-        super(wing, "   ", " X ", " Y ", 'X', "", 'Y', wing);
+        super(wing, "X  ", "Y  ", "   ", 'X', "", 'Y', wing);
         this.itemWing = new ItemStack(wing);
 
         this.input = new Object[9];
-        input[4] = this.itemWing;
-        input[7] = IcarusHelper.armorList;
+        input[wingPos] = this.itemWing;
+        input[armorPos] = IcarusHelper.armorList;
     }
 
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
-        ItemStack wingStack = inventoryCrafting.getStackInSlot(4);
-        ItemStack armorStack = inventoryCrafting.getStackInSlot(7);
+        ItemStack wingStack = inventoryCrafting.getStackInSlot(wingPos);
+        ItemStack armorStack = inventoryCrafting.getStackInSlot(armorPos);
 
-        return armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing);
+        return armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && ((ItemArmor) armorStack.getItem()).armorType == 1 && wingStack.isItemEqual(itemWing);
     }
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
-        ItemStack wingStack = inventoryCrafting.getStackInSlot(4);
-        ItemStack armorStack = inventoryCrafting.getStackInSlot(7);
+        ItemStack wingStack = inventoryCrafting.getStackInSlot(wingPos);
+        ItemStack armorStack = inventoryCrafting.getStackInSlot(armorPos);
         ItemStack result = null;
 
-        if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && wingStack.isItemEqual(itemWing)) {
+        if (armorStack != null && wingStack != null && armorStack.getItem() instanceof ItemArmor && ((ItemArmor) armorStack.getItem()).armorType == 1 && wingStack.isItemEqual(itemWing)) {
             result = wingStack.copy();
 
-            if (wingStack.stackTagCompound != null) {
+            if (wingStack.hasTagCompound()) {
                 result.setTagCompound(wingStack.getTagCompound());
-            }
-            if (result.stackTagCompound == null) {
+            } else if (!wingStack.hasTagCompound() && result.stackTagCompound == null) {
                 result.setTagCompound(new NBTTagCompound());
             }
 
             NBTTagCompound tag = new NBTTagCompound();
-            armorStack.writeToNBT(tag);
+            tag = armorStack.writeToNBT(tag);
             result.stackTagCompound.setTag(IcarusConstants.NBT_ITEMSTACK, tag);
         }
         return result;

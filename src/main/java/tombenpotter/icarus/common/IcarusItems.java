@@ -29,7 +29,7 @@ public class IcarusItems {
     public static final ItemArmor.ArmorMaterial ELECTRUM = EnumHelper.addArmorMaterial("ICARUS_ELECTRUM", 100, new int[]{3, 8, 6, 3}, 20);
     public static final ItemArmor.ArmorMaterial ENDERIUM = EnumHelper.addArmorMaterial("ICARUS_ENDERIUM", 100, new int[]{4, 9, 7, 4}, 30);
     public static ArrayList<String> wingNames = new ArrayList<String>();
-    //Last damage value used: 39
+    //Last damage value used: 45
     public static ItemSingleWing singleWings;
     public static ItemWingVanilla cardboardWings, featherWings, ironWings, goldDiamondWings, bronzeWings,
             treatedCardboardWings, hempFabricWings, steelWings, rubyWings, sapphireWings, peridotWings;
@@ -263,9 +263,9 @@ public class IcarusItems {
             addWingRecipe(44, rubyWings, "gemRuby", Items.feather);
         }
 
-        potatoWings = new ItemWingRF.ItemWingPotato(ItemArmor.ArmorMaterial.CHAIN, new IcarusWing("PotatoWing", 32962, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
+        potatoWings = new ItemWingRF.ItemWingPotato(CLOTH, new IcarusWing("PotatoWing", 32962, 128, 0.35, 0.65, -0.15, -0.3, 0.6));
         if (ConfigHandler.enableTECompat && ModItemGetter.potatoCapacitor != null) {
-            registerWing(potatoWings, "ItemPotatoWing");
+            registerWing(potatoWings, "ItemPotatoWings");
             addWingRecipe(45, potatoWings, Items.potato, ModItemGetter.potatoCapacitor);
         }
     }

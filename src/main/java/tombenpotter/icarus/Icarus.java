@@ -29,7 +29,7 @@ public class Icarus {
     public static final String texturePath = "icarus";
     public static final String channel = "Icarus";
     public static final String depend = "after:Thaumcraft;after:ThermalExpansion;after:Botania;after:EnderIO;after:aura;" +
-            "after:witchery;after:erebus;after:ProjRed|Core;after:bluepower;after:BiomesOPlenty";
+            "after:witchery;after:erebus;after:ProjRed|Core;after:bluepower;after:BiomesOPlenty;after:ImmersiveEngineering";
     public static final String clientProxy = "tombenpotter.icarus.proxies.ClientProxy";
     public static final String commonProxy = "tombenpotter.icarus.proxies.CommonProxy";
     private File configDir;

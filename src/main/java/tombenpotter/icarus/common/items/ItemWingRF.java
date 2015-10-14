@@ -4,10 +4,12 @@ import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
@@ -236,6 +238,17 @@ public class ItemWingRF extends ItemWing implements IEnergyContainerItem, ISpeci
         @Override
         public int receiveEnergy(ItemStack stack, int i, boolean simulate) {
             return 0;
+        }
+
+        @Override
+        public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held) {
+            super.onUpdate(stack, world, entity, slot, held);
+
+            if (!stack.hasTagCompound()) {
+                NBTTagCompound tag = new NBTTagCompound();
+                tag.setInteger("Energy", getMaxEnergyStored(stack));
+                stack.setTagCompound(tag);
+            }
         }
     }
 }
