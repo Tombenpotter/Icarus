@@ -39,7 +39,6 @@ public class Icarus {
             return IcarusItems.goldDiamondWings;
         }
     };
-    public static final boolean isDevelopmentEnvironment = version.equals("@VERSION@");
 
     @SidedProxy(serverSide = Icarus.commonProxy, clientSide = Icarus.clientProxy)
     public static CommonProxy proxy;

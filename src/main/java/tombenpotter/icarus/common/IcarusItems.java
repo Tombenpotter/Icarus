@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
-import tombenpotter.icarus.Icarus;
 import tombenpotter.icarus.common.items.*;
 import tombenpotter.icarus.common.util.ArmorWingRecipe;
 import tombenpotter.icarus.common.util.IcarusHelper;
@@ -49,12 +48,6 @@ public class IcarusItems {
     public static void registerItems() {
         ModItemGetter.load();
         IcarusItems.addArmorsToList();
-
-        if (Icarus.isDevelopmentEnvironment) {
-            OreDictionary.registerOre("gemSapphire", Items.cooked_beef);
-            OreDictionary.registerOre("gemPeridot", Items.cooked_chicken);
-            OreDictionary.registerOre("gemRuby", Items.cooked_porkchop);
-        }
 
         singleWings = new ItemSingleWing();
         GameRegistry.registerItem(singleWings, "ItemSingleWings");
