@@ -19,6 +19,7 @@ import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.api.wings.IWingHUD;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.util.HoverHandler;
+import tombenpotter.icarus.common.util.IcarusHelper;
 
 public class ClientEventHandler {
 
@@ -68,6 +69,13 @@ public class ClientEventHandler {
 
             GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+            int color = IcarusHelper.getWingColor(stack);
+            float f1 = (float) (color >> 16 & 255) / 255.0F;
+            float f2 = (float) (color >> 8 & 255) / 255.0F;
+            float f3 = (float) (color & 255) / 255.0F;
+            GL11.glColor4f(f1, f2, f3, 1.0F);
+
             minecraft.renderEngine.bindTexture(new ResourceLocation(Icarus.texturePath + ":textures/items/wings/" + itemWing.getWing(stack).name + ".png"));
 
             if (player.isSneaking()) {

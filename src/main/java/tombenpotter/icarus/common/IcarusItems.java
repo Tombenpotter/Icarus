@@ -13,10 +13,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import tombenpotter.icarus.ConfigHandler;
 import tombenpotter.icarus.common.items.*;
-import tombenpotter.icarus.common.util.ArmorWingRecipe;
-import tombenpotter.icarus.common.util.IcarusHelper;
-import tombenpotter.icarus.common.util.IcarusWing;
-import tombenpotter.icarus.common.util.ModItemGetter;
+import tombenpotter.icarus.common.util.*;
 import vazkii.botania.api.BotaniaAPI;
 
 import java.util.ArrayList;
@@ -261,6 +258,8 @@ public class IcarusItems {
             registerWing(potatoWings, "ItemPotatoWings");
             addWingRecipe(45, potatoWings, Items.potato, ModItemGetter.potatoCapacitor);
         }
+
+        GameRegistry.addRecipe(new DyeWingRecipe());
     }
 
     public static void registerWing(ItemWing itemWing, String name) {

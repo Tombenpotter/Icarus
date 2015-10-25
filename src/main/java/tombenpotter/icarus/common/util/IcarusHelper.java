@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
+import tombenpotter.icarus.api.IcarusConstants;
 import tombenpotter.icarus.common.items.ItemWing;
 import tombenpotter.icarus.common.util.cofh.StringHelper;
 
@@ -36,5 +37,19 @@ public class IcarusHelper {
         float amplifier = potionEffect != null ? (float) (potionEffect.getAmplifier() + 1) : 0.0F;
 
         return (int) (MathHelper.ceiling_float_int(player.fallDistance - 3.0F - amplifier) * itemWing.getWing(stack).fallReductionFactor);
+    }
+
+    public static int getWingColor(ItemStack stack) {
+        NBTTagCompound tagCompound = stack.getTagCompound();
+        if (tagCompound == null || !tagCompound.hasKey(IcarusConstants.NBT_COLOR)) {
+            return 16777215;
+        } else {
+            return tagCompound.getInteger(IcarusConstants.NBT_COLOR);
+        }
+    }
+
+    public static void setWingColor(ItemStack stack, int color) {
+        checkNBT(stack);
+        stack.stackTagCompound.setInteger(IcarusConstants.NBT_COLOR, color);
     }
 }

@@ -159,9 +159,11 @@ public abstract class ItemWing extends ItemArmor implements ISpecialArmor, IWing
     }
 
     public void handleHeight(World world, EntityPlayer player, ItemStack stack) {
-        if (player.posY > getWing(stack).maxHeight && world.isDaytime() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && !ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId)) {
-            player.setFire(1);
-            player.attackEntityFrom(DamageSource.inFire, 1.0F);
+        if (!player.onGround) {
+            if (ConfigHandler.dimensionWingsAlwaysBurn.contains(world.provider.dimensionId) || (player.posY > (getWing(stack).maxHeight + ConfigHandler.maxHeightOffset) && world.isDaytime() && world.canBlockSeeTheSky((int) player.posX, (int) player.posY, (int) player.posZ) && !ConfigHandler.dimensionNoWingBurn.contains(world.provider.dimensionId))) {
+                player.setFire(2);
+                player.attackEntityFrom(DamageSource.inFire, 1.0F);
+            }
         }
     }
 

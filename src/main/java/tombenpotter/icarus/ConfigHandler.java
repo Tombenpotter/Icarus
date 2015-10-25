@@ -16,9 +16,11 @@ public class ConfigHandler {
     public static float hungerConsumed;
     public static HashSet<Integer> dimensionNoWingBurn = new HashSet<Integer>();
     public static HashSet<Integer> dimensionWingsDisabled = new HashSet<Integer>();
+    public static HashSet<Integer> dimensionWingsAlwaysBurn = new HashSet<Integer>();
     public static boolean enableThaumcraftCompat, enableTECompat, enableOreDictCompat, enableEIOCompat, enableBotaniaCompat, enableACCompat, enableBMCompat, enableIECompat, enableWitcheryCompat, enableErebusCompat;
     public static int boostEnchantID, hoverEnchantID, waterproofEnchantID;
     public static int[] wingsHUDCoords = new int[2];
+    public static int maxHeightOffset;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -47,6 +49,11 @@ public class ConfigHandler {
         int[] dimsNoWork = config.get(general, "dimensionsWingsDisabled", new int[]{}, "The IDs of the dimensions where Wings will never be able to work.").getIntList();
         for (int i : dimsNoWork) {
             dimensionWingsDisabled.add(i);
+        }
+        maxHeightOffset = config.getInt("maxHeightOffset", general, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "Offsets all the wings' max height by this number.\nThis is meant to be used for worlds with higher terrain generation.");
+        int[] dimsBurn = config.get(general, "dimensionsWingsAlwaysBurn", new int[]{}, "The IDs of the dimensions where wings will always burn you when you're off ground.").getIntList();
+        for(int i: dimsBurn){
+            dimensionWingsAlwaysBurn.add(i);
         }
 
         //Compat
